@@ -1,0 +1,12 @@
+{
+  "name": "TeleRank",
+  "displayName": "TeleRank",
+  "expo": {
+    "name": "TeleRank",
+    "slug": "TeleRank",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
