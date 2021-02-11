@@ -1,17 +1,15 @@
 const express = require('express');
+const scraper = require('./scraper');
+const firebase = require('./firebase')
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const scraper = require('./scraper');
-
 const app = express();
 const port = 4000;
 
-// Middlewares
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Endpoints
 app.get('/', (req, res) => {
     res.send('OK');
 });
