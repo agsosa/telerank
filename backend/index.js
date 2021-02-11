@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const scraper = require('./scraper');
 
 const app = express();
 const port = 4000;
@@ -21,3 +22,5 @@ app.get('/api/test', (req, res) => {
 });
 
 app.listen(port, () => console.log(`Backend listening on port ${port}`))
+
+scraper.test();
