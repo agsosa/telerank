@@ -40,6 +40,8 @@ const initialize = () => {
     console.log("scraper_jobs initialized");
 
     Job_FindNewChannels();
+
+ //   const usernames = ["ofertify","BitMEXSniper","cgpers","thebull_crypto"];
 }
 
 const Job_UpdateChannelsInfo = () => {
@@ -48,7 +50,7 @@ const Job_UpdateChannelsInfo = () => {
 
 let attempt = 0;
 
-const Job_FindNewChannels = async () => {
+/*const Job_FindNewChannels = async () => {
     let promises = [];
 
     console.log("Running Job_FindNewChannels()");
@@ -107,6 +109,42 @@ const Job_FindNewChannels = async () => {
             
         });
     });
+}*/
+
+const Job_FindNewChannels = async () => {
+    let promises = [];
+
+    console.log("Running Job_FindNewChannels()");
+
+    scraper.scrapeTelegramChannels(async (entries) => {
+        /*for(let i = 0; i < entries.length; i++) {
+            let q = entries[i];
+
+            q.title = data.title;
+            q.description = data.description;
+            q.members = data.members;
+            q.image = data.image;
+            q.created_date = Date.now();
+            q.updated_date = Date.now();
+            q.likes = 0;
+            q.dislikes = 0;
+            q.featured = false;
+        }*/
+
+        // Execute the python summarizer script
+        const usernames = entries.map(q => q.username);
+
+        const spawn = require("child_process").spawn;
+        const pythonProcess = spawn('python', ["./telegram.py", usernames]);
+    
+        pythonProcess.stdout.setEncoding("latin1");
+    
+        pythonProcess.stdout.on('data', (data) => {
+            //let parsed = JSON.parse(data);
+            console.log("received data from python = "+data);
+        });
+    });
 }
+
 
 exports.initialize = initialize;

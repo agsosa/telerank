@@ -9,7 +9,7 @@ const app = express();
 const port = 4000;
 
 firebase.initialize();
-//scraper_jobs.initialize();
+scraper_jobs.initialize();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
