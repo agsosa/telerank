@@ -28,5 +28,22 @@ function GetAllEntries(onResult) {
   });
 }
 
+
+function ListEntries(perPage, page) {
+  return new Promise((resolve, reject) => {
+    EntryModel.find()
+    .limit(perPage)
+    .skip(perPage * page)
+    .exec(function (err, entries) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(entries);
+      }
+    })
+  });
+}
+
 exports.AddEntry = AddEntry;
 exports.GetAllEntries = GetAllEntries;
+exports.ListEntries = ListEntries;
