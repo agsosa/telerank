@@ -88,7 +88,7 @@ export default function EntriestList(props) {
 
     function renderItem(q) {
         return (
-            <ListItem noBorder key={q.item._id} thumbnail onPress={() => { Linking.openURL("https://t.me/"+q.item.username).catch(err => { console.error("Failed opening page because: ", err) })}}>
+            <ListItem noBorder key={q.item._id} thumbnail onPress={() => { props.navigation.navigate('Details', q.item) }}>
                 <Left>
                     <Thumbnail square source={{ uri: q.item.image }} small />
                 </Left>

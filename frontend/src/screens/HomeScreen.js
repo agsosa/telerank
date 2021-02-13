@@ -15,7 +15,7 @@ export default function HomeScreen({navigation}) {
                 onPress={() => navigation.navigate('Details')}
             />
 
-            <EntriesList />
+            <EntriesList navigation={navigation} />
         </View>
     );
 }
