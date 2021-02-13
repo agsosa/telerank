@@ -41,7 +41,6 @@ export default function HorizontalList(props) {
         itemVisiblePercentThreshold: 80  
     });
 
-    
     return ( 
         <View> 
             <FlatList      

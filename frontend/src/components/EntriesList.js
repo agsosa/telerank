@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, memo, useRef } from 'react';
 import { View, Button, FlatList, Text, Linking, ActivityIndicator } from 'react-native';
 import { Right, Left, Body} from 'native-base';
 import { List, H2, H3, Title, ListItem, Thumbnail } from 'native-base';
-import { SearchBar } from 'react-native-elements';
+//import { SearchBar } from 'react-native-elements';
+import { Searchbar } from 'react-native-paper';
 import { Tile } from 'react-native-elements';
 import HorizontalList from './HorizontalList';
+import Surface from './Surface';
 
 export default function EntriestList(props) {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState("");
-
-    let arrayholder = [];
+    const [auxData, setAuxData] = useState([]);
 
     useEffect(() => {
         fetchData();
@@ -25,11 +26,13 @@ export default function EntriestList(props) {
         fetch(url)
         .then((response) => response.json())
         .then((data) => {
-            console.log("received data = "+JSON.stringify(data))
+            //console.log("received data = "+JSON.stringify(data))
+            console.log("fetchData() success");
             setError(null);
-            setData(data);
+            setData(data); // TODO: Ver si es necesario optimizar los objetos de data, eliminando campos sin uso en flatlist (description por ejemplo)
             setLoading(false);
-            arrayholder = data;
+            setAuxData(data);
+            console.log(auxData.length);
         })
         .catch(error => {
             console.log("error = "+error)
@@ -51,11 +54,13 @@ export default function EntriestList(props) {
         );
     };
     
-    function searchFilterFunction(text) {
+    const searchFilterFunction = (text) => {
         setSearchValue(text);
 
-        const newData = arrayholder.filter(item => {
-            const itemData = `${item.name.toUpperCase()} ${item.symbol.toUpperCase()}`;
+        console.log("searchfilterfunction "+auxData.length)
+
+        const newData = auxData.filter(item => {
+            const itemData = `${item.username.toUpperCase()} ${item.title.toUpperCase()}`;
             const textData = text.toUpperCase();
 
             return itemData.indexOf(textData) > -1;
@@ -67,22 +72,26 @@ export default function EntriestList(props) {
     function renderHeader() {
         return (
             <View>
-                <SearchBar
-                    placeholder="Search..."
-                    lightTheme
-                    round
-                    onChangeText={text => searchFilterFunction(text)}
-                    autoCorrect={false}
-                    value={searchValue}
-                />
-                <HorizontalList data={data}/>
+                <View style={{padding: 10}}>
+                    <Searchbar
+                        placeholder="Search..."
+                        //lightTheme
+                        //round
+                        onChangeText={searchFilterFunction}
+                        //autoCorrect={false}
+                        value={searchValue}
+                    />
+                </View>
             </View>
         );
     };
 
     function renderFooter() {
         return (
-            <Text>No more entries...</Text>
+            <View>
+                <Surface><Text>Latest entries</Text></Surface>
+                <HorizontalList data={data}/>
+            </View>
         );
     };
 
@@ -116,12 +125,12 @@ export default function EntriestList(props) {
         return (
             <View style={{ flex: 1 }}>
                     <FlatList          
-                        data={data}          
+                        data={data}    
                         renderItem={renderItem}          
                         keyExtractor={item => item._id}  
                         ItemSeparatorComponent={renderSeparator}
-                        ListHeaderComponent={renderHeader}
-                        ListFooterComponent={renderFooter}
+                        ListHeaderComponent={renderHeader()}
+                        ListFooterComponent={renderFooter()}
                         onRefresh={() => fetchData()}
                         refreshing={loading}
                     /> 
