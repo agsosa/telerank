@@ -1,13 +1,9 @@
-import React, { useState, useEffect, useCallback, memo, useRef } from 'react';
-import { View, FlatList, Linking, ActivityIndicator, Image } from 'react-native';
-import { List, H2, H3, Title, ListItem } from 'native-base';
-//import { SearchBar } from 'react-native-elements';
-import { Searchbar, Chip } from 'react-native-paper';
-import { Tile } from 'react-native-elements';
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, ActivityIndicator } from 'react-native';
+import { Searchbar } from 'react-native-paper';
 import HorizontalList from './HorizontalList';
-import Surface from './Surface';
-import { Container, Header, Content, Badge, Right, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body } from 'native-base';
-
+import SectionTitle from '../SectionTitle';
+import { Text } from 'native-base';
 import VerticalCard from './VerticalCard'
 
 export default function VerticalList(props) {
@@ -91,7 +87,7 @@ export default function VerticalList(props) {
     function renderFooter() {
         return (
             <View>
-                <Surface><Text>Latest entries</Text></Surface>
+                <SectionTitle><Text>Latest entries</Text></SectionTitle>
                 <HorizontalList data={data}/>
             </View>
         );

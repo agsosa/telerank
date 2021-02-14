@@ -3,19 +3,19 @@ import { Appbar, Menu } from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
 import {translateRouteName} from '../utils/Helpers';
 
-export default function CustomNavigationBar({navigation, previous}) {
+export default function NavigationHeader({navigation, previous}) {
     const [visible, setVisible] = React.useState(false);
     const openMenu = () => setVisible(true);
     const closeMenu = () => setVisible(false);
     const route = useRoute();
 
     return (
-        <Appbar.Header style={{}}>
+        <Appbar.Header style={{backgroundColor:'#2296F3'}}>
             {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
 
             {!previous && <Appbar.Action icon="cog" color="white" onPress={ () => navigation.navigate('Settings') } />}
 
-            <Appbar.Content style={{ alignItems: 'center' }} title="Telerank" subtitle={translateRouteName(route.name)} />
+            <Appbar.Content style={{ }} title="Telerank" subtitle={translateRouteName(route.name)} />
 
             {!previous && (
                 <Menu

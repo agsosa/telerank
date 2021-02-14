@@ -1,12 +1,9 @@
-import React, { useState, memo, useEffect, useRef, useCallback } from 'react';
-import { View, FlatList, Linking, ActivityIndicator, Animated } from 'react-native';
-import { Right, Left, Body} from 'native-base';
-import { List, H2, H3, Text, ListItem, Thumbnail } from 'native-base';
-import { SearchBar } from 'react-native-elements';
-import { Tile } from 'react-native-elements';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {truncateWithEllipses} from '../utils/Helpers'
-import { Avatar, Button, Divider, Card, Caption, Chip, Title, Paragraph } from 'react-native-paper';
+import React, { useState, useRef } from 'react';
+import { View, FlatList } from 'react-native';
+import {Pagination} from 'react-native-snap-carousel';
+import {truncateWithEllipses} from '../../utils/Helpers'
+import { Card, Caption } from 'react-native-paper';
+import Tag from '../Tag';
 
 export default function HorizontalList(props) {
     const [currentIdx, setCurrentIdx] = useState(0);
@@ -21,7 +18,7 @@ export default function HorizontalList(props) {
                     <Card.Content style={{marginTop:7}}>
                         <Caption style={{alignSelf:'center'}}>{truncateWithEllipses(item.title, 32)}</Caption>
                         <View style={{flex:1, flexDirection:'row', marginTop:5,  flexWrap:'wrap', justifyContent:'space-between',padding:10}}>
-                        <Chip icon="thumb-up">{item.likes}</Chip><Chip icon="thumb-down">{item.dislikes}</Chip><Chip style={{alignSelf: 'flex-start'}} icon="account">{item.members}</Chip>
+                        <Tag icon="thumb-up">{item.likes}</Tag><Tag icon="thumb-down">{item.dislikes}</Tag><Tag style={{alignSelf: 'flex-start'}} icon="account">{item.members}</Tag>
                         </View>
                     </Card.Content>
                 </Card> 
@@ -66,24 +63,6 @@ export default function HorizontalList(props) {
             /> 
         </View>
     )
-
-    /*
-    return (
-        <View>
-            <Carousel
-
-            contentContainerCustomStyle={{paddingLeft:10}}
-
-                layout={'default'}
-                data={props.data}
-                renderItem={_renderItem}
-                itemWidth={250}
-                sliderWidth={500}
-                onSnapToItem={(index) => setActiveSlide(index)}
-            />
-            <_pagination />
-        </View>
-    );*/
 }
 
   

@@ -1,7 +1,6 @@
 import 'react-native-gesture-handler';
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AppLoading from 'expo-app-loading';
@@ -9,9 +8,9 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import CustomNavigationBar from './src/components/CustomNavigationBar'
+import NavigationHeader from './src/components/NavigationHeader'
 
-import HomeScreen from './src/screens/HomeScreen';
+import MainScreen from './src/screens/MainScreen';
 import EntryDetailsScreen from './src/screens/EntryDetailsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 
@@ -38,14 +37,14 @@ export default function App() {
     <SafeAreaProvider>
       <PaperProvider>
         <NavigationContainer>
-          <Stack.Navigator initialRouteName="Home" screenOptions={{header: (props) => <CustomNavigationBar {...props} />}}>
-            <Stack.Screen name="Home" component={HomeScreen} screenOptions={{ title: 'Home' }} />
+          <Stack.Navigator initialRouteName="Home" screenOptions={{header: (props) => <NavigationHeader {...props} />}}>
+            <Stack.Screen name="Home" component={MainScreen} screenOptions={{ title: 'Home' }} />
             <Stack.Screen name="Details" component={EntryDetailsScreen} screenOptions={{ title: 'Details' }} />
             <Stack.Screen name ="Settings" component={SettingsScreen} screenOptions={{ title: 'Settings' }} />
           </Stack.Navigator>
         </NavigationContainer>
 
-        <Button title="AD BANNER" style={{height:500}}/>
+        <Button title="AD BANNER" />
 
       </PaperProvider>
     </SafeAreaProvider>

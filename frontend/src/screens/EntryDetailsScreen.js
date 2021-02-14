@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { Button, Text, View } from 'react-native';
 
 export default function EntryDetailsScreen({route, navigation}) {
     const data = route.params;
