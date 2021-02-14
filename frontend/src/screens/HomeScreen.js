@@ -15,7 +15,7 @@ import {
     useTabNavigation,
   } from 'react-native-paper-tabs';
 
-import EntriesList from '../components/EntriesList';
+import VerticalList from '../components/VerticalList';
 
 function _Tabs() {
     const goTo = useTabNavigation();
@@ -62,7 +62,7 @@ function ExploreWitHookExamples() {
     const navigation = useNavigation();
     return (
       <View style={{ flex:1 }}>
-        <EntriesList navigation={navigation} />
+        <VerticalList navigation={navigation} />
       </View>
     );
   }
