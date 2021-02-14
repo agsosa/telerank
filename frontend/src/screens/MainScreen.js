@@ -1,8 +1,10 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Image, ScrollView } from 'react-native';
 import { Tabs, TabScreen, useTabNavigation} from 'react-native-paper-tabs';
+import { Banner, Searchbar } from 'react-native-paper';
 
 import VerticalList from '../components/entries/VerticalList';
+import HomeTab from './tabscreens/HomeTab';
 
 function _Tabs() {
     const goTo = useTabNavigation(); // <Button onPress={() => goTo(3)}>Go to Flights</Button>
@@ -29,14 +31,6 @@ function _Tabs() {
           </TabScreen>
       </Tabs>
     )
-}
-
-function HomeTab() {
-    return (
-      <View style={{ flex:1 }}>
-        <VerticalList />
-      </View>
-    );
 }
 
 function Top100Tab() {

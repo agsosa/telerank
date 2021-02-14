@@ -10,7 +10,7 @@ export default function NavigationHeader({navigation, previous}) {
     const route = useRoute();
 
     return (
-        <Appbar.Header style={{backgroundColor:'#2296F3'}}>
+        <Appbar.Header style={{backgroundColor:'#2196F3'}}>
             {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
 
             {!previous && <Appbar.Action icon="cog" color="white" onPress={ () => navigation.navigate('Settings') } />}

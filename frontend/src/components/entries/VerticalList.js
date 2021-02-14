@@ -18,7 +18,7 @@ export default function VerticalList(props) {
     }, []);
 
     async function fetchData() {
-        let url = "http://22f88f873224.ngrok.io/api/entries?page=0&limit=10";
+        let url = props.api_url;
         setLoading(true);
 
         fetch(url)
@@ -39,19 +39,6 @@ export default function VerticalList(props) {
         });
     };
 
-    function renderSeparator() {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: '258%',
-                    backgroundColor: '#CED0CE',
-                    marginLeft: '0%',
-                }}
-            />
-        );
-    };
-    
     const searchFilterFunction = (text) => {
         setSearchValue(text);
 
@@ -67,38 +54,52 @@ export default function VerticalList(props) {
         setData(newData);
     };
 
-    function renderHeader() {
+    function renderSeparator() {
+        return (
+            <View
+                style={{
+                    height: 1,
+                    width: '258%',
+                    backgroundColor: '#CED0CE',
+                    marginLeft: '0%',
+                }}
+            />
+        );
+    };
+
+    function renderLocalHeader() {
         return (
             <View>
-                <View style={{padding: 10}}>
-                    <Searchbar
-                        placeholder="Search..."
-                        //lightTheme
-                        //round
-                        onChangeText={searchFilterFunction}
-                        //autoCorrect={false}
-                        value={searchValue}
-                    />
-                </View>
+                {props.header && <props.header />}
+                
+                {props.searchbar &&
+                <Searchbar
+                    placeholder="Search..."
+                    //lightTheme
+                    //round
+                    onChangeText={searchFilterFunction}
+                    //autoCorrect={false}
+                    value={searchValue}
+                />}
+            </View>
+        )
+    }
+
+    function renderLocalFooter() {
+        return (
+            <View>
+                {props.footer && <props.footer />}
             </View>
         );
     };
 
-    function renderFooter() {
-        return (
-            <View>
-                <SectionTitle><Text>Latest entries</Text></SectionTitle>
-                <HorizontalList data={data}/>
-            </View>
-        );
-    };
-
+    
     // TODO: IMPLEMENT INFINITE SCROLL
     // Render
     if (loading) {
         return (
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <ActivityIndicator size="large" color="#0000ff" />
+            <ActivityIndicator size="large" color="#2196F3" />
           </View>
         ); 
     }
@@ -110,8 +111,8 @@ export default function VerticalList(props) {
                         renderItem={(q) => <VerticalCard item={q.item} />}          
                         keyExtractor={item => item._id}  
                         ItemSeparatorComponent={null}
-                        ListHeaderComponent={renderHeader()}
-                        ListFooterComponent={renderFooter()}
+                        ListHeaderComponent={renderLocalHeader()}
+                        ListFooterComponent={renderLocalFooter()}
                         onRefresh={() => fetchData()}
                         refreshing={loading}
                     /> 
