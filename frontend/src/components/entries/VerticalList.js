@@ -18,7 +18,9 @@ export default function VerticalList(props) {
     }, []);
 
     async function fetchData() {
+        // TODO: Retry then show error
         let url = props.api_url;
+
         setLoading(true);
 
         fetch(url)
@@ -33,7 +35,7 @@ export default function VerticalList(props) {
             console.log(auxData.length);
         })
         .catch(error => {
-            console.log("error = "+error)
+            console.log("error = "+error+" url = "+url)
             setLoading(false);
             setError(error);
         });
@@ -89,6 +91,7 @@ export default function VerticalList(props) {
         return (
             <View>
                 {props.footer && <props.footer />}
+                <HorizontalList data={data}/>
             </View>
         );
     };

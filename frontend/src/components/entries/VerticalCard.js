@@ -1,16 +1,16 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { View, TouchableOpacity } from 'react-native';
 import { Badge, Right, Card, CardItem, Thumbnail, Text, Icon, Left, Body } from 'native-base';
 import Tag from '../Tag.js'
+import { useNavigation } from '@react-navigation/native';
 
 export default function VerticalCard(props) {
     const navigation = useNavigation();
-
+    
     return (
         <TouchableOpacity activeOpacity={0.5}  onPress={() => navigation.navigate('Details', props.item)}>
-            <Card style={[{flex: 1}, props.featured && {borderColor:'#FFB400', borderLeftWidth:10}]}>
-                <CardItem style={props.featured && {backgroundColor:'#FFEEC7'}}>
+            <Card style={[{flex: 1}, props.item.featured && {borderColor:'#FFB400', borderLeftWidth:10}]}>
+                <CardItem style={props.item.featured && {backgroundColor:'#FFEEC7'}}>
                     <Left>
                         <Thumbnail source={{uri: props.item.image}} />
                         <Body>
@@ -28,7 +28,7 @@ export default function VerticalCard(props) {
                     </Right>}
 
                 </CardItem>
-                <CardItem style={props.featured && {backgroundColor:'#FFEEC7'}}>
+                <CardItem style={props.item.featured && {backgroundColor:'#FFEEC7'}}>
                 <Body style={{}}>
                     <Text>
                     {props.item.title}

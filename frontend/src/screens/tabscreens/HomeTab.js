@@ -71,7 +71,7 @@ export default function HomeTab() {
 
     return (
       <View style={{ flex:1 }}>
-        <VerticalList searchbar={false} header={HeaderRenderer} footer={FooterRenderer} api_url="http://22f88f873224.ngrok.io/api/entries?page=0&limit=5" /> 
+        <VerticalList searchbar={false} header={HeaderRenderer} footer={FooterRenderer} api_url="http://55951ba206c2.ngrok.io/api/entries?page=0&limit=5" /> 
       </View>
     );
 }
