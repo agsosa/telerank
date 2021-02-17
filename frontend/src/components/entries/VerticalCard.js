@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function VerticalCard(props) {
     const navigation = useNavigation();
-    
+
     return (
         <TouchableOpacity activeOpacity={0.5}  onPress={() => navigation.navigate('Details', props.item)}>
             <Card style={[{flex: 1}, props.item.featured && {borderColor:'#FFB400', borderLeftWidth:10}]}>

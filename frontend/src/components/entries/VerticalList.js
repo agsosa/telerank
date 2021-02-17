@@ -91,7 +91,6 @@ export default function VerticalList(props) {
         return (
             <View>
                 {props.footer && <props.footer />}
-                <HorizontalList data={data}/>
             </View>
         );
     };

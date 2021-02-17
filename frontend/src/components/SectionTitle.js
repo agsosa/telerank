@@ -4,8 +4,16 @@ import { Button, Headline } from 'react-native-paper';
 
 export default function SectionTitle(props) {
     return (
-        <View style={{flex:1, marginHorizontal:0, marginVertical:15, borderBottomWidth:1, alignContent: 'center', alignItems:'center', borderBottomColor:'darkgray'}}>
-            <Headline style={{fontWeight:'bold', color:'#2196F3'}}>{props.children}</Headline>
+        <View style={{
+            flex:1,
+            marginVertical:15, 
+            padding:3,
+            backgroundColor:'#2196F3', 
+            borderBottomWidth:4,
+            borderBottomColor:'#20E1C2', 
+            margin:-10,
+        }}> 
+            <Headline style={{ fontSize:17,fontWeight:'normal', color:'white', alignSelf:'center'}}>{props.children}</Headline>
         </View>
     )
 }

@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-native';
+import { Button, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AppLoading from 'expo-app-loading';
@@ -36,6 +36,12 @@ export default function App() {
   else return (
     <SafeAreaProvider>
       <PaperProvider>
+      <StatusBar
+        barStyle="light-content"
+        translucent={true}
+        backgroundColor="transparent"
+      />
+      
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home" screenOptions={{header: (props) => <NavigationHeader {...props} />}}>
             <Stack.Screen name="Home" component={MainScreen} screenOptions={{ title: 'Home' }} />

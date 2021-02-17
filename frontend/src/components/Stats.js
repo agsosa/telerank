@@ -55,8 +55,11 @@ export default function Stats() {
 const styles = StyleSheet.create({
     grid: {
         elevation:1,
-        marginHorizontal:15,
-        marginBottom:15
+        marginHorizontal:-10,
+        marginBottom:15,
+        backgroundColor:'white',
+        elevation:2,
+        borderRadius:5,
     },
     row: {
         flexDirection:'column', 

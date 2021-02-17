@@ -1,34 +1,40 @@
 import React from 'react';
+import { StatusBar, StyleSheet, Text } from 'react-native';
 import { Appbar, Menu } from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
 import {translateRouteName} from '../utils/Helpers';
+
+import NavGradient from './linear-gradients/NavGradient';
 
 export default function NavigationHeader({navigation, previous}) {
     const [visible, setVisible] = React.useState(false);
     const openMenu = () => setVisible(true);
     const closeMenu = () => setVisible(false);
     const route = useRoute();
-
+    
     return (
-        <Appbar.Header style={{backgroundColor:'#2196F3'}}>
-            {previous ? <Appbar.BackAction onPress={navigation.goBack} /> : null}
+        <NavGradient style={{paddingBottom:previous ? 150 : 5}}>
+            <Appbar.Header style={{backgroundColor:'transparent',}}>
+                {previous ? <Appbar.BackAction color='white' onPress={navigation.goBack} /> : null}
 
-            {!previous && <Appbar.Action icon="cog" color="white" onPress={ () => navigation.navigate('Settings') } />}
+                {!previous && <Appbar.Action icon="cog" color="white" onPress={ () => navigation.navigate('Settings') } />}
 
-            <Appbar.Content style={{ }} title="Telerank" subtitle={translateRouteName(route.name)} />
+                <Appbar.Content color='white' style={{ textColor:'white', color:'white' }} title="Telerank" subtitle={translateRouteName(route.name)} />
 
-            {!previous && (
-                <Menu
-                    visible={visible}
-                    onDismiss={closeMenu}
-                    anchor={
-                    <Appbar.Action icon="dots-vertical" color="white" onPress={openMenu} />
-                    }>
-                    <Menu.Item onPress={() => {console.log('Option 1 was pressed')}} title="Option 1" />
-                    <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
-                    <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled />
-                </Menu>
-            )}
-        </Appbar.Header>
+
+                {!previous && (
+                    <Menu
+                        visible={visible}
+                        onDismiss={closeMenu}
+                        anchor={
+                        <Appbar.Action icon="dots-vertical" color="white" onPress={openMenu} />
+                        }>
+                        <Menu.Item onPress={() => {console.log('Option 1 was pressed')}} title="Option 1" />
+                        <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
+                        <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled />
+                    </Menu>
+                )}
+            </Appbar.Header>
+        </NavGradient>
     );
 }
