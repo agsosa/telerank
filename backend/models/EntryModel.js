@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
+// TODO: Agregar visitas, ver si agregar reportes
+
 var EntryModelSchema = new Schema({
     username: String,
     type: String,

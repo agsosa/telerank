@@ -1,3 +1,11 @@
+export function formatLanguageCode(langCode) {
+  switch(langCode) {
+    case 'es': return 'Español';
+    case 'en': return 'English';
+    default: return langCode;
+  }
+}
+
 export function truncateWithEllipses(str, max, add) 
 {
     add = add || '...';

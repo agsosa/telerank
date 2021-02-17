@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Badge, Right, Card, CardItem, Thumbnail, Text, Icon, Left, Body } from 'native-base';
 import Tag from '../Tag.js'
 import { useNavigation } from '@react-navigation/native';
+import { formatLanguageCode } from '../../utils/Helpers';
 
 export default function VerticalCard(props) {
     const navigation = useNavigation();
@@ -15,7 +16,7 @@ export default function VerticalCard(props) {
                         <Thumbnail source={{uri: props.item.image}} />
                         <Body>
                             <Text>{props.item.username}</Text>
-                            <Text note>{props.item.type} / {props.item.category}</Text> 
+                            <Text note>{props.item.type} / {props.item.category} / {formatLanguageCode(props.item.language)}</Text> 
                         </Body>
                     </Left>
 
@@ -30,9 +31,7 @@ export default function VerticalCard(props) {
                 </CardItem>
                 <CardItem style={props.item.featured && {backgroundColor:'#FFEEC7'}}>
                 <Body style={{}}>
-                    <Text>
-                    {props.item.title}
-                    </Text>               
+                    <Text>{props.item.title}</Text>               
 
                     <View style={{flex:1, flexDirection:'row', marginTop:5, flexWrap:'wrap', alignItems:'center',padding:10}}>
                         <Tag icon="thumb-up">{props.item.likes}</Tag>
