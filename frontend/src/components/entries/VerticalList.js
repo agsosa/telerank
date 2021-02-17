@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, FlatList, ActivityIndicator } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import HorizontalList from './HorizontalList';
@@ -12,6 +12,9 @@ export default function VerticalList(props) {
     const [loading, setLoading] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [auxData, setAuxData] = useState([]);
+
+    const verticalFlatListRef = useRef();
+    props.verticalListFunctions.scrollToBottom = scrollToBottom;
 
     useEffect(() => {
         fetchData();
@@ -93,8 +96,12 @@ export default function VerticalList(props) {
                 {props.footer && <props.footer />}
             </View>
         );
-    };
+    }
 
+    function scrollToBottom() {
+        console.log("hola")
+        verticalFlatListRef?.current?.scrollToEnd();
+    }
     
     // TODO: IMPLEMENT INFINITE SCROLL
     // Render
@@ -108,7 +115,8 @@ export default function VerticalList(props) {
     else {
         return (
             <View style={{ flex: 1 }}>
-                    <FlatList          
+                    <FlatList
+                        ref={verticalFlatListRef}
                         data={data}    
                         renderItem={(q) => <VerticalCard item={q.item} />}          
                         keyExtractor={item => item._id}  

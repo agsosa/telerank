@@ -6,7 +6,7 @@ export default function SectionTitle(props) {
     return (
         <View style={{
             flex:1,
-            marginVertical:15, 
+            marginVertical:10, 
             padding:3,
             backgroundColor:'#2196F3', 
             borderBottomWidth:4,

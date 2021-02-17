@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Image, View, StyleSheet } from 'react-native';
 import { Searchbar, Banner, Badge, Text } from 'react-native-paper';
 import {Col, Row, Grid} from 'native-base';
@@ -10,6 +10,7 @@ import SectionTitle from '../../components/SectionTitle';
 import {formattedNumber} from '../../utils/Helpers';
 
 export default function HomeTab() {
+    let verticalListFunctions = {};
 
     function HeaderRenderer() {
       return (
@@ -33,7 +34,7 @@ export default function HomeTab() {
                 <Text>Agrega tu canal, grupo, bot o sticker de Telegram al directorio gratis! <Text style={{color:'#2196F3', fontWeight:'bold', textDecorationLine:'underline'}}>Tap here</Text></Text>
           </Banner>
 
-    <GlobalSearch />
+        <GlobalSearch scrollToBottom={() => verticalListFunctions.scrollToBottom() } />
 
         <SectionTitle>Recently Added</SectionTitle>
 
@@ -74,7 +75,7 @@ export default function HomeTab() {
 
     return (
       <View style={{ flex:1 }}>
-        <VerticalList searchbar={false} header={HeaderRenderer} footer={FooterRenderer} api_url="http://55951ba206c2.ngrok.io/api/entries?page=0&limit=5" /> 
+        <VerticalList verticalListFunctions={verticalListFunctions} searchbar={false} header={HeaderRenderer} footer={FooterRenderer} api_url="http://55951ba206c2.ngrok.io/api/entries?page=0&limit=5" /> 
       </View>
     );
 }
