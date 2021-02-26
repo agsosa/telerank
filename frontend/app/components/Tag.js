@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Chip} from 'react-native-paper';
-import { formattedNumber, isNumber } from '../utils/Helpers'
+import { formattedNumber, isNumber } from '../lib/Helpers'
 
 export default function Tag(props) {
     return (

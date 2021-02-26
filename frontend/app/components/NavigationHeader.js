@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar, StyleSheet, Text } from 'react-native';
 import { Appbar, Menu } from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
-import {getRouteInfo, translateRouteName} from '../utils/Helpers';
+import {getRouteInfo, translateRouteName} from '../lib/Helpers';
 
 import NavGradient from './linear-gradients/NavGradient';
 

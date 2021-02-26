@@ -7,8 +7,9 @@ import Stats from '../../components/Stats';
 import GlobalSearch from '../../components/GlobalSearch';
 import VerticalList from '../../components/entries/VerticalList';
 import SectionTitle from '../../components/SectionTitle';
-import {formattedNumber} from '../../utils/Helpers';
+import {formattedNumber} from '../../lib/Helpers';
 
+// TODO: Modularizar <Banner> component </Banner>
 export default function HomeTab() {
     let verticalListFunctions = {};
 
@@ -22,9 +23,7 @@ export default function HomeTab() {
                     ]}
                     icon={({size}) => (
                         <Image
-                        source={{
-                            uri: 'https://avatars3.githubusercontent.com/u/17571969?s=400&v=4',
-                        }}
+                        source={require('../../../img/tg.png')}
                         style={{
                             width: size,
                             height: size,
@@ -54,9 +53,7 @@ export default function HomeTab() {
                     ]}
                     icon={({size}) => (
                         <Image
-                        source={{
-                            uri: 'https://avatars3.githubusercontent.com/u/17571969?s=400&v=4',
-                        }}
+                        source={require('../../../img/tg.png')}
                         style={{
                             width: size,
                             height: size,

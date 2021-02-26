@@ -1,3 +1,8 @@
 {
-    "python.pythonPath": "C:\\Users\\A000\\.windows-build-tools\\python27\\python.exe"
+    "python.pythonPath": "C:\\Users\\A000\\.windows-build-tools\\python27\\python.exe",
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#043145",
+        "titleBar.activeBackground": "#064560",
+        "titleBar.activeForeground": "#F4FBFE"
+    }
 }

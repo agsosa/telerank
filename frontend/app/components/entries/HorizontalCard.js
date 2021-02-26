@@ -1,11 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
-import {truncateWithEllipses} from '../../utils/Helpers'
+import {truncateWithEllipses} from '../../lib/Helpers'
 import { Card, Caption, Text } from 'react-native-paper';
 import { Right, Badge, Icon } from 'native-base';
 import {useNavigation} from '@react-navigation/native';
 import Tag from '../Tag';
-import { formatLanguageCode } from '../../utils/Helpers';
+import { formatLanguageCode } from '../../lib/Helpers';
 
 export default function HorizontalCard(props) {
     const navigation = useNavigation();

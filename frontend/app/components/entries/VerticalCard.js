@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Badge, Right, Card, CardItem, Thumbnail, Text, Icon, Left, Body } from 'native-base';
 import Tag from '../Tag.js'
 import { useNavigation } from '@react-navigation/native';
-import { formatLanguageCode } from '../../utils/Helpers';
+import { formatLanguageCode } from '../../lib/Helpers';
 
 export default function VerticalCard(props) {
     const navigation = useNavigation();

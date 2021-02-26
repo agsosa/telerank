@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
-import { formattedNumber } from '../utils/Helpers';
+import { formattedNumber } from '../lib/Helpers';
 
 export default function Stats() {
     return (

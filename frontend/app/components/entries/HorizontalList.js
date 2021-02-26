@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, FlatList } from 'react-native';
 import {Pagination} from 'react-native-snap-carousel';
-import {truncateWithEllipses} from '../../utils/Helpers'
+import {truncateWithEllipses} from '../../lib/Helpers'
 import { Card, Caption } from 'react-native-paper';
 import Tag from '../Tag';
 import HorizontalCard from './HorizontalCard';
