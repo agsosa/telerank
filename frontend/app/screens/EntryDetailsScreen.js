@@ -1,14 +1,13 @@
 import React from "react";
 import { View, ScrollView } from "react-native";
-import NavGradient from "../components/linear-gradients/NavGradient";
 import { Image } from "react-native";
-import { Container, Header, Content, Right, Badge, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from "native-base";
+import { Right, Badge, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from "native-base";
 import { Button } from "react-native-paper";
 
 import Tag from "../components/Tag";
 import { formatLanguageCode } from "../lib/Helpers";
 
-export default function EntryDetailsScreen({ route, navigation }) {
+export default function EntryDetailsScreen({ route }) {
 	const data = route.params;
 
 	/*            <CardItem>
@@ -71,7 +70,7 @@ export default function EntryDetailsScreen({ route, navigation }) {
 						<Left />
 						<Body>
 							<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignItems: "center", padding: 0 }}>
-								<Tag icon="thumb-up">{data.likes} </Tag>
+								<Tag icon="thumb-up">{data.likes}</Tag>
 								<Tag icon="thumb-down">{data.dislikes}</Tag>
 							</View>
 						</Body>
@@ -82,7 +81,9 @@ export default function EntryDetailsScreen({ route, navigation }) {
 						<Left></Left>
 						<Body>
 							<View style={{ flex: 1, flexDirection: "row", flexWrap: "wrap", alignItems: "center", padding: 0 }}>
-								<Tag icon="chart-bar">visitas</Tag>
+								<Tag icon="chart-bar">
+									<Text>visitas</Text>
+								</Tag>
 								<Tag icon="account">{data.members}</Tag>
 							</View>
 						</Body>

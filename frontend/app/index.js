@@ -6,15 +6,25 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { Provider as PaperProvider } from "react-native-paper";
+import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import NavigationHeader from "./components/NavigationHeader";
 
 import MainScreen from "./screens/MainScreen";
 import EntryDetailsScreen from "./screens/EntryDetailsScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import { colors } from "./config/Styles";
 
 const Stack = createStackNavigator();
+
+const theme = {
+	...DefaultTheme,
+	roundness: 2,
+	colors: {
+		...DefaultTheme.colors,
+		primary: colors.main,
+	},
+};
 
 export default function App() {
 	const [isReady, setIsReady] = useState(false);
@@ -36,7 +46,7 @@ export default function App() {
 	else
 		return (
 			<SafeAreaProvider>
-				<PaperProvider>
+				<PaperProvider theme={theme}>
 					<StatusBar barStyle="light-content" translucent={true} backgroundColor="transparent" />
 
 					<NavigationContainer>
@@ -47,7 +57,7 @@ export default function App() {
 						</Stack.Navigator>
 					</NavigationContainer>
 
-					<Button title="AD BANNER" />
+					{/*<Button title="AD BANNER" />*/}
 				</PaperProvider>
 			</SafeAreaProvider>
 		);

@@ -1,45 +1,44 @@
-import React, { useState} from 'react';
-import { View, Text } from 'react-native';
-import { Searchbar, Button, IconButton } from 'react-native-paper';
+import React, { useState } from "react";
+import { View, Text, StyleSheet } from "react-native";
+import { Searchbar, Button } from "react-native-paper";
+import { colors } from "./../config/Styles";
 
-export default function GlobalSearch(props)  {
-    const [searchQuery, setSearchQuery] = useState('');
+export default function GlobalSearch() {
+	const [searchQuery, setSearchQuery] = useState("");
 
-    const onChangeSearch = query => {
-        setSearchQuery(query);
-    }
-    
-    return (
-        <View style={{
-            marginVertical:3,
-            backgroundColor:'white',
-            alignContent:'center',
-            alignItems:'center'
-            }}> 
-        
-            <Text style={{textAlign:'center', paddingTop:10, fontSize:19, color:'#2196F3', fontWeight:'bold', fontStyle:'italic'}}>Discover your next community</Text>
+	const onChangeSearch = (query) => {
+		setSearchQuery(query);
+	};
 
-            <Text style={{textAlign:'center', padding:5, fontSize:15, color:'black'}}>Search more than 5000 Telegram Channels, Groups, Bots and Stickers.
-
-            {"\n"}{"\n"}<Text onPress={() => (props && props.scrollToBottom) && props.scrollToBottom() } style={{color:'#393D3E', fontWeight:'bold', textDecorationLine:'underline'}}>Tap here to view statistics</Text></Text>
- 
-            <Searchbar
-                style={{width:'100%',marginTop:20, borderTopWidth:0.4, borderTopColor:'rgba(57, 61, 62, 0.30)'}}
-                placeholder="Search"
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-            />
-
-            <View style={{flex:1, flexDirection:'row', justifyContent:'space-evenly', padding:10}}>
-                <Button style={{width:'50%', marginHorizontal:10}} color='#DF4294' icon="cached" mode="contained" onPress={() => console.log('Pressed')}>
-                Aleatorio
-                </Button>
-                <Button style={{width:'50%', marginHorizontal:10}} color='#DF4294' icon="comment-search" mode="contained" onPress={() => console.log('Pressed')}>
-                Buscar
-                </Button>
-            </View>
-
-        </View>
-    )
+	return (
+		<View style={styles.mainView}>
+			<Text style={styles.titleText}>Discover your next community</Text>
+			<Text style={styles.descriptionText}>Search more than 5000 Telegram Channels, Groups, Bots and Stickers.</Text>
+			<Searchbar style={styles.searchBar} placeholder="Search" onChangeText={onChangeSearch} value={searchQuery} />
+			<View style={styles.buttonsView}>
+				<Button style={styles.buttonBase} color="white" icon="cached" mode="contained" onPress={() => console.log("Pressed")}>
+					<Text style={styles.buttonRandomText}>Aleatorio</Text>
+				</Button>
+				<Button style={[styles.buttonBase, styles.buttonSearch]} color="black" icon="comment-search" mode="contained" onPress={() => console.log("Pressed")}>
+					<Text style={styles.buttonSearchText}>Buscar</Text>
+				</Button>
+			</View>
+		</View>
+	);
 }
 
+const styles = StyleSheet.create({
+	buttonBase: { marginHorizontal: 10, width: "35%" },
+	buttonRandomText: { color: colors.tgDarkGray },
+	buttonSearch: { backgroundColor: colors.main },
+	buttonSearchText: { color: "white" },
+	buttonsView: { flex: 1, flexDirection: "row", justifyContent: "space-evenly", marginTop: 15, marginBottom: 20 },
+	descriptionText: { color: "gray", fontSize: 15, padding: 5, textAlign: "center" },
+	mainView: {
+		alignContent: "center",
+		alignItems: "center",
+		marginVertical: 3,
+	},
+	searchBar: { marginTop: 15, width: "90%" },
+	titleText: { color: colors.main, fontSize: 24, fontWeight: "bold", paddingTop: 10, textAlign: "center" },
+});

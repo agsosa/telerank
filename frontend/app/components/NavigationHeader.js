@@ -1,41 +1,58 @@
-import React from 'react';
-import { StatusBar, StyleSheet, Text } from 'react-native';
-import { Appbar, Menu } from 'react-native-paper';
-import {useRoute} from '@react-navigation/native';
-import {getRouteInfo, translateRouteName} from '../lib/Helpers';
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Appbar, Menu } from "react-native-paper";
+import { useRoute } from "@react-navigation/native";
+import { getRouteInfo } from "../config/Routes";
 
-import NavGradient from './linear-gradients/NavGradient';
+import NavGradient from "./NavGradient";
 
-export default function NavigationHeader({navigation, previous}) {
-    const [visible, setVisible] = React.useState(false);
-    const openMenu = () => setVisible(true);
-    const closeMenu = () => setVisible(false);
-    const route = useRoute();
-    const routeInfo = getRouteInfo(route.name);
-    
-    return (
-        <NavGradient style={{paddingBottom:previous && routeInfo.extendHeaderGradient ? 150 : 5}}>
-            <Appbar.Header style={{backgroundColor:'transparent',}}>
-                {previous ? <Appbar.BackAction color='white' onPress={navigation.goBack} /> : null}
+export default function NavigationHeader({ navigation, previous }) {
+	const [visible, setVisible] = React.useState(false);
+	const openMenu = () => setVisible(true);
+	const closeMenu = () => setVisible(false);
+	const route = useRoute();
+	const routeInfo = getRouteInfo(route.name);
 
-                {!previous && <Appbar.Action icon="cog" color="white" onPress={ () => navigation.navigate('Settings') } />}
+	return (
+		<NavGradient style={previous && routeInfo.extendHeaderGradient ? styles.navExtended : styles.navNormal}>
+			<Appbar.Header style={styles.header}>
+				{previous ? <Appbar.BackAction color="white" onPress={navigation.goBack} /> : null}
 
-                <Appbar.Content color='white' style={{ textColor:'white', color:'white' }} title="Telerank" subtitle={routeInfo.title} />
+				{!previous && <Appbar.Action icon="cog" color="white" onPress={() => navigation.navigate("Settings")} />}
 
+				<Appbar.Content color="white" style={styles.content} title="Telerank" subtitle={routeInfo.title} />
 
-                {!previous && (
-                    <Menu
-                        visible={visible}
-                        onDismiss={closeMenu}
-                        anchor={
-                        <Appbar.Action icon="dots-vertical" color="white" onPress={openMenu} />
-                        }>
-                        <Menu.Item onPress={() => {console.log('Option 1 was pressed')}} title="Option 1" />
-                        <Menu.Item onPress={() => {console.log('Option 2 was pressed')}} title="Option 2" />
-                        <Menu.Item onPress={() => {console.log('Option 3 was pressed')}} title="Option 3" disabled />
-                    </Menu>
-                )}
-            </Appbar.Header>
-        </NavGradient>
-    );
+				{!previous && (
+					<Menu visible={visible} onDismiss={closeMenu} anchor={<Appbar.Action icon="dots-vertical" color="white" onPress={openMenu} />}>
+						<Menu.Item
+							onPress={() => {
+								console.log("Option 1 was pressed");
+							}}
+							title="Option 1"
+						/>
+						<Menu.Item
+							onPress={() => {
+								console.log("Option 2 was pressed");
+							}}
+							title="Option 2"
+						/>
+						<Menu.Item
+							onPress={() => {
+								console.log("Option 3 was pressed");
+							}}
+							title="Option 3"
+							disabled
+						/>
+					</Menu>
+				)}
+			</Appbar.Header>
+		</NavGradient>
+	);
 }
+
+const styles = StyleSheet.create({
+	content: { color: "white" },
+	header: { backgroundColor: "transparent" },
+	navExtended: { paddingBottom: 150 },
+	navNormal: { paddingBottom: 5 },
+});

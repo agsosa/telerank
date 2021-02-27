@@ -1,10 +1,10 @@
-import React from 'react';
-import { View } from 'react-native';
+import React from "react";
+import { View, StyleSheet } from "react-native";
 
-export default function SettingsScreen({navigation}) {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        
-      </View>
-    );
-  }
+export default function SettingsScreen() {
+	return <View style={styles.mainView}></View>;
+}
+
+const styles = StyleSheet.create({
+	mainView: { alignItems: "center", flex: 1, justifyContent: "center" },
+});

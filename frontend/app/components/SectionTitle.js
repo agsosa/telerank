@@ -1,19 +1,27 @@
-import React from 'react';
-import { View } from 'react-native';
-import { Button, Headline } from 'react-native-paper';
+import React from "react";
+import { View, StyleSheet, Text } from "react-native";
+import { Headline } from "react-native-paper";
+import { colors } from "../config/Styles";
 
 export default function SectionTitle(props) {
-    return (
-        <View style={{
-            flex:1,
-            marginVertical:10, 
-            padding:3,
-            backgroundColor:'#2196F3', 
-            borderBottomWidth:4,
-            borderBottomColor:'#20E1C2', 
-            margin:-10,
-        }}> 
-            <Headline style={{ fontSize:17,fontWeight:'normal', color:'white', alignSelf:'center'}}>{props.children}</Headline>
-        </View>
-    )
+	return (
+		<View style={styles.view}>
+			<Headline style={styles.headline}>
+				<Text>{props.text ? props.text : ""}</Text>
+			</Headline>
+		</View>
+	);
 }
+
+const styles = StyleSheet.create({
+	headline: { alignSelf: "center", color: colors.pink, fontSize: 18, fontWeight: "bold" },
+	view: {
+		borderBottomLeftRadius: 50,
+		borderBottomRightRadius: 50,
+		borderBottomWidth: 3,
+		borderColor: colors.pink,
+		marginHorizontal: "25%",
+		marginVertical: 10,
+		padding: 2,
+	},
+});
