@@ -3,16 +3,6 @@ import { View, StyleSheet, Text } from "react-native";
 import { Headline } from "react-native-paper";
 import { colors } from "../config/Styles";
 
-export default function SectionTitle(props) {
-	return (
-		<View style={styles.view}>
-			<Headline style={styles.headline}>
-				<Text>{props.text ? props.text : ""}</Text>
-			</Headline>
-		</View>
-	);
-}
-
 const styles = StyleSheet.create({
 	headline: { alignSelf: "center", color: colors.pink, fontSize: 18, fontWeight: "bold" },
 	view: {
@@ -25,3 +15,13 @@ const styles = StyleSheet.create({
 		padding: 2,
 	},
 });
+
+export default function SectionTitle({text}) {
+	return (
+		<View style={styles.view}>
+			<Headline style={styles.headline}>
+				<Text>{text || ""}</Text>
+			</Headline>
+		</View>
+	);
+}

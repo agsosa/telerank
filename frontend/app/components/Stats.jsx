@@ -1,8 +1,40 @@
-import React from "react";
-import { Text, StyleSheet } from "react-native";
-import { Grid, Col, Row } from "native-base";
-import { formattedNumber } from "../lib/Helpers";
-import { colors } from "../config/Styles";
+import React from 'react';
+import { Text, StyleSheet } from 'react-native';
+import { Grid, Col, Row } from 'native-base';
+import { formattedNumber } from '../lib/Helpers';
+import { colors } from '../config/Styles';
+
+const styles = StyleSheet.create({
+	col: {
+		alignContent: 'center',
+		alignItems: 'center',
+		borderColor: 'gray',
+		borderLeftWidth: 1,
+		height: '100%',
+		justifyContent: 'center',
+	},
+	grid: {
+		marginHorizontal: -10,
+		marginVertical: 0,
+		paddingVertical: 10,
+	},
+	row: {
+		alignContent: 'center',
+		alignItems: 'center',
+		flexDirection: 'column',
+		padding: 5,
+	},
+	row_number: {
+		color: colors.main,
+		fontSize: 25,
+		fontWeight: 'bold',
+	},
+	row_title: {
+		color: 'gray',
+		fontSize: 15,
+	},
+});
+
 
 export default function Stats() {
 	return (
@@ -52,34 +84,3 @@ export default function Stats() {
 		</Grid>
 	);
 }
-
-const styles = StyleSheet.create({
-	col: {
-		alignContent: "center",
-		alignItems: "center",
-		borderColor: "gray",
-		borderLeftWidth: 1,
-		height: "100%",
-		justifyContent: "center",
-	},
-	grid: {
-		marginHorizontal: -10,
-		marginVertical: 0,
-		paddingVertical: 10,
-	},
-	row: {
-		alignContent: "center",
-		alignItems: "center",
-		flexDirection: "column",
-		padding: 5,
-	},
-	row_number: {
-		color: colors.main,
-		fontSize: 25,
-		fontWeight: "bold",
-	},
-	row_title: {
-		color: "gray",
-		fontSize: 15,
-	},
-});

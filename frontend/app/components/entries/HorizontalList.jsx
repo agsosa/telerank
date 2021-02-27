@@ -1,16 +1,14 @@
-import React, { useState, useRef } from "react";
-import { View, FlatList, StyleSheet } from "react-native";
-import { Pagination } from "react-native-snap-carousel";
-import { colors } from "../../config/Styles";
-import HorizontalCard from "./HorizontalCard";
+import React, { useState, useRef } from 'react';
+import { View, FlatList, StyleSheet } from 'react-native';
+import { Pagination } from 'react-native-snap-carousel';
+import { colors } from '../../config/Styles';
+import HorizontalCard from './HorizontalCard';
 
 export default function HorizontalList(props) {
 	const [currentIdx, setCurrentIdx] = useState(0);
 
 	const _onViewableItemsChanged = useRef(({ viewableItems }) => {
-		setCurrentIdx((oldCurrentIdx) => {
-			return viewableItems[0] && oldCurrentIdx != viewableItems[0].index ? viewableItems[0].index : oldCurrentIdx;
-		});
+		setCurrentIdx((oldCurrentIdx) => (viewableItems[0] && oldCurrentIdx != viewableItems[0].index ? viewableItems[0].index : oldCurrentIdx));
 	});
 
 	const _viewabilityConfig = useRef({
