@@ -20,7 +20,7 @@ export default function NavigationHeader({ navigation, previous }) {
 
 				{!previous && <Appbar.Action icon="cog" color="white" onPress={() => navigation.navigate("Settings")} />}
 
-				<Appbar.Content color="white" style={styles.content} title="Telerank" subtitle={routeInfo.title} />
+				<Appbar.Content color="white" title="Telerank" subtitle={routeInfo.title} />
 
 				{!previous && (
 					<Menu visible={visible} onDismiss={closeMenu} anchor={<Appbar.Action icon="dots-vertical" color="white" onPress={openMenu} />}>
@@ -51,8 +51,7 @@ export default function NavigationHeader({ navigation, previous }) {
 }
 
 const styles = StyleSheet.create({
-	content: { color: "white" },
-	header: { backgroundColor: "transparent" },
+	header: { backgroundColor: "transparent", elevation: 0 },
 	navExtended: { paddingBottom: 150 },
 	navNormal: { paddingBottom: 5 },
 });

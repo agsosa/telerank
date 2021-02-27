@@ -8,8 +8,6 @@ import VerticalList from "../../components/entries/VerticalList";
 import SectionTitle from "../../components/SectionTitle";
 import InfoBanner from "../../components/InfoBanner";
 
-// TODO: Modularizar <Banner> component </Banner>
-
 export default function HomeTab() {
 	let verticalListFunctions = {};
 

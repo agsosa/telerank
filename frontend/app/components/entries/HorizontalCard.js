@@ -17,7 +17,7 @@ export default function HorizontalCard(props) {
 			<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate("Details", props.item)}>
 				<Card elevation={2} style={[{ width: "100%", minWidth: "100%" }, item.featured && { backgroundColor: colors.featuredLight, borderColor: colors.featured, borderLeftWidth: 10 }]}>
 					<Card.Title title={item.username} subtitle={"" + item.type + " / " + item.category + " / " + formatLanguageCode(item.language)} />
-					<Card.Cover source={{ uri: item.image }} style={{ width: "100%", resizeMode: "cover" }} />
+					<Card.Cover source={{ uri: item.image }} style={styles.coverImg} />
 
 					{item.featured && <FeaturedBadge />}
 
@@ -38,5 +38,6 @@ export default function HorizontalCard(props) {
 }
 
 const styles = StyleSheet.create({
+	coverImg: { resizeMode: "cover", width: "100%" },
 	mainView: { flex: 1, padding: 5 },
 });

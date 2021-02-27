@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { Pagination } from "react-native-snap-carousel";
+import { colors } from "../../config/Styles";
 import HorizontalCard from "./HorizontalCard";
 
 export default function HorizontalList(props) {
@@ -10,11 +11,10 @@ export default function HorizontalList(props) {
 		setCurrentIdx((oldCurrentIdx) => {
 			return viewableItems[0] && oldCurrentIdx != viewableItems[0].index ? viewableItems[0].index : oldCurrentIdx;
 		});
-	}); //, []);
+	});
 
 	const _viewabilityConfig = useRef({
 		minimumViewTime: 1,
-		//waitForInteraction: true,
 		itemVisiblePercentThreshold: 80,
 	});
 
@@ -28,19 +28,17 @@ export default function HorizontalList(props) {
 				keyExtractor={(item) => item._id}
 				horizontal
 			/>
-			<Pagination
-				dotsLength={props.data.length}
-				activeDotIndex={currentIdx}
-				dotStyle={{
-					width: 10,
-					height: 10,
-					borderRadius: 5,
-					marginHorizontal: 4,
-					backgroundColor: "rgba(30,144,255, 1)",
-				}}
-				inactiveDotOpacity={0.4}
-				inactiveDotScale={0.6}
-			/>
+			<Pagination dotsLength={props.data.length} activeDotIndex={currentIdx} dotStyle={styles.dot} inactiveDotOpacity={0.4} inactiveDotScale={0.6} />
 		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	dot: {
+		backgroundColor: colors.main,
+		borderRadius: 5,
+		height: 10,
+		marginHorizontal: 4,
+		width: 10,
+	},
+});

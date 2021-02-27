@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+
 export const colors = {
 	main: "#2196F3", //1C73B4
 	mainLight: "#55AEF7",
@@ -17,5 +18,6 @@ export const colors = {
 };
 
 export const commonStyles = StyleSheet.create({
+	transparentBg: { backgroundColor: "transparent" },
 	whiteText: { color: "white" },
 });

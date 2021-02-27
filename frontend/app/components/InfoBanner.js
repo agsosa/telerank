@@ -1,20 +1,17 @@
 import React from "react";
-import { Image, View, Text } from "react-native";
-import { Banner, Button } from "react-native-paper";
+import { Image, StyleSheet } from "react-native";
+import { Banner } from "react-native-paper";
 import { colors } from "../config/Styles";
+
+// TODO: Implementar onPress del action
 
 export default function InfoBanner(props) {
 	return (
 		<Banner
 			visible={true}
-			contentStyle={{ marginBottom: "1%", marginTop: "-1%" }}
-			style={{ marginVertical: "2%", backgroundColor: "white", borderLeftWidth: 5, elevation: 1, borderLeftColor: colors.main }}
+			contentStyle={styles.content}
+			style={styles.banner}
 			actions={[
-				{
-					label: "Hide",
-					onPress: () => console.log("learn more"),
-					style: { marginVertical: "-5%", paddingBottom: 15, marginRight: 10 },
-				},
 				{
 					label: "Learn more",
 					onPress: () => console.log("learn more"),
@@ -34,3 +31,8 @@ export default function InfoBanner(props) {
 		</Banner>
 	);
 }
+
+const styles = StyleSheet.create({
+	banner: { backgroundColor: "white", borderLeftColor: colors.main, borderLeftWidth: 5, elevation: 1, marginVertical: "2%" },
+	content: { marginBottom: "1%", marginTop: "-1%" },
+});

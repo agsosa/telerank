@@ -9,7 +9,7 @@ export default function MainScreen() {
 		<View style={styles.view}>
 			<Tabs iconPosition="leading" style={styles.tabs} mode="scrollable" showLeadingSpace={true}>
 				<TabScreen label="Inicio" icon="home">
-					<HomeTab style={{ flex: 1 }} />
+					<HomeTab style={styles.view} />
 				</TabScreen>
 				<TabScreen label="Top 100" icon="crown">
 					<View />
