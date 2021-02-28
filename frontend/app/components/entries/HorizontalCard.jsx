@@ -9,8 +9,14 @@ import { colors } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
+	caption: { alignSelf: 'center' },
+	card: { minWidth: '100%', width: '100%' },
+	cardContent: { marginTop: 7 },
+	cardContentView: { flex: 1, flexDirection: 'row', marginTop: 5, flexWrap: 'wrap', justifyContent: 'space-between', padding: 10 },
+	cardFeatured: { backgroundColor: colors.featuredLight, borderColor: colors.featured, borderLeftWidth: 10 },
 	coverImg: { resizeMode: 'cover', width: '100%' },
 	mainView: { flex: 1, padding: 5 },
+	membersCount: { alignSelf: 'flex-start' },
 });
 
 export default function HorizontalCard({item}) {
@@ -19,18 +25,18 @@ export default function HorizontalCard({item}) {
 	return (
 		<View style={styles.mainView}>
 			<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
-				<Card elevation={2} style={[{ width: '100%', minWidth: '100%' }, item.featured && { backgroundColor: colors.featuredLight, borderColor: colors.featured, borderLeftWidth: 10 }]}>
+				<Card elevation={2} style={[styles.card, item.featured && styles.cardFeatured]}>
 					<Card.Title title={item.username} subtitle={`${item.type} / ${item.category} / ${formatLanguageCode(item.language)}`} />
 					<Card.Cover source={{ uri: item.image }} style={styles.coverImg} />
 
 					{item.featured && <FeaturedBadge />}
 
-					<Card.Content style={{ marginTop: 7 }}>
-						<Caption style={{ alignSelf: 'center' }}>{truncateWithEllipses(item.title, 32)}</Caption>
-						<View style={{ flex: 1, flexDirection: 'row', marginTop: 5, flexWrap: 'wrap', justifyContent: 'space-between', padding: 10 }}>
+					<Card.Content style={styles.cardContent}>
+						<Caption style={styles.caption}>{truncateWithEllipses(item.title, 32)}</Caption>
+						<View style={styles.cardContentView}>
 							<Tag icon='thumb-up'>{item.likes}</Tag>
 							<Tag icon='thumb-down'>{item.dislikes}</Tag>
-							<Tag style={{ alignSelf: 'flex-start' }} icon='account'>
+							<Tag style={styles.membersCount} icon='account'>
 								{item.members}
 							</Tag>
 						</View>

@@ -11,10 +11,10 @@ export default function EntryDetailsScreen({ route }) {
 	const data = route.params;
 
 	return (
-		<View style={{ zIndex: 99, top: '-28%', flex: 1, marginBottom: '-30%', marginHorizontal: -5 }}>
-			<ScrollView centerContent style={{ height: 50 }} contentContainerStyle={{ alignSelf: 'center' }}>
-				<Card key={data._id} style={{ width: '90%', flex: 1 }}>
-					<CardItem bordered>
+		
+			<ScrollView centerContent style={{ zIndex: 99, height: "100%", flex:1, position:"absolute", top: "-27%"}}>
+				<Card key={data._id} style={{width:"auto", alignSelf:"center", alignContent:"center", justifyContent:"center", alignItems:"center"}}>
+					<CardItem>
 						<Left>
 							<Thumbnail source={{ uri: data.image }} />
 							<Body>
@@ -35,14 +35,15 @@ export default function EntryDetailsScreen({ route }) {
 						)}
 					</CardItem>
 
-					<CardItem bordered style={{ flex: 1, flexDirection: 'column' }}>
-						<Text style={{ textAlign: 'center' }}>{data.title}</Text>
+					<CardItem>
+						<Body>
+							<Image source={{ uri: data.image }} style={{ height: 200, width: '100%' }} />
+						</Body>
 					</CardItem>
 
-					<CardItem bordered>
-						<Body>
-							<Image source={{ uri: data.image }} style={{ height: 200, width: '100%', flex: 0 }} />
-						</Body>
+					
+					<CardItem bordered style={{ flex: 1, flexDirection: 'column' }}>
+						<Text style={{ textAlign: 'center' }}>{data.title}</Text>
 					</CardItem>
 
 					<CardItem boreded style={{ flex: 1, flexDirection: 'column' }}>
@@ -88,6 +89,5 @@ export default function EntryDetailsScreen({ route }) {
 					</CardItem>
 				</Card>
 			</ScrollView>
-		</View>
 	);
 }

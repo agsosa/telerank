@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, FlatList, ActivityIndicator } from 'react-native';
+import { StyleSheet , View, FlatList, ActivityIndicator } from 'react-native';
+
 import { Searchbar } from 'react-native-paper';
-import { commonStyles } from '../../config/Styles';
+import { commonStyles, colors } from '../../config/Styles';
 import VerticalCard from './VerticalCard';
 
-export default function VerticalList(props) {
+const styles = StyleSheet.create({
+	loadingView: { alignItems: 'center', flex: 1, justifyContent: 'center' },
+})
+
+export default function VerticalList({apiURL, Header, searchBar, Footer}) {
 	const [data, setData] = useState([]);
 	// const [error, setError] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -12,19 +17,18 @@ export default function VerticalList(props) {
 	const [auxData, setAuxData] = useState([]);
 
 	const verticalFlatListRef = useRef();
-	props.verticalListFunctions.scrollToBottom = scrollToBottom;
 
 	async function fetchData() {
-		const url = props.api_url;
+		const url = apiURL;
 
 		setLoading(true);
 
 		fetch(url)
 			.then((response) => response.json())
-			.then((data) => {
-				setData(data);
+			.then((res) => {
+				setData(res);
 				setLoading(false);
-				setAuxData(data);
+				setAuxData(res);
 			})
 			.catch((error) => {
 				setLoading(false);
@@ -48,18 +52,15 @@ export default function VerticalList(props) {
 		setData(newData);
 	};
 
-	function renderLocalHeader() {
+	function renderHeader() {
 		return (
 			<View>
-				{props.header && <props.header />}
+				{Header && <Header />}
 
-				{props.searchbar && (
+				{searchBar && (
 					<Searchbar
 						placeholder='Search...'
-						// lightTheme
-						// round
 						onChangeText={searchFilterFunction}
-						// autoCorrect={false}
 						value={searchValue}
 					/>
 				)}
@@ -67,18 +68,14 @@ export default function VerticalList(props) {
 		);
 	}
 
-	function renderLocalFooter() {
-		return <View>{props.footer && <props.footer />}</View>;
-	}
-
-	function scrollToBottom() {
-		verticalFlatListRef?.current?.scrollToEnd();
+	function renderFooter() {
+		return <View>{Footer && <Footer />}</View>;
 	}
 
 	if (loading) {
 		return (
-			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-				<ActivityIndicator size='large' color='#2196F3' />
+			<View style={styles.loadingView}>
+				<ActivityIndicator size='large' color={colors.main} />
 			</View>
 		);
 	}
@@ -90,8 +87,8 @@ export default function VerticalList(props) {
 				renderItem={(q) => <VerticalCard item={q.item} />}
 				keyExtractor={(item) => item._id}
 				ItemSeparatorComponent={null}
-				ListHeaderComponent={renderLocalHeader()}
-				ListFooterComponent={renderLocalFooter()}
+				ListHeaderComponent={renderHeader()}
+				ListFooterComponent={renderFooter()}
 				onRefresh={() => fetchData()}
 				refreshing={loading}
 			/>

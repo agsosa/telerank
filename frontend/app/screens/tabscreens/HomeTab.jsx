@@ -9,12 +9,11 @@ import SectionTitle from '../../components/SectionTitle';
 import InfoBanner from '../../components/InfoBanner';
 
 export default function HomeTab() {
-	const verticalListFunctions = {};
 
 	function HeaderRenderer() {
 		return (
 			<View>
-				<GlobalSearch scrollToBottom={() => verticalListFunctions.scrollToBottom()} />
+				<GlobalSearch/>
 				<InfoBanner>
 					<Text>Agrega tu canal, grupo, bot o sticker de Telegram al directorio gratis!</Text>
 				</InfoBanner>
@@ -39,11 +38,10 @@ export default function HomeTab() {
 
 	return (
 		<VerticalList
-			verticalListFunctions={verticalListFunctions}
-			searchbar={false}
-			header={HeaderRenderer}
-			footer={FooterRenderer}
-			api_url='http://f1741455bdf0.ngrok.io/api/entries?page=0&limit=5'
+			searchBar={false}
+			Header={HeaderRenderer}
+			Footer={FooterRenderer}
+			apiURL='http://f1741455bdf0.ngrok.io/api/entries?page=0&limit=5'
 		/>
 	);
 }

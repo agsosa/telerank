@@ -9,6 +9,6 @@ export function getRouteInfo(routeName) {
 		case 'Settings':
 			return { title: 'Details', extendHeaderGradient: false };
 		default:
-			return { ttiel: routeName, extendHeaderGradient: false };
+			return { tittle: routeName, extendHeaderGradient: false };
 	}
 }
