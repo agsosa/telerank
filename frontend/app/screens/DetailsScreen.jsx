@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 	titleCard: { alignSelf: 'center', marginBottom: 10 },
 });
 
-export default function EntryDetailsScreen({ route }) {
+export default function DetailsScreen({ route }) {
 	const data = route.params;
 
 	return (
