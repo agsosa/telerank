@@ -4,6 +4,7 @@ import { View, ScrollView, Image, StyleSheet } from 'react-native';
 import { Right, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from 'native-base';
 import { Button } from 'react-native-paper';
 
+import { PropTypes } from 'prop-types';
 import Tag from '../components/Tag';
 import { formatLanguageCode } from '../lib/Helpers';
 import { colors } from '../config/Styles';
@@ -19,14 +20,15 @@ const stylesBtn = StyleSheet.create({
 	shareContent: { color: colors.mainLight, fontSize: 12 },
 	telegramBtn: { alignSelf: 'center', backgroundColor: colors.main, marginHorizontal: 40, marginVertical: 5, padding: 5 },
 	telegramContent: { color: 'white', fontSize: 20 },
-	viewButtons: { flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-evenly', marginVertical: 5 },
+	viewButtons: { flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-evenly', marginVertical: 10 },
 });
 
 const styles = StyleSheet.create({
 	card: {
-		elevation: 0,
+		elevation: 1,
 	},
 	centeredText: { textAlign: 'center' },
+	descriptionText: { margin: 10, paddingTop: 5, textAlign: 'center' },
 	disclaimerText: {
 		margin: 10,
 		marginBottom: 20,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
 		width: '90%',
 		zIndex: 100,
 	},
-	statsView: { flex: 1, flexDirection: 'row', justifyContent: 'center' },
+	statsView: { flex: 1, flexDirection: 'row', justifyContent: 'center', marginVertical: 5 },
 	titleCard: { alignSelf: 'center', marginBottom: 10 },
 });
 
@@ -72,7 +74,6 @@ export default function DetailsScreen({ route }) {
 							</Right>
 						)}
 					</CardItem>
-
 					<CardItem style={styles.titleCard}>
 						<Text style={styles.centeredText}>{data.title}</Text>
 					</CardItem>
@@ -83,7 +84,7 @@ export default function DetailsScreen({ route }) {
 						<Text note>
 							{data.type} / {data.category} / {formatLanguageCode(data.language)}
 						</Text>
-						<Text style={{ textAlign: 'center', margin: 10, paddingTop: 5 }}>{data.description}</Text>
+						<Text style={styles.descriptionText}>{data.description}</Text>
 						<View style={stylesBtn.viewButtons}>
 							<Tag icon='thumb-down' outlined style={stylesBtn.likesPadding} textStyle={stylesBtn.dislikeTag} selectedColor={colors.red} selected>
 								{data.dislikes}
@@ -98,26 +99,30 @@ export default function DetailsScreen({ route }) {
 						<Icon name='paper-plane' style={stylesBtn.telegramContent} />
 						<Text style={stylesBtn.telegramContent}>Abrir Telegram</Text>
 					</Button>
+
 					<Text note style={styles.centeredText}>
 						https://t.me/{data.username}
 					</Text>
-					<View style={stylesBtn.viewButtons}>
-						<Button style={stylesBtn.reportBtn}>
-							<Icon name='flag' style={stylesBtn.reportContent} />
-							<Text style={stylesBtn.reportContent}>Reportar</Text>
-						</Button>
-						<Button style={stylesBtn.shareBtn}>
-							<Icon name='share' style={stylesBtn.shareContent} />
-							<Text style={stylesBtn.shareContent}>Share</Text>
-						</Button>
-					</View>
-
-					<View style={styles.statsView}>
-						<Tag icon='chart-bar'>{data.clicks}</Tag>
-						<Tag icon='account'>{data.members}</Tag>
-					</View>
 
 					<CardItem style={styles.flexCardItem}>
+						<View style={stylesBtn.viewButtons}>
+							<Button style={stylesBtn.reportBtn}>
+								<Icon name='flag' style={stylesBtn.reportContent} />
+								<Text style={stylesBtn.reportContent}>Reportar</Text>
+							</Button>
+							<Button style={stylesBtn.shareBtn}>
+								<Icon name='share' style={stylesBtn.shareContent} />
+								<Text style={stylesBtn.shareContent}>Share</Text>
+							</Button>
+						</View>
+						<View style={styles.statsView}>
+							<Tag icon='chart-bar'>
+								<Text>{data.clicks}</Text>
+							</Tag>
+							<Tag icon='account'>
+								<Text>{data.members}</Text>
+							</Tag>
+						</View>
 						<Text note>Date Added: {new Date().toDateString()}</Text>
 						<Text note>Last Updated: {new Date().toDateString()}</Text>
 					</CardItem>
@@ -130,3 +135,7 @@ export default function DetailsScreen({ route }) {
 		</View>
 	);
 }
+
+DetailsScreen.propTypes = {
+	route: PropTypes.object.isRequired,
+};

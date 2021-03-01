@@ -29,7 +29,7 @@ export default function VerticalCard({ item }) {
 	return (
 		<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
 			<Card style={[commonStyles.flex, item.featured && styles.featuredCard]}>
-				<CardItem style={item.featured && styles.featuredBG}>
+				<CardItem style={item.featured ? styles.featuredBG : {}}>
 					<Left>
 						<Thumbnail source={{ uri: item.image }} />
 						<Body>
@@ -46,15 +46,19 @@ export default function VerticalCard({ item }) {
 						</Right>
 					)}
 				</CardItem>
-				<CardItem style={item.featured && styles.featuredBG}>
-					<Body style={{}}>
+				<CardItem style={item.featured ? styles.featuredBG : {}}>
+					<Body>
 						<Text>{item.title}</Text>
 
 						<View style={styles.statsView}>
-							<Tag icon='thumb-up'>{item.likes}</Tag>
-							<Tag icon='thumb-down'>{item.dislikes}</Tag>
+							<Tag icon='thumb-up'>
+								<Text>{item.likes}</Text>
+							</Tag>
+							<Tag icon='thumb-down'>
+								<Text>{item.dislikes}</Text>
+							</Tag>
 							<Tag style={styles.membersTag} icon='account'>
-								{item.members}
+								<Text>{item.members}</Text>
 							</Tag>
 						</View>
 					</Body>

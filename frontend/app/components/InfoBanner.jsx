@@ -22,6 +22,11 @@ export default function InfoBanner({ children }) {
 			style={styles.banner}
 			actions={[
 				{
+					label: 'Hide',
+					onPress: () => null,
+					style: styles.action,
+				},
+				{
 					label: 'Learn more',
 					onPress: () => null,
 					style: styles.action,

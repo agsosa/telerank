@@ -38,11 +38,15 @@ export default function NavigationHeader({ navigation, previous, routeInfo }) {
 	);
 }
 
+NavigationHeader.defaultProps = {
+	previous: null,
+};
+
 NavigationHeader.propTypes = {
 	routeInfo: PropTypes.func.isRequired,
 	navigation: PropTypes.shape({
 		goBack: func.isRequired,
 		navigate: func.isRequired,
 	}).isRequired,
-	previous: PropTypes.object.isRequired,
+	previous: PropTypes.object,
 };
