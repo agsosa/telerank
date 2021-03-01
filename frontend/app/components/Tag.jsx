@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewPropTypes } from 'react-native';
 import { Chip } from 'react-native-paper';
+import { PropTypes } from 'prop-types';
 import { commonStyles } from '../config/Styles';
 import { formattedNumber, isNumber } from '../lib/Helpers';
 
@@ -15,3 +16,15 @@ export default function Tag({ icon, outlined = false, children, style, ...props 
 		</Chip>
 	);
 }
+
+Tag.defaultProps = {
+	outlined: false,
+	style: null,
+};
+
+Tag.propTypes = {
+	icon: PropTypes.string.isRequired,
+	outlined: PropTypes.bool,
+	children: PropTypes.element.isRequired,
+	style: ViewPropTypes.style,
+};

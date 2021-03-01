@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Badge, Right, Card, CardItem, Thumbnail, Text, Icon, Left, Body } from 'native-base';
+import { Right, Card, CardItem, Thumbnail, Text, Left, Body } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
+import { PropTypes } from 'prop-types';
 import Tag from '../Tag';
 import { formatLanguageCode } from '../../lib/Helpers';
 import { commonStyles, colors } from '../../config/Styles';
@@ -9,6 +10,8 @@ import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
 	featuredBG: { backgroundColor: colors.featuredLight },
+	featuredBadgeContainer: { position: 'absolute', right: '0%', top: '-10%', zIndex: 5 },
+	featuredCard: { borderColor: '#FFB400', borderLeftWidth: 5 },
 	membersTag: { alignSelf: 'flex-start' },
 	statsView: {
 		flex: 1,
@@ -25,7 +28,7 @@ export default function VerticalCard({ item }) {
 
 	return (
 		<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
-			<Card style={[commonStyles.flex, item.featured && { borderColor: '#FFB400', borderLeftWidth: 5 }]}>
+			<Card style={[commonStyles.flex, item.featured && styles.featuredCard]}>
 				<CardItem style={item.featured && styles.featuredBG}>
 					<Left>
 						<Thumbnail source={{ uri: item.image }} />
@@ -38,7 +41,7 @@ export default function VerticalCard({ item }) {
 					</Left>
 
 					{item.featured && (
-						<Right style={{ zIndex: 5, position: 'absolute', right: '0%', top: '-10%' }}>
+						<Right style={styles.featuredBadgeContainer}>
 							<FeaturedBadge />
 						</Right>
 					)}
@@ -60,3 +63,18 @@ export default function VerticalCard({ item }) {
 		</TouchableOpacity>
 	);
 }
+
+VerticalCard.propTypes = {
+	item: PropTypes.shape({
+		featured: PropTypes.bool,
+		members: PropTypes.number,
+		likes: PropTypes.number,
+		dislikes: PropTypes.number,
+		title: PropTypes.string,
+		category: PropTypes.string,
+		language: PropTypes.string,
+		image: PropTypes.string,
+		type: PropTypes.string,
+		username: PropTypes.string,
+	}).isRequired,
+};

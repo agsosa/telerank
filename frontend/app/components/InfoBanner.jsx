@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { Banner } from 'react-native-paper';
+import PropTypes from 'prop-types';
 import { colors } from '../config/Styles';
 
 const img = require('../../img/tg.png');
@@ -39,3 +40,11 @@ export default function InfoBanner({ children }) {
 		</Banner>
 	);
 }
+
+InfoBanner.defaultProps = {
+	children: null,
+};
+
+InfoBanner.propTypes = {
+	children: PropTypes.element,
+};

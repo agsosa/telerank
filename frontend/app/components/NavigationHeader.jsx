@@ -27,25 +27,9 @@ export default function NavigationHeader({ navigation, previous, routeInfo }) {
 
 				{!previous && (
 					<Menu visible={visible} onDismiss={closeMenu} anchor={<Appbar.Action icon='dots-vertical' color='white' onPress={openMenu} />}>
-						<Menu.Item
-							onPress={() => {
-								console.log('Option 1 was pressed');
-							}}
-							title='Option 1'
-						/>
-						<Menu.Item
-							onPress={() => {
-								console.log('Option 2 was pressed');
-							}}
-							title='Option 2'
-						/>
-						<Menu.Item
-							onPress={() => {
-								console.log('Option 3 was pressed');
-							}}
-							title='Option 3'
-							disabled
-						/>
+						<Menu.Item onPress={() => {}} title='Option 1' />
+						<Menu.Item onPress={() => {}} title='Option 2' />
+						<Menu.Item onPress={() => {}} title='Option 3' disabled />
 					</Menu>
 				)}
 			</Appbar.Header>

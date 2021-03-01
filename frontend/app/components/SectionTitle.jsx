@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { Headline } from 'react-native-paper';
+import { PropTypes } from 'prop-types';
 import { colors } from '../config/Styles';
 
 const styles = StyleSheet.create({
@@ -25,3 +26,5 @@ export default function SectionTitle({ text }) {
 		</View>
 	);
 }
+
+SectionTitle.propTypes = { text: PropTypes.string.isRequired };

@@ -42,16 +42,24 @@ export default function GlobalSearch() {
 		setSearchQuery(query);
 	};
 
+	const onRandomClick = () => {
+		// TODO: Implement
+	};
+
+	const onSearchClick = () => {
+		// TODO: Implement
+	};
+
 	return (
 		<View style={styles.mainView}>
 			<Text style={styles.titleText}>Discover your next community</Text>
 			<Text style={styles.descriptionText}>Search more than 5000 Telegram Channels, Groups, Bots and Stickers.</Text>
 			<Searchbar style={styles.searchBar} placeholder='Search' onChangeText={onChangeSearch} value={searchQuery} />
 			<View style={styles.buttonsView}>
-				<Button style={styles.buttonBase} color='white' icon='cached' mode='contained' onPress={() => console.log('Pressed')}>
+				<Button style={styles.buttonBase} color='white' icon='cached' mode='contained' onPress={onRandomClick}>
 					<Text style={styles.buttonRandomText}>Aleatorio</Text>
 				</Button>
-				<Button style={[styles.buttonBase, styles.buttonSearch]} color='black' icon='comment-search' mode='contained' onPress={() => console.log('Pressed')}>
+				<Button style={[styles.buttonBase, styles.buttonSearch]} color='black' icon='comment-search' mode='contained' onPress={onSearchClick}>
 					<Text style={commonStyles.whiteText}>Buscar</Text>
 				</Button>
 			</View>

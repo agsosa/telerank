@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card, Caption } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { PropTypes } from 'prop-types';
 import { truncateWithEllipses, formatLanguageCode } from '../../lib/Helpers';
 import Tag from '../Tag';
 
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
 	membersCount: { alignSelf: 'flex-start' },
 });
 
-export default function HorizontalCard({item}) {
+export default function HorizontalCard({ item }) {
 	const navigation = useNavigation();
 
 	return (
@@ -46,3 +47,18 @@ export default function HorizontalCard({item}) {
 		</View>
 	);
 }
+
+HorizontalCard.propTypes = {
+	item: PropTypes.shape({
+		featured: PropTypes.bool,
+		members: PropTypes.number,
+		likes: PropTypes.number,
+		dislikes: PropTypes.number,
+		title: PropTypes.string,
+		category: PropTypes.string,
+		language: PropTypes.string,
+		image: PropTypes.string,
+		type: PropTypes.string,
+		username: PropTypes.string,
+	}).isRequired,
+};

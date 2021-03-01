@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default function HorizontalList({data}) {
+export default function HorizontalList({ data }) {
 	const [currentIdx, setCurrentIdx] = useState(0);
 
 	const onViewableItemsChanged = useRef(({ viewableItems }) => {

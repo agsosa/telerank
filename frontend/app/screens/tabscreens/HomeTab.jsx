@@ -9,14 +9,15 @@ import SectionTitle from '../../components/SectionTitle';
 import InfoBanner from '../../components/InfoBanner';
 
 export default function HomeTab() {
-
 	function HeaderRenderer() {
 		return (
 			<View>
-				<GlobalSearch/>
+				<GlobalSearch />
+
 				<InfoBanner>
 					<Text>Agrega tu canal, grupo, bot o sticker de Telegram al directorio gratis!</Text>
 				</InfoBanner>
+
 				<SectionTitle text='Recently Added' />
 
 				<SectionTitle text='Featured List' />
@@ -36,12 +37,5 @@ export default function HomeTab() {
 		);
 	}
 
-	return (
-		<VerticalList
-			searchBar={false}
-			Header={HeaderRenderer}
-			Footer={FooterRenderer}
-			apiURL='http://f1741455bdf0.ngrok.io/api/entries?page=0&limit=5'
-		/>
-	);
+	return <VerticalList searchBar={false} Header={HeaderRenderer} Footer={FooterRenderer} apiURL='http://f1741455bdf0.ngrok.io/api/entries?page=0&limit=5' />;
 }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
+import { PropTypes } from 'prop-types';
+import { ViewPropTypes } from 'react-native';
 import { colors } from '../config/Styles';
 
 export default function NavGradient({ style, children }) {
@@ -9,3 +11,12 @@ export default function NavGradient({ style, children }) {
 		</LinearGradient>
 	);
 }
+
+NavGradient.defaultProps = {
+	style: null,
+	children: null,
+};
+NavGradient.propTypes = {
+	style: ViewPropTypes.style,
+	children: PropTypes.element,
+};
