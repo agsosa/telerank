@@ -8,6 +8,7 @@ const img = require('../../img/tg.png');
 // TODO: Implementar onPress del action
 
 const styles = StyleSheet.create({
+	action: { marginRight: 10, marginVertical: '-5%', paddingBottom: 15 },
 	banner: { backgroundColor: 'white', borderLeftColor: colors.main, borderLeftWidth: 5, elevation: 1, marginVertical: '2%' },
 	content: { marginBottom: '1%', marginTop: '-1%' },
 });
@@ -22,7 +23,7 @@ export default function InfoBanner({ children }) {
 				{
 					label: 'Learn more',
 					onPress: () => console.log('learn more'),
-					style: { marginVertical: '-5%', paddingBottom: 15, marginRight: 10 },
+					style: styles.action,
 				},
 			]}
 			icon={({ size }) => (

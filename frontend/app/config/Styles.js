@@ -15,6 +15,8 @@ export const colors = {
 	alt2: '#1C73B4',
 	pink: '#E462A5',
 	purple: '#7F20F3',
+	red: '#F44336',
+	green: '#4CAF50',
 };
 
 export const commonStyles = StyleSheet.create({
