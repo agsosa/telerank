@@ -23,7 +23,7 @@ export default function InfoBanner({ children }) {
 			actions={[
 				{
 					label: 'Learn more',
-					onPress: () => console.log('learn more'),
+					onPress: () => null,
 					style: styles.action,
 				},
 			]}

@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Appbar, Menu } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
+import { func, PropTypes } from 'prop-types';
 import NavGradient from './NavGradient';
 
 const styles = StyleSheet.create({
@@ -36,3 +37,12 @@ export default function NavigationHeader({ navigation, previous, routeInfo }) {
 		</NavGradient>
 	);
 }
+
+NavigationHeader.propTypes = {
+	routeInfo: PropTypes.func.isRequired,
+	navigation: PropTypes.shape({
+		goBack: func.isRequired,
+		navigate: func.isRequired,
+	}).isRequired,
+	previous: PropTypes.object.isRequired,
+};
