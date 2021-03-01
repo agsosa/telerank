@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Appbar, Menu } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
-import { getRouteInfo } from '../config/Routes';
-
 import NavGradient from './NavGradient';
 
 const styles = StyleSheet.create({
@@ -12,21 +10,20 @@ const styles = StyleSheet.create({
 	navNormal: { paddingBottom: 5 },
 });
 
-export default function NavigationHeader({ navigation, previous }) {
+export default function NavigationHeader({ navigation, previous, routeInfo }) {
 	const [visible, setVisible] = React.useState(false);
 	const openMenu = () => setVisible(true);
 	const closeMenu = () => setVisible(false);
 	const route = useRoute();
-	const routeInfo = getRouteInfo(route.name);
 
 	return (
-		<NavGradient style={previous && routeInfo.extendHeaderGradient ? styles.navExtended : styles.navNormal}>
+		<NavGradient style={previous && routeInfo(route).extendHeaderGradient ? styles.navExtended : styles.navNormal}>
 			<Appbar.Header style={styles.header}>
 				{previous ? <Appbar.BackAction color='white' onPress={navigation.goBack} /> : null}
 
 				{!previous && <Appbar.Action icon='cog' color='white' onPress={() => navigation.navigate('Settings')} />}
 
-				<Appbar.Content color='white' title='Telerank' subtitle={routeInfo.title} />
+				<Appbar.Content color='white' title='Telerank' subtitle={routeInfo(route).title} />
 
 				{!previous && (
 					<Menu visible={visible} onDismiss={closeMenu} anchor={<Appbar.Action icon='dots-vertical' color='white' onPress={openMenu} />}>

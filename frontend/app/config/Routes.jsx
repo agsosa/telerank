@@ -31,29 +31,18 @@ const ROUTES = [
 	},
 ];
 
+export function getRouteInfo(route) {
+	return ROUTES.find((q) => q.name === route.name);
+}
+
 export function Navigator() {
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName={DEFAULT_ROUTE} screenOptions={{ header: (props) => <NavigationHeader {...props} /> }}>
-				{ROUTES.map((q) => {
-					return (
-						<Stack.Screen
-							key={q.name}
-							name={q.name}
-							component={q.component}
-							screenOptions={(q) => {
-								title: {
-									q.title;
-								}
-							}}
-						/>
-					);
-				})}
+			<Stack.Navigator initialRouteName={DEFAULT_ROUTE} screenOptions={{ header: (props) => <NavigationHeader {...props} routeInfo={getRouteInfo} /> }}>
+				{ROUTES.map((q) => (
+					<Stack.Screen key={q.name} name={q.name} component={q.component} screenOptions={{ title: q.title }} />
+				))}
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
-}
-
-export function getRouteInfo(routeName) {
-	return ROUTES.find((q) => q.name === routeName);
 }
