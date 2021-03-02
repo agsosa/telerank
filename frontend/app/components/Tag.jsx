@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 	margin: { margin: '1%' },
 });
 
-export default function Tag({ icon, outlined = false, children, style, ...props }) {
+export default function Tag({ icon, outlined, children, style, ...props }) {
 	return (
 		<Chip mode={outlined ? 'outlined' : false} icon={icon} style={[commonStyles.transparentBg, styles.margin, style]} {...props}>
 			{isNumber(children) ? formattedNumber(children) : children}

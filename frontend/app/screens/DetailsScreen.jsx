@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, ScrollView, Image, StyleSheet } from 'react-native';
-
 import { Right, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from 'native-base';
 import { Button } from 'react-native-paper';
-
 import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 import Tag from '../components/Tag';
 import { formatLanguageCode } from '../lib/Helpers';
 import { colors } from '../config/Styles';
@@ -54,12 +53,12 @@ const styles = StyleSheet.create({
 	titleCard: { alignSelf: 'center', marginBottom: 10 },
 });
 
-export default function DetailsScreen({ route }) {
+const DetailsScreen = ({ route }) => {
 	const data = route.params;
 
 	return (
 		<View style={styles.mainView}>
-			<ScrollView centerContent style={{}}>
+			<ScrollView centerContent>
 				<Card key={data._id} style={styles.card}>
 					<CardItem>
 						<Left>
@@ -134,7 +133,7 @@ export default function DetailsScreen({ route }) {
 			</ScrollView>
 		</View>
 	);
-}
+};
 
 DetailsScreen.propTypes = {
 	route: PropTypes.object.isRequired,

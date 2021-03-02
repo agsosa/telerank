@@ -7,8 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { colors } from './config/Styles';
-
 import { Navigator } from './config/Routes';
+import StoreProvider from './state/Store';
 
 const ROBOTO = require('native-base/Fonts/Roboto.ttf');
 const ROBOTO_MEDIUM = require('native-base/Fonts/Roboto_medium.ttf');
@@ -40,14 +40,14 @@ export default function App() {
 
 	if (!isReady) return <AppLoading />;
 	return (
-		<SafeAreaProvider>
-			<PaperProvider theme={theme}>
-				<StatusBar barStyle='light-content' translucent backgroundColor='transparent' />
-
-				<Navigator />
-
-				{/* <Button title="AD BANNER" /> */}
-			</PaperProvider>
-		</SafeAreaProvider>
+		<StoreProvider>
+			<SafeAreaProvider>
+				<PaperProvider theme={theme}>
+					<StatusBar barStyle='light-content' translucent backgroundColor='transparent' />
+					<Navigator />
+					{/* <Button title="AD BANNER" /> */}
+				</PaperProvider>
+			</SafeAreaProvider>
+		</StoreProvider>
 	);
 }
