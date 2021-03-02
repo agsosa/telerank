@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-paper';
-
 import Stats from '../../components/Stats';
 import GlobalSearch from '../../components/GlobalSearch';
 import VerticalList from '../../components/media/VerticalList';
@@ -37,5 +36,5 @@ export default function HomeTab() {
 		);
 	}
 
-	return <VerticalList searchBar={false} Header={HeaderRenderer} Footer={FooterRenderer} apiURL='http://f1741455bdf0.ngrok.io/api/entries?page=0&limit=5' />;
+	return <VerticalList useSearchBar Header={HeaderRenderer} Footer={FooterRenderer} apiModule='Home' />;
 }

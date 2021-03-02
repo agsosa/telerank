@@ -3,7 +3,6 @@ import { View, ScrollView, Image, StyleSheet } from 'react-native';
 import { Right, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from 'native-base';
 import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
-import { connect } from 'react-redux';
 import Tag from '../components/Tag';
 import { formatLanguageCode } from '../lib/Helpers';
 import { colors } from '../config/Styles';
@@ -138,3 +137,5 @@ const DetailsScreen = ({ route }) => {
 DetailsScreen.propTypes = {
 	route: PropTypes.object.isRequired,
 };
+
+export default DetailsScreen;
