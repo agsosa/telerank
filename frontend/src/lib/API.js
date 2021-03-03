@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { MMKV } from 'react-native-mmkv';
 
-const BASE_URL = 'http://8161bfba0a50.ngrok.io/api';
+const BASE_URL = 'http://eb3d070923d6.ngrok.io/api';
 const STORAGE_KEY_PREFIX = 'tr_';
 const CACHE_EXPIRATION_MINUTES = 1;
 

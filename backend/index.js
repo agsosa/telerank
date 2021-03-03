@@ -1,14 +1,28 @@
-var Ddos = require('ddos') // TODO: Test this library https://github.com/animir/node-rate-limiter-flexible
+var Ddos = require('ddos'); // TODO: Test this library https://github.com/animir/node-rate-limiter-flexible
 const express = require('express');
 const scraper_jobs = require('./scraper_jobs');
-require("./scraper");
-const firebase = require('./firebase')
+const firebase = require('./firebase');
 const database = require('./database');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-var ddos = new Ddos({burst:10, limit:15})
+require('./scraper');
+
+function byteLength(str) {
+	// TODO: Remove or move to utils
+	// returns the byte length of an utf8 string
+	var s = str.length;
+	for (var i = str.length - 1; i >= 0; i--) {
+		var code = str.charCodeAt(i);
+		if (code > 0x7f && code <= 0x7ff) s++;
+		else if (code > 0x7ff && code <= 0xffff) s += 2;
+		if (code >= 0xdc00 && code <= 0xdfff) i--; //trail surrogate
+	}
+	return s;
+}
+
+var ddos = new Ddos({ burst: 10, limit: 15 });
 const app = express();
-const port = 4000;
+const port = 4001;
 
 firebase.initialize();
 //scraper_jobs.initialize();
@@ -21,22 +35,42 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.send('OK');
+	res.send('OK');
 });
 
-app.get('/api/entries/', (req, res) => { // List entries pagination supported
-    let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
-    let page = 0;
-    if (req.query) {
-        if (req.query.page) {
-            req.query.page = parseInt(req.query.page);
-            page = Number.isInteger(req.query.page) ? req.query.page : 0;
-        }
-    }
-    
-    database.ListEntries(limit, page).then((result) => {
-        res.status(200).send(result);
-    })
+app.get('/api/entries/', (req, res) => {
+	// Query parameters: limit (number), page (number)
+	// Returns array of EntryModel
+	let limit = req.query.limit && req.query.limit <= 100 ? parseInt(req.query.limit) : 10;
+	let page = 0;
+	if (req.query) {
+		if (req.query.page) {
+			req.query.page = parseInt(req.query.page);
+			page = Number.isInteger(req.query.page) ? req.query.page : 0;
+		}
+	}
+
+	database.ListEntries(limit, page).then((result) => {
+		console.log('returning result size before = ' + byteLength(JSON.stringify(result)) / 1000);
+		resultEx = JSON.parse(JSON.stringify(result));
+
+		resultEx.map((q) => {
+			delete q.description;
+			delete q.updated_date;
+		});
+
+		console.log('returning result size after = ' + byteLength(JSON.stringify(resultEx)) / 1000);
+		res.status(200).send(resultEx);
+	});
 });
 
-app.listen(port, () => console.log(`Backend listening on port ${port}`))
+app.get('/api/stats/', (req, res) => {
+	// Query parameters: none
+	// Returns object of StatsModel
+	database.GetStats().then((result) => {
+		console.log('GetStats returning ' + result);
+		res.status(200).send(result);
+	});
+});
+
+app.listen(port, () => console.log(`Server listening on port ${port}`));
