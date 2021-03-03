@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform, StatusBar } from 'react-native';
 import { Appbar, Menu } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import { func, PropTypes } from 'prop-types';
@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
 	header: { backgroundColor: 'transparent', elevation: 0 },
 	navExtended: { paddingBottom: 150 },
 	navNormal: { paddingBottom: 5 },
+	padding: { paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0 },
 });
 
 export default function NavigationHeader({ navigation, previous, routeInfo }) {
@@ -18,7 +19,7 @@ export default function NavigationHeader({ navigation, previous, routeInfo }) {
 	const route = useRoute();
 
 	return (
-		<NavGradient style={previous && routeInfo(route).extendHeaderGradient ? styles.navExtended : styles.navNormal}>
+		<NavGradient style={[previous && routeInfo(route).extendHeaderGradient ? styles.navExtended : styles.navNormal, styles.padding]}>
 			<Appbar.Header style={styles.header}>
 				{previous ? <Appbar.BackAction color='white' onPress={navigation.goBack} /> : null}
 

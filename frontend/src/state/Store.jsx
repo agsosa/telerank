@@ -6,12 +6,10 @@ import * as models from './Models';
 
 const store = init({ models });
 
-function StoreProvider({ children }) {
+export default function StoreProvider({ children }) {
 	return <Provider store={store}>{children}</Provider>;
 }
 
 StoreProvider.propTypes = {
 	children: PropTypes.element.isRequired,
 };
-
-export default StoreProvider;

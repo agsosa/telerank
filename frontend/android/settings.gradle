@@ -1,4 +1,4 @@
-rootProject.name = 'TeleRank'
+rootProject.name = 'Telerank'
 include ':react-native-appodeal'
 project(':react-native-appodeal').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-appodeal/android')
 

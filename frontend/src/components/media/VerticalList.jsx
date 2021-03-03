@@ -6,9 +6,6 @@ import { commonStyles, colors } from '../../config/Styles';
 import VerticalCard from './VerticalCard';
 import { getModuleData } from '../../lib/API';
 
-const ENABLE_REFRESH_DATA_LOOP = true;
-const REFRESH_DATA_LOOP_INTERVAL = 60000 * 5; // ms
-
 const styles = StyleSheet.create({
 	loadingView: { alignItems: 'center', flex: 1, justifyContent: 'center', marginVertical: 50 },
 });
@@ -23,24 +20,18 @@ export default function VerticalList({ apiModule, Header, Footer, useSearchBar }
 
 	// Data
 	const refreshData = () => {
-		const done = (forceRepeatInmediatly = false) => {
-			setLoading(false);
-			if (forceRepeatInmediatly) refreshData();
-			if (ENABLE_REFRESH_DATA_LOOP) setTimeout(() => refreshData(), REFRESH_DATA_LOOP_INTERVAL);
-		};
-
 		setLoading(true);
 
 		// TODO: Implement payload (second parameter of getModuleData)
 		getModuleData(apiModule, null)
 			.then((result) => {
 				setData(result);
-				done();
+				setLoading(false);
 			})
 			.catch((reason) => {
 				console.log(`getModuleData rejected with reason ${reason}`);
 				// TODO: Show error etc. (revisar retry)
-				done();
+				setLoading(false);
 			});
 	};
 
@@ -49,7 +40,7 @@ export default function VerticalList({ apiModule, Header, Footer, useSearchBar }
 		return () => {
 			// save data
 		};
-	});
+	}, []);
 
 	// Search & filter
 	const applySearchValue = () => {
@@ -116,6 +107,6 @@ VerticalList.defaultProps = {
 VerticalList.propTypes = {
 	apiModule: PropTypes.string.isRequired,
 	useSearchBar: PropTypes.bool,
-	Header: PropTypes.element,
-	Footer: PropTypes.element,
+	Header: PropTypes.func,
+	Footer: PropTypes.func,
 };
