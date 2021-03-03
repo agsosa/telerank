@@ -1,11 +1,14 @@
 var Ddos = require('ddos'); // TODO: Test this library https://github.com/animir/node-rate-limiter-flexible
 const express = require('express');
+var compression = require('compression');
 const scraper_jobs = require('./scraper_jobs');
 const firebase = require('./firebase');
 const database = require('./database');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 require('./scraper');
+
+// TODO: Para cada media scrapeado subir la imagen a bucket de google storage ya que los archivos de imagen de telegram expiran
 
 function byteLength(str) {
 	// TODO: Remove or move to utils
@@ -29,6 +32,7 @@ firebase.initialize();
 //database.AddEntry({username: "usuarioxd", type: "channel", language: "es", category: "cryptocurrencies", title: "loleta", description:"esta es una descripcion", members:50, image:"404.jpg", created_date: Date.now(), updated_date: Date.now(), likes: 50, dislikes: 150, featured: false})
 //database.GetAllEntries(null);
 
+app.use(compression());
 app.use(ddos.express);
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -51,7 +55,6 @@ app.get('/api/entries/', (req, res) => {
 	}
 
 	database.ListEntries(limit, page).then((result) => {
-		console.log('returning result size before = ' + byteLength(JSON.stringify(result)) / 1000);
 		resultEx = JSON.parse(JSON.stringify(result));
 
 		resultEx.map((q) => {
@@ -59,14 +62,13 @@ app.get('/api/entries/', (req, res) => {
 			delete q.updated_date;
 		});
 
-		console.log('returning result size after = ' + byteLength(JSON.stringify(resultEx)) / 1000);
 		res.status(200).send(resultEx);
 	});
 });
 
 app.get('/api/stats/', (req, res) => {
 	// Query parameters: none
-	// Returns object of StatsModel
+	// Returns object stats
 	database.GetStats().then((result) => {
 		console.log('GetStats returning ' + result);
 		res.status(200).send(result);
