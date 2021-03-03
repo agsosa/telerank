@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar, View, Platform } from 'react-native';
+import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { colors } from './config/Styles';
 import { Navigator } from './config/Routes';
 import StoreProvider from './state/Store';

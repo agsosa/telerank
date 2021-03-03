@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Text } from 'react-native-paper';
 import Stats from '../../components/Stats';
 import GlobalSearch from '../../components/GlobalSearch';
-import VerticalList from '../../components/media/VerticalList';
+import VerticalList from '../../components/entries/VerticalList';
 import SectionTitle from '../../components/SectionTitle';
 import InfoBanner from '../../components/InfoBanner';
 

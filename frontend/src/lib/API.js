@@ -5,64 +5,70 @@ import { MMKV } from 'react-native-mmkv';
 
 const BASE_URL = 'http://8161bfba0a50.ngrok.io/api';
 const STORAGE_KEY_PREFIX = 'tr_';
-const CACHE_EXPIRATION_MINUTES = 5;
+const CACHE_EXPIRATION_MINUTES = 1;
 
 const API_MODULES = {
 	home: {
+		// Returned DATA object: array [] of {} EntryModel including all featured and recent added.
+		// required payload: none
+		validateData: (data) => data && Array.isArray(data),
 		getURL: (payload) => `${BASE_URL}/entries?page=0&limit=10`,
+	},
+	stats: {
+		// Returned DATA object: object {} of StatsModel
+		validateData: (data) => data,
+		getURL: (payload) => `${BASE_URL}/stats`,
 	},
 };
 
-// getModuleData: Get data from cache or server. Will resolve only with a valid ARRAY.
-export function getModuleData(apiModule, payload) {
-	// TODO: Remove async from promise and axios.get
-	// MMKV.setString('home', 'test');
+// getModuleData: Get data from cache or server. Will resolve only if validateData from the apiModule object returns true
+export function getModuleData(apiModule, payload, ignoreCache = false) {
 	// MMKV.delete('tr_home');
-	// console.log('tr_home');
+
 	return new Promise((resolve, reject) => {
 		const apiModuleStr = apiModule.toLowerCase();
-		console.log(`1 ${apiModuleStr}`);
+
 		if (apiModuleStr && API_MODULES[apiModuleStr]) {
 			const moduleInfo = API_MODULES[apiModuleStr];
 			const CACHE_STORAGE_KEY = STORAGE_KEY_PREFIX + apiModuleStr;
-			const now = moment(new Date());
-			console.log('2');
+
 			// Try to get cache from local storage
-			const cache = MMKV.getString(CACHE_STORAGE_KEY); // { data: [], expirationTime: date time }
-			const cacheParsed = cache ? JSON.parse(cache) : null;
-			console.log('3');
+			const cache = MMKV.getString(CACHE_STORAGE_KEY);
+			const cacheParsed = cache ? JSON.parse(cache) : null; // cacheParsed.data, cacheParsed.expirationTime
+
 			// Check cache expiration time
 			let cacheExpired = false;
 			if (cacheParsed && cacheParsed.expirationTime) {
-				// console.log(cacheParsed);
+				// Get time from cache and calculate seconds remaining
 				const cacheMoment = moment(cacheParsed.expirationTime);
-				const minutesRemaining = cacheMoment && cacheMoment.isValid() ? Math.abs(moment.duration(now.diff(cacheMoment)).asMinutes()) : 0;
-				console.log(`found cache, expiration in ${minutesRemaining}`);
-				if (minutesRemaining <= 0) cacheExpired = true;
+				const secondsRemaining = cacheMoment ? cacheMoment.diff(moment(), 'seconds') : 0;
+				console.log(`getModuleData: cache seconds remaining ${secondsRemaining}`);
+
+				if (secondsRemaining <= 0) cacheExpired = true;
 			}
 
-			console.log('4');
 			// Check cache validity and fetch from server if it's not valid
-			const validCache = cacheParsed && !cacheExpired && cacheParsed.data && Array.isArray(cacheParsed.data) && cacheParsed.data.length > 0;
+			const validCache = !ignoreCache && cacheParsed && !cacheExpired && cacheParsed.data && moduleInfo.validateData(cacheParsed.data);
+
 			if (!validCache) {
-				// console.log(`validCache is false. Conditions: ${cacheParsed} ${cacheExpired} ${cacheParsed.data} ${Array.isArray(cacheParsed.data)} ${cacheParsed.data.length}`);
-				console.log('5');
+				// Cache not valid/expired, get fresh data from server
+				console.log('getModuleData: Fetching data from server');
 				axios.get(moduleInfo.getURL(payload)).then((result) => {
 					const resultData = result.data;
-					if (resultData && Array.isArray(resultData)) {
-						// TODO: Revisar que el backend siempre devuelva un array
-						console.log('6');
-						console.log(`Got data from backend with length ${resultData.length}`);
-						MMKV.set(CACHE_STORAGE_KEY, JSON.stringify({ data: resultData, expirationTime: moment().add(CACHE_EXPIRATION_MINUTES, 'minutes') }));
-						console.log('7');
-						console.log(`Next expiration time for cache data is ${moment().add(CACHE_EXPIRATION_MINUTES, 'minutes').toString()}`);
+					if (resultData && moduleInfo.validateData(resultData)) {
+						// Calculate expiration time and save to local storage (cache)
+						const expTime = moment().add(CACHE_EXPIRATION_MINUTES, 'minutes');
+						MMKV.set(CACHE_STORAGE_KEY, JSON.stringify({ data: resultData, expirationTime: expTime }));
+
+						console.log(`Next expiration time for cache data is ${expTime.toString()}`);
+
 						resolve(resultData);
-					}
+					} else reject(new Error('Data from server is not valid')); // TODO: Implement axios retry
 				});
 				// TODO: Add reject
-			} else resolve(cacheParsed.data);
+			} else resolve(cacheParsed.data); // Cache is still valid, return data from cache
 		}
 	});
 }
 
-export function getSingleData(username) {}
+export function getEntryData(username) {}

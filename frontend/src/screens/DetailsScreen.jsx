@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import Tag from '../components/Tag';
 import { formatLanguageCode } from '../lib/Helpers';
 import { colors } from '../config/Styles';
-import FeaturedBadge from '../components/media/FeaturedBadge';
+import FeaturedBadge from '../components/entries/FeaturedBadge';
 
 const stylesBtn = StyleSheet.create({
 	dislikeTag: { color: colors.red, fontSize: 22 },
