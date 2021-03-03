@@ -127,7 +127,7 @@ const DetailsScreen = ({ route }) => {
 				</Card>
 
 				<Text note style={styles.disclaimerText}>
-					Please conduct your own research before trusting the content. Especially if they asked you for money.
+					Please conduct your own research before trusting the content. Especially if they ask you for money.
 				</Text>
 			</ScrollView>
 		</View>
