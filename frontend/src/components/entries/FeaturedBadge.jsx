@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, ViewPropTypes } from 'react-native';
 import { Badge, Icon } from 'native-base';
 import { colors } from '../../config/Styles';
 
@@ -9,11 +9,19 @@ const styles = StyleSheet.create({
 	text: { color: 'white', lineHeight: 25 },
 });
 
-export default function FeaturedBadge() {
+export default function FeaturedBadge({ style }) {
 	return (
-		<Badge style={styles.badge}>
+		<Badge style={[styles.badge, style]}>
 			<Icon name='star' style={styles.icon} />
 			<Text style={styles.text}>Featured</Text>
 		</Badge>
 	);
 }
+
+FeaturedBadge.defaultProps = {
+	style: {},
+};
+
+FeaturedBadge.propTypes = {
+	style: ViewPropTypes.style,
+};
