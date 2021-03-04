@@ -16,10 +16,10 @@ const EntryModelSchema = new Schema({
 	likes: Number,
 	dislikes: Number,
 	featured: Boolean,
-	visits: Number,
 	reports: Number,
 	pending: Boolean,
 	removed: Boolean,
+	views: Boolean,
 });
 
 module.exports = mongoose.model('EntryModel', EntryModelSchema);

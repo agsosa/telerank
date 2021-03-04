@@ -14,6 +14,7 @@ export function truncateWithEllipses(str, max, add) {
 	return typeof str === 'string' && str.length > max ? str.substring(0, max) + x : str;
 }
 
+// Format a big number (i.e. 100000) to 100k
 export function formattedNumber(num, digits = 1) {
 	const si = [
 		{ value: 1, symbol: '' },

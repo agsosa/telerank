@@ -1,58 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, View, FlatList, ActivityIndicator } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, FlatList } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
-import { commonStyles, colors } from '../../config/Styles';
+import { commonStyles } from '../../config/Styles';
 import VerticalCard from './VerticalCard';
-import { getModuleData } from '../../lib/API';
+import LoadingIndicator from '../LoadingIndicator';
 
-const styles = StyleSheet.create({
-	loadingView: { alignItems: 'center', flex: 1, justifyContent: 'center', marginVertical: 50 },
-});
-
-export default function VerticalList({ apiModule, Header, Footer, useSearchBar }) {
+export default function VerticalList({ Header, Footer, useSearchBar, refreshFunc, data, loading }) {
 	const verticalFlatListRef = useRef();
-
-	// State
-	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
 	const [searchValue, setSearchValue] = useState('');
-
-	// Data
-	const refreshData = () => {
-		setLoading(true);
-
-		// TODO: Implement payload (second parameter of getModuleData)
-		getModuleData(apiModule, null)
-			.then((result) => {
-				setData(result);
-				setLoading(false);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-				// TODO: Show error etc. (revisar retry)
-				setLoading(false);
-			});
-	};
-
-	useEffect(() => {
-		refreshData();
-		return () => {
-			// save data
-		};
-	}, []);
 
 	// Search & filter
 	const applySearchValue = () => {
 		if (data && data.length > 0) {
-			const newData = data.filter((item) => {
+			// TODO: Hacer. Quizas cuando el usuario busque pasar data a dataLocal
+			/* const newData = data.filter((item) => {
 				const itemData = `${item.username.toUpperCase()} ${item.title.toUpperCase()}`;
 				const textData = searchValue.toUpperCase();
 
 				return itemData.indexOf(textData) > -1;
 			});
 
-			if (newData !== data) setData(newData);
+			if (newData !== data) setData(newData); */
 		}
 	};
 
@@ -69,11 +38,7 @@ export default function VerticalList({ apiModule, Header, Footer, useSearchBar }
 
 			{useSearchBar && !loading && <Searchbar placeholder='Search...' onChangeText={searchFilterFunction} value={searchValue} />}
 
-			{loading && (
-				<View style={styles.loadingView}>
-					<ActivityIndicator size='large' color={colors.main} />
-				</View>
-			)}
+			<LoadingIndicator isLoading={loading} />
 		</View>
 	);
 
@@ -91,7 +56,7 @@ export default function VerticalList({ apiModule, Header, Footer, useSearchBar }
 				ItemSeparatorComponent={null}
 				ListHeaderComponent={renderHeader}
 				ListFooterComponent={renderFooter}
-				onRefresh={refreshData}
+				onRefresh={refreshFunc}
 				refreshing={loading}
 			/>
 		</View>
@@ -105,8 +70,10 @@ VerticalList.defaultProps = {
 };
 
 VerticalList.propTypes = {
-	apiModule: PropTypes.string.isRequired,
 	useSearchBar: PropTypes.bool,
 	Header: PropTypes.func,
 	Footer: PropTypes.func,
+	refreshFunc: PropTypes.func.isRequired,
+	data: PropTypes.any.isRequired,
+	loading: PropTypes.bool.isRequired,
 };

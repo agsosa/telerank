@@ -3,7 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { MMKV } from 'react-native-mmkv';
 
-const BASE_URL = 'http://eb3d070923d6.ngrok.io/api';
+const BASE_URL = 'http://c008e13c7e66.ngrok.io/api';
 const STORAGE_KEY_PREFIX = 'tr_';
 const CACHE_EXPIRATION_MINUTES = 1;
 
@@ -42,7 +42,7 @@ export function getModuleData(apiModule, payload, ignoreCache = false) {
 				// Get time from cache and calculate seconds remaining
 				const cacheMoment = moment(cacheParsed.expirationTime);
 				const secondsRemaining = cacheMoment ? cacheMoment.diff(moment(), 'seconds') : 0;
-				console.log(`getModuleData: cache seconds remaining ${secondsRemaining}`);
+				console.log(`getModuleData ${apiModule}: cache seconds remaining ${secondsRemaining}`);
 
 				if (secondsRemaining <= 0) cacheExpired = true;
 			}

@@ -69,7 +69,7 @@ app.get('/api/entries/', (req, res) => {
 app.get('/api/stats/', (req, res) => {
 	// Query parameters: none
 	// Returns object stats
-	database.GetStats().then((result) => {
+	database.GetStats((result) => {
 		console.log('GetStats returning ' + result);
 		res.status(200).send(result);
 	});
