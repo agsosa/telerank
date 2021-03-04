@@ -4,7 +4,6 @@ import { Pagination } from 'react-native-snap-carousel';
 import { PropTypes } from 'prop-types';
 import { colors } from '../../config/Styles';
 import HorizontalCard from './HorizontalCard';
-import LoadingIndicator from '../LoadingIndicator';
 
 const styles = StyleSheet.create({
 	dot: {
@@ -14,9 +13,12 @@ const styles = StyleSheet.create({
 		marginHorizontal: 4,
 		width: 10,
 	},
+	flatList: {
+		marginBottom: -30,
+	},
 });
 
-export default function HorizontalList({ data, loading }) {
+export default function HorizontalList({ data }) {
 	const [currentIdx, setCurrentIdx] = useState(0);
 
 	const onViewableItemsChanged = useRef(({ viewableItems }) => {
@@ -28,8 +30,6 @@ export default function HorizontalList({ data, loading }) {
 		itemVisiblePercentThreshold: 80,
 	});
 
-	if (loading || !data || !Array.isArray(data) || data.length <= 0) return <LoadingIndicator />;
-
 	return (
 		<View>
 			<FlatList
@@ -38,6 +38,7 @@ export default function HorizontalList({ data, loading }) {
 				data={data}
 				renderItem={(item) => <HorizontalCard item={item.item} />}
 				keyExtractor={(item) => item._id}
+				style={styles.flatList}
 				horizontal
 			/>
 			<Pagination dotsLength={data.length} activeDotIndex={currentIdx} dotStyle={styles.dot} inactiveDotOpacity={0.4} inactiveDotScale={0.6} />
@@ -47,5 +48,4 @@ export default function HorizontalList({ data, loading }) {
 
 HorizontalList.propTypes = {
 	data: PropTypes.any.isRequired,
-	loading: PropTypes.bool.isRequired,
 };

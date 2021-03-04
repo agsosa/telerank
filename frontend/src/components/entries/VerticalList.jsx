@@ -37,12 +37,12 @@ export default function VerticalList({ Header, Footer, useSearchBar, refreshFunc
 			{Header && <Header />}
 
 			{useSearchBar && !loading && <Searchbar placeholder='Search...' onChangeText={searchFilterFunction} value={searchValue} />}
-
-			{(loading || !data || !Array.isArray(data) || data.length <= 0) && <LoadingIndicator />}
 		</View>
 	);
 
 	const renderFooter = () => <View>{Footer && <Footer />}</View>;
+
+	if (loading || !data || !Array.isArray(data) || data.length <= 0) return <LoadingIndicator />;
 
 	return (
 		<View style={commonStyles.flex}>
