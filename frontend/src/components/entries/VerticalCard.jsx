@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import NumberTag from '../NumberTag';
 import { formatLanguageCode } from '../../lib/Helpers';
-import { commonStyles, colors } from '../../config/Styles';
+import { commonStyles, colors, telegramPlaceholderImgUrl } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
@@ -26,12 +26,14 @@ const styles = StyleSheet.create({
 export default function VerticalCard({ item }) {
 	const navigation = useNavigation();
 
+	const imageURL = item.image && item.image.includes('storage.googleapis') ? item.image : telegramPlaceholderImgUrl;
+
 	return (
 		<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
 			<Card style={[commonStyles.flex, item.featured && styles.featuredCard]}>
 				<CardItem style={item.featured ? styles.featuredBG : {}}>
 					<Left>
-						<Thumbnail source={{ uri: item.image }} />
+						<Thumbnail source={{ uri: imageURL }} />
 						<Body>
 							<Text>{item.username}</Text>
 							<Text note>

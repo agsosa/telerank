@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
 import NumberTag from '../components/NumberTag';
 import { formatLanguageCode } from '../lib/Helpers';
-import { colors } from '../config/Styles';
+import { colors, telegramPlaceholderImgUrl } from '../config/Styles';
 import FeaturedBadge from '../components/entries/FeaturedBadge';
 
 const stylesBtn = StyleSheet.create({
@@ -55,13 +55,15 @@ const styles = StyleSheet.create({
 const DetailsScreen = ({ route }) => {
 	const data = route.params;
 
+	const imageURL = data.image && data.image.includes('storage.googleapis') ? data.image : telegramPlaceholderImgUrl;
+
 	return (
 		<View style={styles.mainView}>
 			<ScrollView centerContent>
 				<Card key={data._id} style={styles.card}>
 					<CardItem>
 						<Left>
-							<Thumbnail source={{ uri: data.image }} />
+							<Thumbnail source={{ uri: imageURL }} />
 							<Body>
 								<Text>{data.username}</Text>
 							</Body>
@@ -76,7 +78,7 @@ const DetailsScreen = ({ route }) => {
 						<Text style={styles.centeredText}>{data.title}</Text>
 					</CardItem>
 
-					<Image source={{ uri: data.image }} style={styles.image} />
+					<Image source={{ uri: imageURL }} style={styles.image} />
 
 					<CardItem style={styles.flexCardItem}>
 						<Text note>

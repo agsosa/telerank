@@ -5,8 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import { truncateWithEllipses, formatLanguageCode } from '../../lib/Helpers';
 import NumberTag from '../NumberTag';
-
-import { colors } from '../../config/Styles';
+import { colors, telegramPlaceholderImgUrl } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
@@ -23,13 +22,14 @@ const styles = StyleSheet.create({
 
 export default function HorizontalCard({ item }) {
 	const navigation = useNavigation();
+	const imageURL = item.image && item.image.includes('storage.googleapis') ? item.image : telegramPlaceholderImgUrl;
 
 	return (
 		<View style={styles.mainView}>
 			<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
 				<Card elevation={2} style={[styles.card, item.featured && styles.cardFeatured]}>
 					<Card.Title title={item.username} subtitle={`${item.type} / ${item.category} / ${formatLanguageCode(item.language)}`} />
-					<Card.Cover source={{ uri: item.image }} style={styles.coverImg} />
+					<Card.Cover source={{ uri: imageURL }} style={styles.coverImg} />
 
 					{item.featured && (
 						<View style={styles.featuredBadgeContainer}>
