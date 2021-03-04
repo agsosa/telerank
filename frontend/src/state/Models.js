@@ -19,7 +19,7 @@
 	}),
 }; */
 
-export const count = {
+/* export const count = {
 	name: 'count',
 	state: 0, // initial state
 	reducers: {
@@ -33,7 +33,7 @@ export const count = {
 		// use async/await for async actions
 		async incrementAsync(payload, rootState) {},
 	}),
-};
+}; */
 
 export const settings = {
 	name: 'settings',

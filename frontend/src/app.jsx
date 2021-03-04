@@ -5,10 +5,13 @@ import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { getPersistor } from '@rematch/persist';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 import { colors } from './config/Styles';
 import { Navigator } from './config/Routes';
 import StoreProvider from './state/Store';
 
+const persistor = getPersistor();
 const ROBOTO = require('native-base/Fonts/Roboto.ttf');
 const ROBOTO_MEDIUM = require('native-base/Fonts/Roboto_medium.ttf');
 
@@ -40,13 +43,15 @@ export default function App() {
 	if (!isReady) return <AppLoading />;
 	return (
 		<StoreProvider>
-			<SafeAreaProvider>
-				<PaperProvider theme={theme}>
-					<StatusBar barStyle='light-content' translucent backgroundColor='transparent' />
-					<Navigator />
-					{/* <Button title="AD BANNER" /> */}
-				</PaperProvider>
-			</SafeAreaProvider>
+			<PersistGate persistor={persistor}>
+				<SafeAreaProvider>
+					<PaperProvider theme={theme}>
+						<StatusBar barStyle='light-content' translucent backgroundColor='transparent' />
+						<Navigator />
+						{/* <Button title="AD BANNER" /> */}
+					</PaperProvider>
+				</SafeAreaProvider>
+			</PersistGate>
 		</StoreProvider>
 	);
 }
