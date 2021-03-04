@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 		padding: 5,
 	},
 	row_number: {
-		color: colors.mainLight,
+		color: colors.main,
 		fontSize: 25,
 		fontWeight: 'bold',
 	},

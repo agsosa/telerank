@@ -7,7 +7,7 @@ import HorizontalCard from './HorizontalCard';
 
 const styles = StyleSheet.create({
 	dot: {
-		backgroundColor: colors.main,
+		backgroundColor: colors.darkBlueGray,
 		borderRadius: 5,
 		height: 10,
 		marginHorizontal: 4,
