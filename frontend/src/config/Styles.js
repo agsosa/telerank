@@ -13,7 +13,7 @@ export const colors = {
 	lightBlueGray: '#6282A3',
 	niceGreen: '#1CB55E',
 	alt2: '#1C73B4',
-	pink: '#E462A5',
+	pink: '#DF4294',
 	purple: '#7F20F3',
 	red: '#F44336',
 	green: '#4CAF50',

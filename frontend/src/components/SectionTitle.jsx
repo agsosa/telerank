@@ -11,8 +11,9 @@ const styles = StyleSheet.create({
 		borderBottomRightRadius: 50,
 		borderBottomWidth: 3,
 		borderColor: colors.pink,
+		marginBottom: 10,
 		marginHorizontal: '25%',
-		marginVertical: 10,
+		marginTop: 5,
 		padding: 2,
 	},
 });
