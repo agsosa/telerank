@@ -3,7 +3,7 @@ import { View, ScrollView, Image, StyleSheet } from 'react-native';
 import { Right, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from 'native-base';
 import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
-import Tag from '../components/Tag';
+import NumberTag from '../components/NumberTag';
 import { formatLanguageCode } from '../lib/Helpers';
 import { colors } from '../config/Styles';
 import FeaturedBadge from '../components/entries/FeaturedBadge';
@@ -11,12 +11,12 @@ import FeaturedBadge from '../components/entries/FeaturedBadge';
 const stylesBtn = StyleSheet.create({
 	dislikeTag: { color: colors.red, fontSize: 22 },
 	likeTag: { color: colors.green, fontSize: 22 },
-	likesPadding: { padding: 10 },
-	reportBtn: { borderColor: colors.red, borderWidth: 0.1, marginRight: 15, marginTop: 10 },
+	likesPadding: { marginHorizontal: 5, padding: 15 },
+	reportBtn: { borderColor: colors.red, borderWidth: 0.3, marginRight: 15, marginTop: 10 },
 	reportContent: { color: colors.red, fontSize: 12 },
-	shareBtn: { borderColor: colors.mainLight, borderWidth: 0.1, marginTop: 10 },
+	shareBtn: { borderColor: colors.mainLight, borderWidth: 0.3, marginTop: 10 },
 	shareContent: { color: colors.mainLight, fontSize: 12 },
-	telegramBtn: { alignSelf: 'center', backgroundColor: colors.main, marginHorizontal: 40, marginVertical: 5, padding: 5 },
+	telegramBtn: { alignSelf: 'center', backgroundColor: colors.main, marginHorizontal: 40, marginVertical: 5, padding: 5, paddingHorizontal: 'auto' },
 	telegramContent: { color: 'white', fontSize: 20 },
 	viewButtons: { flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-evenly', marginVertical: 10 },
 });
@@ -84,23 +84,15 @@ const DetailsScreen = ({ route }) => {
 						</Text>
 						<Text style={styles.descriptionText}>{data.description}</Text>
 						<View style={stylesBtn.viewButtons}>
-							<Tag icon='thumb-down' outlined style={stylesBtn.likesPadding} textStyle={stylesBtn.dislikeTag} selectedColor={colors.red} selected>
-								{data.dislikes}
-							</Tag>
-							<Tag icon='thumb-up' outlined style={stylesBtn.likesPadding} textStyle={stylesBtn.likeTag} selectedColor={colors.green} selected>
-								{data.likes}
-							</Tag>
+							<NumberTag icon='thumb-down' outlined style={stylesBtn.likesPadding} textStyle={stylesBtn.dislikeTag} selectedColor={colors.red} selected number={data.dislikes} />
+							<NumberTag icon='thumb-up' outlined style={stylesBtn.likesPadding} textStyle={stylesBtn.likeTag} selectedColor={colors.green} selected number={data.likes} />
 						</View>
 					</CardItem>
 
 					<Button style={stylesBtn.telegramBtn}>
 						<Icon name='paper-plane' style={stylesBtn.telegramContent} />
-						<Text style={stylesBtn.telegramContent}>Abrir Telegram</Text>
+						<Text style={stylesBtn.telegramContent}>Telegram</Text>
 					</Button>
-
-					<Text note style={styles.centeredText}>
-						https://t.me/{data.username}
-					</Text>
 
 					<CardItem style={styles.flexCardItem}>
 						<View style={stylesBtn.viewButtons}>
@@ -114,12 +106,8 @@ const DetailsScreen = ({ route }) => {
 							</Button>
 						</View>
 						<View style={styles.statsView}>
-							<Tag icon='chart-bar'>
-								<Text>{data.clicks}</Text>
-							</Tag>
-							<Tag icon='account'>
-								<Text>{data.members}</Text>
-							</Tag>
+							<NumberTag icon='chart-bar' number={data.views} />
+							<NumberTag icon='account' number={data.members} />
 						</View>
 						<Text note>Date Added: {new Date().toDateString()}</Text>
 						<Text note>Last Updated: {new Date().toDateString()}</Text>

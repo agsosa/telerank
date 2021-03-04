@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Right, Card, CardItem, Thumbnail, Text, Left, Body } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
-import Tag from '../Tag';
+import NumberTag from '../NumberTag';
 import { formatLanguageCode } from '../../lib/Helpers';
 import { commonStyles, colors } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
@@ -51,15 +51,9 @@ export default function VerticalCard({ item }) {
 						<Text>{item.title}</Text>
 
 						<View style={styles.statsView}>
-							<Tag icon='thumb-up'>
-								<Text>{item.likes}</Text>
-							</Tag>
-							<Tag icon='thumb-down'>
-								<Text>{item.dislikes}</Text>
-							</Tag>
-							<Tag style={styles.membersTag} icon='account'>
-								<Text>{item.members}</Text>
-							</Tag>
+							<NumberTag icon='thumb-up' number={item.likes} />
+							<NumberTag icon='thumb-down' number={item.dislikes} />
+							<NumberTag style={styles.membersTag} icon='account' number={item.members} />
 						</View>
 					</Body>
 				</CardItem>
