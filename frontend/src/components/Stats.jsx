@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Stats({ data, loading }) {
-	if (loading) return <LoadingIndicator isLoading={loading} />;
+	if (loading || !data || !data.channels) return <LoadingIndicator />;
+
 	return (
 		<Grid style={styles.grid}>
 			<Col style={styles.col}>

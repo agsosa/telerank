@@ -7,6 +7,7 @@ import VerticalList from '../../components/entries/VerticalList';
 import SectionTitle from '../../components/SectionTitle';
 import InfoBanner from '../../components/InfoBanner';
 import { getModuleData } from '../../lib/API';
+import HorizontalList from '../../components/entries/HorizontalList';
 
 export default function HomeTab() {
 	const [statsData, setStatsData] = useState({});
@@ -52,8 +53,9 @@ export default function HomeTab() {
 				<InfoBanner>
 					<Text>Do you want to feature your Telegram Channel, Group or Bot here?</Text>
 				</InfoBanner>
-				<SectionTitle text='Recently Added' />
 
+				<SectionTitle text='Recently Added' />
+				<HorizontalList data={entriesData} loading={loading} />
 				<SectionTitle text='Featured List' />
 			</View>
 		);

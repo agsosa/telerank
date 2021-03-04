@@ -38,20 +38,18 @@ export default function VerticalList({ Header, Footer, useSearchBar, refreshFunc
 
 			{useSearchBar && !loading && <Searchbar placeholder='Search...' onChangeText={searchFilterFunction} value={searchValue} />}
 
-			<LoadingIndicator isLoading={loading} />
+			{(loading || !data || !Array.isArray(data) || data.length <= 0) && <LoadingIndicator />}
 		</View>
 	);
 
 	const renderFooter = () => <View>{Footer && <Footer />}</View>;
-
-	const renderItem = (q) => <VerticalCard item={q.item} />;
 
 	return (
 		<View style={commonStyles.flex}>
 			<FlatList
 				ref={verticalFlatListRef}
 				data={data}
-				renderItem={(q) => renderItem(q)}
+				renderItem={(q) => <VerticalCard item={q.item} />}
 				keyExtractor={(item) => item._id}
 				ItemSeparatorComponent={null}
 				ListHeaderComponent={renderHeader}

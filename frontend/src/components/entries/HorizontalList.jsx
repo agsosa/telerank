@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { Pagination } from 'react-native-snap-carousel';
+import { PropTypes } from 'prop-types';
 import { colors } from '../../config/Styles';
 import HorizontalCard from './HorizontalCard';
+import LoadingIndicator from '../LoadingIndicator';
 
 const styles = StyleSheet.create({
 	dot: {
@@ -14,7 +16,7 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default function HorizontalList({ data }) {
+export default function HorizontalList({ data, loading }) {
 	const [currentIdx, setCurrentIdx] = useState(0);
 
 	const onViewableItemsChanged = useRef(({ viewableItems }) => {
@@ -25,6 +27,8 @@ export default function HorizontalList({ data }) {
 		minimumViewTime: 1,
 		itemVisiblePercentThreshold: 80,
 	});
+
+	if (loading || !data || !Array.isArray(data) || data.length <= 0) return <LoadingIndicator />;
 
 	return (
 		<View>
@@ -40,3 +44,8 @@ export default function HorizontalList({ data }) {
 		</View>
 	);
 }
+
+HorizontalList.propTypes = {
+	data: PropTypes.any.isRequired,
+	loading: PropTypes.bool.isRequired,
+};
