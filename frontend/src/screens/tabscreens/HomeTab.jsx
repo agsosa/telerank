@@ -47,11 +47,9 @@ export default function HomeTab() {
 		return (
 			<View>
 				<GlobalSearch />
-
-				<InfoBanner>
+				<InfoBanner hideKey='add_hint'>
 					<Text>Agrega tu canal, grupo, bot o sticker de Telegram al directorio gratis!</Text>
 				</InfoBanner>
-
 				<SectionTitle text='Recently Added' />
 				<HorizontalList data={entriesData} loading={loading} />
 				<SectionTitle text='Featured List' />
@@ -62,7 +60,7 @@ export default function HomeTab() {
 	function FooterRenderer() {
 		return (
 			<View>
-				<InfoBanner>
+				<InfoBanner hideKey='feature_hint'>
 					<Text>Do you want to feature your Telegram Channel, Group or Bot here?</Text>
 				</InfoBanner>
 				<SectionTitle text='Estadísticas' />

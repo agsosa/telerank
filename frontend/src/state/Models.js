@@ -34,3 +34,16 @@ export const count = {
 		async incrementAsync(payload, rootState) {},
 	}),
 };
+
+export const settings = {
+	name: 'settings',
+	state: { hiddenComponentKeys: [] },
+	reducers: {
+		addHiddenComponentKey(state, payload) {
+			return !state.hiddenComponentKeys.includes(payload) ? { ...state, hiddenComponentKeys: [...state.hiddenComponentKeys, payload] } : state;
+		},
+	},
+	effects: (dispatch) => ({
+		async test(payload, rootState) {},
+	}),
+};
