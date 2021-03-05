@@ -24,9 +24,10 @@ export const storage = {
 const persistConfig = {
 	key: 'root',
 	storage,
+	blacklist: ['apiErrorActive'],
 };
 
-const store = init({ models, plugins: [persistPlugin(persistConfig)] });
+export const store = init({ models, plugins: [persistPlugin(persistConfig)] });
 
 export default function StoreProvider({ children }) {
 	return <Provider store={store}>{children}</Provider>;
