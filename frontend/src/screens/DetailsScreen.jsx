@@ -5,7 +5,7 @@ import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
 import NumberTag from '../components/NumberTag';
 import { formatLanguageCode } from '../lib/Helpers';
-import { colors, telegramPlaceholderImgUrl } from '../config/Styles';
+import { colors } from '../config/Styles';
 import FeaturedBadge from '../components/entries/FeaturedBadge';
 
 const stylesBtn = StyleSheet.create({
@@ -52,10 +52,12 @@ const styles = StyleSheet.create({
 	titleCard: { alignSelf: 'center', marginBottom: 10 },
 });
 
+const placeholderImage = require('../../img/tg_placeholder.jpg');
+
 const DetailsScreen = ({ route }) => {
 	const data = route.params;
 
-	const imageURL = data.image && data.image.includes('storage.googleapis') ? data.image : telegramPlaceholderImgUrl;
+	const imageSrc = data.image && data.image.includes('storage.googleapis') ? { uri: data.image } : placeholderImage;
 
 	return (
 		<View style={styles.mainView}>
@@ -63,7 +65,7 @@ const DetailsScreen = ({ route }) => {
 				<Card key={data._id} style={styles.card}>
 					<CardItem>
 						<Left>
-							<Thumbnail source={{ uri: imageURL }} />
+							<Thumbnail source={imageSrc} />
 							<Body>
 								<Text>{data.username}</Text>
 							</Body>
@@ -78,7 +80,7 @@ const DetailsScreen = ({ route }) => {
 						<Text style={styles.centeredText}>{data.title}</Text>
 					</CardItem>
 
-					<Image source={{ uri: imageURL }} style={styles.image} />
+					<Image source={imageSrc} style={styles.image} />
 
 					<CardItem style={styles.flexCardItem}>
 						<Text note>
