@@ -24,5 +24,3 @@ export const commonStyles = StyleSheet.create({
 	transparentBg: { backgroundColor: 'transparent' },
 	whiteText: { color: 'white' },
 });
-
-export const telegramPlaceholderImgUrl = 'https://firebasestorage.googleapis.com/v0/b/telerank-e9b37.appspot.com/o/telegram_placeholder%20(2).jpg?alt=media&token=84a7f7a2-abf3-4cbe-8fe2-b9dd29eed827';

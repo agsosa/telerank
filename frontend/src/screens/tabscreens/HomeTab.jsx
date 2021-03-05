@@ -14,7 +14,7 @@ export default function HomeTab() {
 	const [entriesData, setEntriesData] = useState([]);
 	const [loading, setLoading] = useState(true);
 
-	// Data
+	// TODO: Modularizar
 	const refreshData = async () => {
 		setLoading(true);
 		setEntriesData([]);
@@ -22,7 +22,7 @@ export default function HomeTab() {
 		// TODO: Cancel promises on unmount
 		const a = getModuleData('Home')
 			.then((result) => {
-				setEntriesData(result);
+				if (setEntriesData) setEntriesData(result);
 			})
 			.catch((reason) => {
 				console.log(`getModuleData rejected with reason ${reason}`);
@@ -30,7 +30,7 @@ export default function HomeTab() {
 
 		const b = getModuleData('Stats')
 			.then((result) => {
-				setStatsData(result);
+				if (setStatsData) setStatsData(result);
 			})
 			.catch((reason) => {
 				console.log(`getModuleData rejected with reason ${reason}`);

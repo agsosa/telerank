@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Tabs, TabScreen } from 'react-native-paper-tabs';
 import { commonStyles } from '../config/Styles';
 import HomeTab from './tabscreens/HomeTab';
+import APIErrorSnackbar from '../components/APIErrorSnackbar';
 
 const styles = StyleSheet.create({
 	tabs: { backgroundColor: 'white', elevation: 5, marginTop: 5 },
@@ -31,6 +32,8 @@ export default function MainScreen() {
 					<View />
 				</TabScreen>
 			</Tabs>
+
+			<APIErrorSnackbar />
 		</View>
 	);
 }
