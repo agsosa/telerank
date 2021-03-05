@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import NavigationHeader from '../components/NavigationHeader';
+import NavigationHeader from '../components/navigation/NavigationHeader';
 import MainScreen from '../screens/MainScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';

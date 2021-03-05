@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View } from 'react-native';
 import { Text } from 'react-native-paper';
-import Stats from '../../components/Stats';
-import GlobalSearch from '../../components/GlobalSearch';
+import Stats from '../../components/entries/Stats';
+import GlobalSearch from '../../components/entries/GlobalSearch';
 import VerticalList from '../../components/entries/VerticalList';
 import SectionTitle from '../../components/SectionTitle';
 import InfoBanner from '../../components/InfoBanner';

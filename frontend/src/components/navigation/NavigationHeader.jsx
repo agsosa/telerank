@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Platform, StatusBar } from 'react-native';
-import { Appbar, Menu } from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import { func, PropTypes } from 'prop-types';
 import NavGradient from './NavGradient';
@@ -13,9 +13,6 @@ const styles = StyleSheet.create({
 });
 
 export default function NavigationHeader({ navigation, previous, routeInfo }) {
-	const [visible, setVisible] = React.useState(false);
-	const openMenu = () => setVisible(true);
-	const closeMenu = () => setVisible(false);
 	const route = useRoute();
 
 	return (
@@ -23,17 +20,9 @@ export default function NavigationHeader({ navigation, previous, routeInfo }) {
 			<Appbar.Header style={styles.header}>
 				{previous ? <Appbar.BackAction color='white' onPress={navigation.goBack} /> : null}
 
-				{!previous && <Appbar.Action icon='cog' color='white' onPress={() => navigation.navigate('Settings')} />}
+				{!previous && <Appbar.Action icon='dots-vertical' color='white' onPress={() => navigation.navigate('Settings')} />}
 
 				<Appbar.Content color='white' title='Telerank' subtitle={routeInfo(route).title} />
-
-				{!previous && (
-					<Menu visible={visible} onDismiss={closeMenu} anchor={<Appbar.Action icon='dots-vertical' color='white' onPress={openMenu} />}>
-						<Menu.Item onPress={() => {}} title='Option 1' />
-						<Menu.Item onPress={() => {}} title='Option 2' />
-						<Menu.Item onPress={() => {}} title='Option 3' disabled />
-					</Menu>
-				)}
 			</Appbar.Header>
 		</NavGradient>
 	);

@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
 import { PropTypes } from 'prop-types';
-import { formattedNumber } from '../lib/Helpers';
-import { colors } from '../config/Styles';
-import LoadingIndicator from './LoadingIndicator';
+import { formattedNumber } from '../../lib/Helpers';
+import { colors } from '../../config/Styles';
+import LoadingIndicator from '../LoadingIndicator';
 
 const styles = StyleSheet.create({
 	col: {

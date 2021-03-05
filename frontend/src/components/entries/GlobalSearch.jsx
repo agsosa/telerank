@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Searchbar, Button } from 'react-native-paper';
-import { colors, commonStyles } from '../config/Styles';
+import { colors, commonStyles } from '../../config/Styles';
 
 const styles = StyleSheet.create({
 	buttonBase: { marginHorizontal: 10, width: '35%' },
