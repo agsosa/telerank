@@ -1,9 +1,38 @@
+import * as rax from 'retry-axios';
 import axios from 'axios';
 // import axios-retry from 'axios-retry'; // TODO: Implementar axios-retry
 import moment from 'moment';
 import { MMKV } from 'react-native-mmkv';
+import { store } from '../state/Store';
 
-const BASE_URL = 'http://c008e13c7e66.ngrok.io/api';
+rax.attach();
+const retryConfig = {
+	// Retry 3 times on requests that return a response (500, etc) before giving up.  Defaults to 3.
+	retry: 3,
+
+	// Retry twice on errors that don't return a response (ENOTFOUND, ETIMEDOUT, etc).
+	noResponseRetries: 3,
+
+	// Milliseconds to delay at first.  Defaults to 100. Only considered when backoffType is 'static'
+	retryDelay: 100,
+
+	statusCodesToRetry: [
+		[100, 199],
+		[429, 429],
+		[500, 599],
+		[404, 404],
+	],
+
+	// options are 'exponential' (default), 'static' or 'linear'
+	backoffType: 'exponential',
+
+	onRetryAttempt: (err) => {
+		const cfg = rax.getConfig(err);
+		console.log(`Retry attempt #${cfg.currentRetryAttempt}`);
+	},
+};
+
+const BASE_URL = 'http://ab1abe503d37.ngrok.io/api';
 const STORAGE_KEY_PREFIX = 'tr_';
 const CACHE_EXPIRATION_MINUTES = 1;
 
@@ -23,8 +52,6 @@ const API_MODULES = {
 
 // getModuleData: Get data from cache or server. Will resolve only if validateData from the apiModule object returns true
 export function getModuleData(apiModule, payload, ignoreCache = false) {
-	// MMKV.delete('tr_home');
-
 	return new Promise((resolve, reject) => {
 		const apiModuleStr = apiModule.toLowerCase();
 
@@ -53,18 +80,26 @@ export function getModuleData(apiModule, payload, ignoreCache = false) {
 			if (!validCache) {
 				// Cache not valid/expired, get fresh data from server
 				console.log('getModuleData: Fetching data from server');
-				axios.get(moduleInfo.getURL(payload)).then((result) => {
-					const resultData = result.data;
-					if (resultData && moduleInfo.validateData(resultData)) {
-						// Calculate expiration time and save to local storage (cache)
-						const expTime = moment().add(CACHE_EXPIRATION_MINUTES, 'minutes');
-						MMKV.set(CACHE_STORAGE_KEY, JSON.stringify({ data: resultData, expirationTime: expTime }));
 
-						console.log(`Next expiration time for cache data is ${expTime.toString()}`);
+				axios({ url: moduleInfo.getURL(payload), raxConfig: retryConfig })
+					.then((result) => {
+						const resultData = result.data;
+						if (resultData && moduleInfo.validateData(resultData)) {
+							// Calculate expiration time and save to local storage (cache)
+							const expTime = moment().add(CACHE_EXPIRATION_MINUTES, 'minutes');
+							MMKV.set(CACHE_STORAGE_KEY, JSON.stringify({ data: resultData, expirationTime: expTime }));
 
-						resolve(resultData);
-					} else reject(new Error('Data from server is not valid')); // TODO: Implement axios retry
-				});
+							console.log(`Next expiration time for cache data is ${expTime.toString()}`);
+
+							resolve(resultData);
+						} else reject(new Error('Data from server is not valid')); // TODO: Implement axios retry
+					})
+					.catch((error) => {
+						store.dispatch.apiErrorActive.setAPIErrorStatus(true);
+						console.log(`axios error : ${error}`);
+						if (cacheParsed && cacheParsed.data) resolve(cacheParsed.data);
+					});
+
 				// TODO: Add reject
 			} else resolve(cacheParsed.data); // Cache is still valid, return data from cache
 		}

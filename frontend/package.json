@@ -16,7 +16,6 @@
     "@rematch/core": "^2.0.1",
     "@rematch/persist": "^2.0.1",
     "axios": "^0.21.1",
-    "axios-retry": "^3.1.9",
     "expo": "~40.0.0",
     "expo-app-loading": "^1.0.1",
     "expo-font": "~8.4.0",
@@ -48,7 +47,8 @@
     "react-native-web": "^0.15.0",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "retry-axios": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
