@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
 		borderColor: colors.pink,
 		marginBottom: 10,
 		marginHorizontal: '25%',
-		marginTop: 5,
 		padding: 2,
 	},
 });

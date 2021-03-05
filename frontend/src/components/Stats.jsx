@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 	},
 	grid: {
+		marginBottom: 5,
 		marginHorizontal: -10,
-		marginVertical: 0,
 		paddingVertical: 10,
 	},
 	row: {

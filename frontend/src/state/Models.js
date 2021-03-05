@@ -51,7 +51,7 @@ export const settings = {
 export const apiErrorActive = {
 	// Used to display an error component when the API fails to request data from server
 	name: 'apiErrorActive',
-	state: true,
+	state: false,
 	reducers: {
 		setAPIErrorStatus(state, payload) {
 			return typeof payload === 'boolean' ? payload : state;
