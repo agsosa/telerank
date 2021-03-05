@@ -55,14 +55,14 @@ app.get('/api/entries/', (req, res) => {
 	}
 
 	database.ListEntries(limit, page).then((result) => {
-		resultEx = JSON.parse(JSON.stringify(result));
+		/*resultEx = JSON.parse(JSON.stringify(result));
 
 		resultEx.map((q) => {
 			delete q.description;
 			delete q.updated_date;
-		});
+		});*/
 
-		res.status(200).send(resultEx);
+		res.status(200).send(result);
 	});
 });
 
