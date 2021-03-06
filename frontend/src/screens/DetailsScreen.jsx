@@ -7,6 +7,7 @@ import NumberTag from '../components/NumberTag';
 import { formatLanguageCode } from '../lib/Helpers';
 import { colors } from '../config/Styles';
 import FeaturedBadge from '../components/entries/FeaturedBadge';
+import { ShareTelegram } from '../lib/Share';
 
 const stylesBtn = StyleSheet.create({
 	dislikeTag: { color: colors.red, fontSize: 22 },
@@ -104,7 +105,7 @@ const DetailsScreen = ({ route }) => {
 								<Icon name='flag' style={stylesBtn.reportContent} />
 								<Text style={stylesBtn.reportContent}>Reportar</Text>
 							</Button>
-							<Button style={stylesBtn.shareBtn}>
+							<Button style={stylesBtn.shareBtn} onPress={() => ShareTelegram(data.username)}>
 								<Icon name='share' style={stylesBtn.shareContent} />
 								<Text style={stylesBtn.shareContent}>Share</Text>
 							</Button>

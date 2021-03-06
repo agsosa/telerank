@@ -5,6 +5,7 @@ import { Dimensions, StyleSheet, ScrollView, View, Image, Text, TouchableOpacity
 import { connect } from 'react-redux';
 import { List } from 'react-native-paper';
 import { colors } from '../../config/Styles';
+import { ShareApp, RateApp } from '../../lib/Share';
 
 const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
@@ -104,6 +105,12 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
 			case 'Promote':
 			case 'Contact':
 				if (navigation) navigation.navigate(item);
+				break;
+			case 'ShareApp':
+				ShareApp();
+				break;
+			case 'RateApp':
+				RateApp();
 				break;
 			default:
 				break;
