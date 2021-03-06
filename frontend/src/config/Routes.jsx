@@ -49,12 +49,6 @@ const ROUTES = [
 		title: 'Terms of Service',
 	},
 	{
-		name: 'Information',
-		component: InformationScreen,
-		extendHeaderGradient: false,
-		title: 'Information',
-	},
-	{
 		name: 'Contact',
 		component: ContactScreen,
 		extendHeaderGradient: false,

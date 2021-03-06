@@ -73,8 +73,7 @@ const MenuContent = ({ onItemSelected }) => (
 				</List.Subheader>
 				<List.Item title='Settings' left={(props) => <List.Icon {...props} icon='cog' />} onPress={() => onItemSelected('Settings')} />
 				<List.Item title='Statistics' left={(props) => <List.Icon {...props} icon='chart-bar' />} onPress={() => onItemSelected('Stats')} />
-				{/* Transformar el componente stats a independiente para poder usarlo aca en un modal */}
-				<List.Item title='About/FAQ' left={(props) => <List.Icon {...props} icon='information' />} onPress={() => onItemSelected('Information')} />
+				{/* TODO: Transformar el componente stats a independiente para poder usarlo aca en un modal */}
 				<List.Item title='Contact' left={(props) => <List.Icon {...props} icon='email' />} onPress={() => onItemSelected('Contact')} />
 				<List.Item title='Rate our app' left={(props) => <List.Icon {...props} icon='heart' />} onPress={() => onItemSelected('RateApp')} />
 				<List.Item title='Share our app' left={(props) => <List.Icon {...props} icon='share-variant' />} onPress={() => onItemSelected('ShareApp')} />
