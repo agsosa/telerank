@@ -11,6 +11,7 @@ import InformationScreen from '../screens/InformationScreen';
 import ContactScreen from '../screens/ContactScreen';
 import AddMediaScreen from '../screens/AddMediaScreen';
 import PromoteScreen from '../screens/PromoteScreen';
+import DMCAScreen from '../screens/DMCAScreen';
 
 const Stack = createStackNavigator();
 
@@ -70,6 +71,12 @@ const ROUTES = [
 		component: PromoteScreen,
 		extendHeaderGradient: false,
 		title: 'Promote/Feature',
+	},
+	{
+		name: 'DMCA',
+		component: DMCAScreen,
+		extendHeaderGradient: false,
+		title: 'DMCA and Abuses',
 	},
 ];
 
