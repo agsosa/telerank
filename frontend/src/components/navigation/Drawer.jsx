@@ -71,7 +71,7 @@ const MenuContent = ({ onItemSelected }) => (
 				<List.Subheader>
 					<Text>Telerank</Text>
 				</List.Subheader>
-				<List.Item title='Settings' left={(props) => <List.Icon {...props} icon='cog' />} onPress={() => onItemSelected('Settings')} />
+				<List.Item title='Language' left={(props) => <List.Icon {...props} icon='cog' />} onPress={() => onItemSelected('Language')} />
 				<List.Item title='Statistics' left={(props) => <List.Icon {...props} icon='chart-bar' />} onPress={() => onItemSelected('Stats')} />
 				{/* TODO: Transformar el componente stats a independiente para poder usarlo aca en un modal */}
 				<List.Item title='Contact' left={(props) => <List.Icon {...props} icon='email' />} onPress={() => onItemSelected('Contact')} />
@@ -95,7 +95,6 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
 		setIsOpen(false);
 
 		switch (item) {
-			case 'Settings':
 			case 'PrivacyPolicy':
 			case 'DMCA':
 			case 'TermsOfService':

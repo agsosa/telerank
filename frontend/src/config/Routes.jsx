@@ -4,7 +4,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import NavigationHeader from '../components/navigation/NavigationHeader';
 import MainScreen from '../screens/MainScreen';
 import DetailsScreen from '../screens/DetailsScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import ContactScreen from '../screens/ContactScreen';
 import AddMediaScreen from '../screens/AddMediaScreen';
@@ -29,12 +28,6 @@ const ROUTES = [
 		component: DetailsScreen,
 		title: 'Details',
 		extendHeaderGradient: true,
-	},
-	{
-		name: 'Settings',
-		component: SettingsScreen,
-		extendHeaderGradient: false,
-		title: 'Settings',
 	},
 	{
 		name: 'PrivacyPolicy',
