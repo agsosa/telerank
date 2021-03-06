@@ -4,9 +4,7 @@ import { Banner } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const img = require('../../img/tg.png');
-
-// TODO: Implementar onPress del action
+const img = require('../../../img/tg.png');
 
 const styles = StyleSheet.create({
 	action: { marginRight: 10, marginVertical: '-5%', paddingBottom: 15 },
@@ -14,7 +12,7 @@ const styles = StyleSheet.create({
 	content: { marginBottom: '1%', marginTop: '-1%' },
 });
 
-const InfoBanner = ({ children, hiddenComponentKeys, hideKey, addHiddenComponentKey }) => (
+const InfoBanner = ({ children, hiddenComponentKeys, hideKey, addHiddenComponentKey, callToAction }) => (
 	<Banner
 		visible={!(hideKey && hiddenComponentKeys.includes(hideKey))}
 		contentStyle={styles.content}
@@ -27,7 +25,9 @@ const InfoBanner = ({ children, hiddenComponentKeys, hideKey, addHiddenComponent
 			},
 			{
 				label: 'Learn more',
-				onPress: () => null,
+				onPress: () => {
+					if (callToAction) callToAction();
+				},
 				style: styles.action,
 			},
 		]}
@@ -47,6 +47,7 @@ const InfoBanner = ({ children, hiddenComponentKeys, hideKey, addHiddenComponent
 InfoBanner.defaultProps = {
 	children: null,
 	hideKey: null,
+	callToAction: null,
 };
 
 InfoBanner.propTypes = {
@@ -54,6 +55,7 @@ InfoBanner.propTypes = {
 	hiddenComponentKeys: PropTypes.array.isRequired,
 	hideKey: PropTypes.string,
 	addHiddenComponentKey: PropTypes.func.isRequired,
+	callToAction: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

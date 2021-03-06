@@ -111,6 +111,8 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
 			case 'RateApp':
 				RateApp();
 				break;
+			case 'Stats':
+				break;
 			default:
 				break;
 		}
