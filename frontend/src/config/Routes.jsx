@@ -6,7 +6,6 @@ import MainScreen from '../screens/MainScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
-import InformationScreen from '../screens/InformationScreen';
 import ContactScreen from '../screens/ContactScreen';
 import AddMediaScreen from '../screens/AddMediaScreen';
 import PromoteScreen from '../screens/PromoteScreen';
