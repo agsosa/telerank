@@ -11,7 +11,7 @@ const img = require('../../img/tg.png');
 
 const styles = StyleSheet.create({
 	action: { marginRight: 10, marginVertical: '-5%', paddingBottom: 15 },
-	banner: { backgroundColor: 'white', borderLeftColor: colors.main, borderLeftWidth: 5, elevation: 1, marginVertical: '2%' },
+	banner: { backgroundColor: 'white', elevation: 1, marginVertical: 10 },
 	content: { marginBottom: '1%', marginTop: '-1%' },
 });
 
