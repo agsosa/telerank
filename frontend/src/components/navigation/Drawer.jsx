@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import SideMenu from 'react-native-side-menu-updated';
 import PropTypes from 'prop-types';
 import { Dimensions, StyleSheet, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { List, Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { colors, commonStyles } from '../../config/Styles';
+import { List } from 'react-native-paper';
+import { colors } from '../../config/Styles';
 
 const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';

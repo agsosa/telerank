@@ -3,7 +3,6 @@ import { Image, StyleSheet } from 'react-native';
 import { Banner } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { colors } from '../config/Styles';
 
 const img = require('../../img/tg.png');
 
