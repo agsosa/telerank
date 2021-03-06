@@ -6,12 +6,12 @@ import MainScreen from '../screens/MainScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
-import TermsAndConditionsScreen from '../screens/TermsAndConditionsScreen';
 import InformationScreen from '../screens/InformationScreen';
 import ContactScreen from '../screens/ContactScreen';
 import AddMediaScreen from '../screens/AddMediaScreen';
 import PromoteScreen from '../screens/PromoteScreen';
 import DMCAScreen from '../screens/DMCAScreen';
+import TermsOfServiceScreen from '../screens/TermsOfServiceScreen';
 
 const Stack = createStackNavigator();
 
@@ -43,10 +43,10 @@ const ROUTES = [
 		title: 'Privacy Policy',
 	},
 	{
-		name: 'TermsAndConditions',
-		component: TermsAndConditionsScreen,
+		name: 'TermsOfService',
+		component: TermsOfServiceScreen,
 		extendHeaderGradient: false,
-		title: 'Terms and Conditions',
+		title: 'Terms of Service',
 	},
 	{
 		name: 'Information',

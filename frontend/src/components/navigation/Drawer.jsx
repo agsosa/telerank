@@ -82,9 +82,9 @@ const MenuContent = ({ onItemSelected }) => (
 				<List.Subheader>
 					<Text>Legal</Text>
 				</List.Subheader>
-				<List.Item title='DMCA/Report Abuse' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onItemSelected('PrivacyPolicy')} />
+				<List.Item title='DMCA/Report Abuse' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onItemSelected('DMCA')} />
 				<List.Item title='Privacy Policy' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onItemSelected('PrivacyPolicy')} />
-				<List.Item title='Terms and Conditions' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onItemSelected('TermsAndConditions')} />
+				<List.Item title='Terms of Service' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onItemSelected('TermsOfService')} />
 			</List.Section>
 		</View>
 	</ScrollView>
@@ -97,7 +97,8 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
 		switch (item) {
 			case 'Settings':
 			case 'PrivacyPolicy':
-			case 'TermsAndConditions':
+			case 'DMCA':
+			case 'TermsOfService':
 			case 'Information':
 			case 'AddMedia':
 			case 'Promote':
