@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import SideMenu from 'react-native-side-menu-updated';
 import PropTypes from 'prop-types';
-import { Dimensions, StyleSheet, ScrollView, View, Image, Text } from 'react-native';
+import { Dimensions, StyleSheet, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { colors } from '../../config/Styles';
+import { List, Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { colors, commonStyles } from '../../config/Styles';
 
 const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
@@ -11,56 +13,100 @@ const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
 const styles = StyleSheet.create({
 	avatar: {
 		borderRadius: 24,
-		flex: 1,
 		height: 48,
 		width: 48,
 	},
 	avatarContainer: {
-		marginBottom: 20,
-		marginTop: 20,
+		marginBottom: 0,
+		marginTop: 30,
+		paddingLeft: 30,
+		paddingVertical: 30,
 	},
-	item: {
-		fontSize: 14,
-		fontWeight: '300',
-		paddingTop: 5,
+	avatarText: {
+		color: 'white',
+		left: 10,
+		top: 15,
 	},
-	menu: {
-		backgroundColor: 'white',
+	featuredItemTitle: { color: 'orange', fontWeight: 'bold' },
+	headerView: { flexDirection: 'row' },
+	listView: { backgroundColor: 'white' },
+	scrollView: {
+		backgroundColor: colors.main,
 		flex: 1,
 		height: window.height,
-		padding: 20,
+		paddingVertical: 0,
 		width: window.width,
-	},
-	name: {
-		left: 70,
-		position: 'absolute',
-		top: 20,
 	},
 });
 
 const MenuContent = ({ onItemSelected }) => (
-	<ScrollView scrollsToTop={false} style={styles.menu}>
+	<ScrollView scrollsToTop={false} style={styles.scrollView}>
 		<View style={styles.avatarContainer}>
-			<Image style={styles.avatar} source={{ uri }} />
-			<Text style={styles.name}>Your name</Text>
+			<TouchableOpacity>
+				<View style={styles.headerView}>
+					<Image style={styles.avatar} source={{ uri }} />
+					<Text style={styles.avatarText}>Telerank</Text>
+				</View>
+			</TouchableOpacity>
 		</View>
 
-		<Text onPress={() => onItemSelected('About')} style={styles.item}>
-			About
-		</Text>
-
-		<Text onPress={() => onItemSelected('Contacts')} style={styles.item}>
-			Contacts
-		</Text>
+		{/* onItemSelected('About') */}
+		<View style={styles.listView}>
+			<List.Section>
+				<List.Subheader>
+					<Text>Directory</Text>
+				</List.Subheader>
+				<List.Item title='Add channels' left={(props) => <List.Icon {...props} icon='bullhorn' />} onPress={() => onItemSelected('AddMedia')} />
+				<List.Item title='Add groups' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onItemSelected('AddMedia')} />
+				<List.Item title='Add bots' left={(props) => <List.Icon {...props} icon='robot' />} onPress={() => onItemSelected('AddMedia')} />
+				<List.Item title='Add stickers' left={(props) => <List.Icon {...props} icon='sticker' />} onPress={() => onItemSelected('Promote')} />
+				<List.Item
+					style={{ backgroundColor: colors.featuredLight }}
+					titleStyle={styles.featuredItemTitle}
+					title='Promote/Feature'
+					left={(props) => <List.Icon {...props} icon='star' color={colors.featured} />}
+				/>
+			</List.Section>
+			<List.Section>
+				<List.Subheader>
+					<Text>Telerank</Text>
+				</List.Subheader>
+				<List.Item title='Settings' left={(props) => <List.Icon {...props} icon='cog' />} onPress={() => onItemSelected('Settings')} />
+				<List.Item title='Statistics' left={(props) => <List.Icon {...props} icon='chart-bar' />} onPress={() => onItemSelected('Stats')} />
+				{/* Transformar el componente stats a independiente para poder usarlo aca en un modal */}
+				<List.Item title='About/FAQ' left={(props) => <List.Icon {...props} icon='information' />} onPress={() => onItemSelected('Information')} />
+				<List.Item title='Contact' left={(props) => <List.Icon {...props} icon='email' />} onPress={() => onItemSelected('Contact')} />
+				<List.Item title='Rate our app' left={(props) => <List.Icon {...props} icon='heart' />} onPress={() => onItemSelected('RateApp')} />
+				<List.Item title='Share our app' left={(props) => <List.Icon {...props} icon='share-variant' />} onPress={() => onItemSelected('ShareApp')} />
+			</List.Section>
+			<List.Section>
+				<List.Subheader>
+					<Text>Legal</Text>
+				</List.Subheader>
+				<List.Item title='Privacy Policy' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onItemSelected('PrivacyPolicy')} />
+				<List.Item title='Terms and Conditions' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onItemSelected('TermsAndConditions')} />
+			</List.Section>
+		</View>
 	</ScrollView>
 );
 
-const Drawer = ({ children, isOpen, setIsOpen }) => {
-	const [selectedItem, setSelectedItem] = useState(null);
-
+const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
 	const onMenuItemSelected = (item) => {
 		setIsOpen(false);
-		setSelectedItem(item);
+
+		switch (item) {
+			case 'Settings':
+			case 'PrivacyPolicy':
+			case 'TermsAndConditions':
+			case 'Information':
+			case 'AddMedia':
+			case 'Promote':
+			case 'Contact':
+				if (navigation) navigation.navigate(item);
+				break;
+			default:
+				break;
+		}
 	};
 
 	const menu = <MenuContent onItemSelected={onMenuItemSelected} />;
@@ -74,12 +120,14 @@ const Drawer = ({ children, isOpen, setIsOpen }) => {
 
 Drawer.defaultProps = {
 	children: null,
+	navigation: null,
 };
 
 Drawer.propTypes = {
 	children: PropTypes.any,
 	setIsOpen: PropTypes.func.isRequired,
 	isOpen: PropTypes.bool.isRequired,
+	navigation: PropTypes.object,
 };
 
 MenuContent.propTypes = {
@@ -88,6 +136,7 @@ MenuContent.propTypes = {
 
 const mapStateToProps = ({ drawerState }) => ({
 	isOpen: drawerState.isOpen,
+	navigation: drawerState.navigation,
 });
 
 const mapDispatchToProps = (dispatch) => ({

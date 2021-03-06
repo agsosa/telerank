@@ -50,7 +50,6 @@ export default function App() {
 						<Drawer>
 							<StatusBar barStyle='light-content' translucent backgroundColor='transparent' />
 							<Navigator />
-
 							{/* <Button title="AD BANNER" /> */}
 						</Drawer>
 					</PaperProvider>

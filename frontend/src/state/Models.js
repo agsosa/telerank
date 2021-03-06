@@ -46,10 +46,13 @@ export const apiErrorActive = {
 export const drawerState = {
 	// Manage the drawer state
 	name: 'drawerState',
-	state: { isOpen: false, selectedItem: null },
+	state: { navigation: null, isOpen: false, selectedItem: null },
 	reducers: {
 		setIsOpen(state, payload) {
 			return typeof payload === 'boolean' ? { ...state, isOpen: payload } : state;
+		},
+		setNavigation(state, payload) {
+			return payload instanceof Object ? { ...state, navigation: payload } : state;
 		},
 	},
 };
