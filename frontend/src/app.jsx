@@ -10,6 +10,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { colors } from './config/Styles';
 import { Navigator } from './config/Routes';
 import StoreProvider from './state/Store';
+import Drawer from './components/navigation/Drawer';
 
 const persistor = getPersistor();
 const ROBOTO = require('native-base/Fonts/Roboto.ttf');
@@ -46,9 +47,12 @@ export default function App() {
 			<PersistGate persistor={persistor}>
 				<SafeAreaProvider>
 					<PaperProvider theme={theme}>
-						<StatusBar barStyle='light-content' translucent backgroundColor='transparent' />
-						<Navigator />
-						{/* <Button title="AD BANNER" /> */}
+						<Drawer>
+							<StatusBar barStyle='light-content' translucent backgroundColor='transparent' />
+							<Navigator />
+
+							{/* <Button title="AD BANNER" /> */}
+						</Drawer>
 					</PaperProvider>
 				</SafeAreaProvider>
 			</PersistGate>

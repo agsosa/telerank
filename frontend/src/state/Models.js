@@ -19,22 +19,6 @@
 	}),
 }; */
 
-/* export const count = {
-	name: 'count',
-	state: 0, // initial state
-	reducers: {
-		// handle state changes with pure functions
-		increment(state, payload) {
-			return state + payload;
-		},
-	},
-	effects: (dispatch) => ({
-		// handle state changes with impure functions.
-		// use async/await for async actions
-		async incrementAsync(payload, rootState) {},
-	}),
-}; */
-
 export const settings = {
 	name: 'settings',
 	state: { hiddenComponentKeys: [] },
@@ -55,6 +39,17 @@ export const apiErrorActive = {
 	reducers: {
 		setAPIErrorStatus(state, payload) {
 			return typeof payload === 'boolean' ? payload : state;
+		},
+	},
+};
+
+export const drawerState = {
+	// Manage the drawer state
+	name: 'drawerState',
+	state: { isOpen: false, selectedItem: null },
+	reducers: {
+		setIsOpen(state, payload) {
+			return typeof payload === 'boolean' ? { ...state, isOpen: payload } : state;
 		},
 	},
 };

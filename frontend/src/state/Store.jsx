@@ -24,7 +24,7 @@ export const storage = {
 const persistConfig = {
 	key: 'root',
 	storage,
-	blacklist: ['apiErrorActive'],
+	blacklist: ['apiErrorActive', 'drawerState'],
 };
 
 export const store = init({ models, plugins: [persistPlugin(persistConfig)] });
