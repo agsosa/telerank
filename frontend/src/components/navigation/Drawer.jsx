@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import SideMenu from 'react-native-side-menu-updated';
 import PropTypes from 'prop-types';
 import { Dimensions, StyleSheet, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native';
@@ -7,8 +7,8 @@ import { List } from 'react-native-paper';
 import { colors } from '../../config/Styles';
 import { ShareApp, RateApp } from '../../lib/Share';
 import LanguageModal from '../modals/LanguageModal';
+import StatsModal from '../modals/StatsModal';
 import { Languages } from '../../config/Locale';
-import { store } from '../../state/Store';
 
 const window = Dimensions.get('window');
 const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
 
 const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
 	const languageModalRef = useRef();
+	const statsModalRef = useRef();
+
 	const langObj = Languages.find((q) => q.code === language);
 	const langDisplay = langObj ? langObj.displayStr : 'Undefined';
 
@@ -67,6 +69,7 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
 				RateApp();
 				break;
 			case 'Stats':
+				statsModalRef.current.show();
 				break;
 			case 'Language':
 				languageModalRef.current.show();
@@ -131,6 +134,7 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
 		<SideMenu menu={<MenuContent />} isOpen={isOpen} onChange={(openState) => setIsOpen(openState)}>
 			{children}
 			<LanguageModal ref={languageModalRef} />
+			<StatsModal ref={statsModalRef} />
 		</SideMenu>
 	);
 };
