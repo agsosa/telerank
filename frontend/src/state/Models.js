@@ -19,12 +19,18 @@
 	}),
 }; */
 
+import { Languages, getBestAvailableLanguage } from '../config/Locale';
+
 export const settings = {
 	name: 'settings',
-	state: { hiddenComponentKeys: [] },
+	state: { hiddenComponentKeys: [], language: getBestAvailableLanguage().languageTag },
 	reducers: {
 		addHiddenComponentKey(state, payload) {
 			return !state.hiddenComponentKeys.includes(payload) ? { ...state, hiddenComponentKeys: [...state.hiddenComponentKeys, payload] } : state;
+		},
+		setLanguage(state, payload) {
+			const isPayloadValid = payload && typeof payload === 'string' && Languages.some((q) => q.code === payload);
+			return isPayloadValid ? { ...state, language: payload } : state;
 		},
 	},
 };
@@ -43,7 +49,7 @@ export const apiErrorActive = {
 export const drawerState = {
 	// Manage the drawer state
 	name: 'drawerState',
-	state: { navigation: null, isOpen: false, selectedItem: null },
+	state: { navigation: null, isOpen: false },
 	reducers: {
 		setIsOpen(state, payload) {
 			return typeof payload === 'boolean' ? { ...state, isOpen: payload } : state;

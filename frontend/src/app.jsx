@@ -11,6 +11,7 @@ import { colors } from './config/Styles';
 import { Navigator } from './config/Routes';
 import StoreProvider from './state/Store';
 import Drawer from './components/navigation/Drawer';
+import Locale from './config/Locale';
 
 const persistor = getPersistor();
 const ROBOTO = require('native-base/Fonts/Roboto.ttf');
@@ -45,6 +46,7 @@ export default function App() {
 	return (
 		<StoreProvider>
 			<PersistGate persistor={persistor}>
+				<Locale />
 				<SafeAreaProvider>
 					<PaperProvider theme={theme}>
 						<Drawer>
