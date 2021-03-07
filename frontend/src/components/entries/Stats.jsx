@@ -44,9 +44,7 @@ export default function Stats({ data, loading }) {
 
 	return (
 		<ScrollView>
-			<Text style={styles.text}>{`We have ${data.channels + data.groups + data.bots + data.stickers} channels, groups, bots and stickers added to our directory. 
-			
-${data.english} in English and ${data.spanish} in Spanish`}</Text>
+			<Text style={styles.text}>{`We have ${data.channels + data.groups + data.bots + data.stickers} channels, groups, bots and stickers added to our directory.`}</Text>
 			<Grid style={styles.grid}>
 				<Col style={styles.col}>
 					<Row style={styles.row}>
