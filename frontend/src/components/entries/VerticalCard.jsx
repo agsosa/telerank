@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 10,
 	},
+	textDescription: { color: 'gray', fontSize: 15, marginTop: -10 },
 });
 
 const placeholderImage = require('../../../img/tg_placeholder.jpg');
@@ -52,7 +53,7 @@ export default function VerticalCard({ item }) {
 				</CardItem>
 				<CardItem style={item.featured ? styles.featuredBG : {}}>
 					<Body>
-						<Text>{item.title}</Text>
+						<Text style={styles.textDescription}>{item.title}</Text>
 
 						<View style={styles.statsView}>
 							<NumberTag icon='thumb-up' number={item.likes} />
