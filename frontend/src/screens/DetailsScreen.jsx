@@ -12,19 +12,19 @@ import { ShareTelegram } from '../lib/Share';
 const stylesBtn = StyleSheet.create({
 	dislikeTag: { color: colors.red, fontSize: 22 },
 	likeTag: { color: colors.green, fontSize: 22 },
-	likesPadding: { marginHorizontal: 5, padding: 15 },
+	likesPadding: { borderWidth: 1, marginHorizontal: 5, padding: 15 },
 	reportBtn: { borderColor: colors.red, borderWidth: 0.3, marginRight: 15, marginTop: 10 },
 	reportContent: { color: colors.red, fontSize: 12 },
 	shareBtn: { borderColor: colors.mainLight, borderWidth: 0.3, marginTop: 10 },
 	shareContent: { color: colors.mainLight, fontSize: 12 },
-	telegramBtn: { alignSelf: 'center', backgroundColor: colors.main, marginHorizontal: 40, marginVertical: 5, padding: 5, paddingHorizontal: 'auto' },
-	telegramContent: { color: 'white', fontSize: 20 },
-	viewButtons: { flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-evenly', marginVertical: 10 },
+	telegramBtn: { alignSelf: 'center', backgroundColor: colors.alt2, elevation: 5, width: '100%' },
+	telegramContent: { color: 'white', fontSize: 22, fontWeight: 'normal' },
+	viewButtons: { flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-evenly', marginVertical: 5 },
 });
 
 const styles = StyleSheet.create({
 	card: {
-		elevation: 1,
+		elevation: 0.25,
 	},
 	centeredText: { textAlign: 'center' },
 	descriptionText: { margin: 10, paddingTop: 5, textAlign: 'center' },
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 		marginBottom: 20,
 		textAlign: 'center',
 	},
+	featuredBG: { backgroundColor: colors.featuredLight },
 	featuredBadgeContainer: {
 		position: 'absolute',
 		right: -3,
@@ -46,29 +47,28 @@ const styles = StyleSheet.create({
 		bottom: 0,
 		position: 'absolute',
 		top: -150,
-		width: '90%',
+		width: '95%',
 		zIndex: 100,
 	},
 	statsView: { flex: 1, flexDirection: 'row', justifyContent: 'center', marginVertical: 5 },
-	titleCard: { alignSelf: 'center', marginBottom: 10 },
+	titleCard: { alignSelf: 'center', flexDirection: 'column', marginVertical: 5 },
 });
 
 const placeholderImage = require('../../img/tg_placeholder.jpg');
 
 const DetailsScreen = ({ route }) => {
 	const data = route.params;
-
 	const imageSrc = data.image && data.image.includes('storage.googleapis') ? { uri: data.image } : placeholderImage;
 
 	return (
 		<View style={styles.mainView}>
 			<ScrollView centerContent>
 				<Card key={data._id} style={styles.card}>
-					<CardItem>
+					<CardItem style={data.featured && styles.featuredBG}>
 						<Left>
 							<Thumbnail source={imageSrc} />
 							<Body>
-								<Text>{data.username}</Text>
+								<Text>@{data.username}</Text>
 							</Body>
 						</Left>
 						{data.featured && (
@@ -79,27 +79,26 @@ const DetailsScreen = ({ route }) => {
 					</CardItem>
 					<CardItem style={styles.titleCard}>
 						<Text style={styles.centeredText}>{data.title}</Text>
-					</CardItem>
-
-					<Image source={imageSrc} style={styles.image} />
-
-					<CardItem style={styles.flexCardItem}>
 						<Text note>
 							{data.type} / {data.category} / {formatLanguageCode(data.language)}
 						</Text>
+					</CardItem>
+
+					<Image source={imageSrc} style={styles.image} />
+					<Button compact style={stylesBtn.telegramBtn}>
+						<Icon name='paper-plane' style={stylesBtn.telegramContent} />
+						<Text style={stylesBtn.telegramContent}> Open Telegram</Text>
+					</Button>
+
+					<CardItem style={styles.flexCardItem}>
 						<Text style={styles.descriptionText}>{data.description}</Text>
+					</CardItem>
+
+					<CardItem style={styles.flexCardItem}>
 						<View style={stylesBtn.viewButtons}>
 							<NumberTag icon='thumb-down' outlined style={stylesBtn.likesPadding} textStyle={stylesBtn.dislikeTag} selectedColor={colors.red} selected number={data.dislikes} />
 							<NumberTag icon='thumb-up' outlined style={stylesBtn.likesPadding} textStyle={stylesBtn.likeTag} selectedColor={colors.green} selected number={data.likes} />
 						</View>
-					</CardItem>
-
-					<Button style={stylesBtn.telegramBtn}>
-						<Icon name='paper-plane' style={stylesBtn.telegramContent} />
-						<Text style={stylesBtn.telegramContent}>Telegram</Text>
-					</Button>
-
-					<CardItem style={styles.flexCardItem}>
 						<View style={stylesBtn.viewButtons}>
 							<Button style={stylesBtn.reportBtn}>
 								<Icon name='flag' style={stylesBtn.reportContent} />

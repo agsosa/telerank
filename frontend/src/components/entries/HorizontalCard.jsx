@@ -10,7 +10,7 @@ import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
 	caption: { alignSelf: 'center' },
-	card: { marginBottom: 15 },
+	card: { elevation: 1, marginBottom: 15 },
 	cardContent: { marginTop: 7 },
 	cardContentView: { flex: 1, flexDirection: 'row', marginTop: 5, flexWrap: 'wrap', justifyContent: 'space-between', padding: 5 },
 	cardFeatured: { backgroundColor: colors.featuredLight, borderColor: colors.featured, borderLeftWidth: 5 },
@@ -29,7 +29,7 @@ export default function HorizontalCard({ item }) {
 	return (
 		<View style={styles.mainView}>
 			<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
-				<Card elevation={2} style={[styles.card, item.featured && styles.cardFeatured]}>
+				<Card style={[styles.card, item.featured && styles.cardFeatured]}>
 					<Card.Title title={item.username} subtitle={`${item.type} / ${item.category} / ${formatLanguageCode(item.language)}`} />
 					<Card.Cover source={imageSrc} style={styles.coverImg} />
 

@@ -5,14 +5,13 @@ import { PropTypes } from 'prop-types';
 import { colors } from '../config/Styles';
 
 const styles = StyleSheet.create({
-	headline: { alignSelf: 'center', color: colors.pink, fontSize: 18, fontWeight: 'bold' },
+	headline: { alignSelf: 'center', color: colors.pink, fontSize: 20, fontWeight: 'bold' },
 	view: {
-		borderBottomLeftRadius: 50,
+		/* borderBottomLeftRadius: 50,
 		borderBottomRightRadius: 50,
-		borderBottomWidth: 3,
-		borderColor: colors.pink,
-		marginBottom: 10,
-		marginHorizontal: '25%',
+		borderBottomWidth: 2,
+		borderColor: colors.pink, 
+		marginHorizontal: '25%', */
 		padding: 2,
 	},
 });

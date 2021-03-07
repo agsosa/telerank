@@ -17,6 +17,7 @@ export const colors = {
 	purple: '#7F20F3',
 	red: '#F44336',
 	green: '#4CAF50',
+	grayAlt: '#5A5A5A',
 };
 
 export const commonStyles = StyleSheet.create({

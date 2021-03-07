@@ -9,9 +9,10 @@ import { commonStyles, colors } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
+	card: { elevation: 1, flex: 1 },
 	featuredBG: { backgroundColor: colors.featuredLight },
 	featuredBadgeContainer: { position: 'absolute', right: '0%', top: '-10%', zIndex: 5 },
-	featuredCard: { borderColor: '#FFB400', borderLeftWidth: 5 },
+	featuredCard: { borderColor: colors.featured, borderLeftWidth: 5 },
 	membersTag: { alignSelf: 'flex-start' },
 	statsView: {
 		flex: 1,
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 10,
 	},
-	textDescription: { color: 'gray', fontSize: 15, marginTop: -10 },
+	textDescription: { color: colors.grayAlt, fontSize: 15, marginTop: -10 },
 });
 
 const placeholderImage = require('../../../img/tg_placeholder.jpg');
@@ -33,7 +34,7 @@ export default function VerticalCard({ item }) {
 
 	return (
 		<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
-			<Card style={[commonStyles.flex, item.featured && styles.featuredCard]}>
+			<Card style={[styles.card, item.featured && styles.featuredCard]}>
 				<CardItem style={item.featured ? styles.featuredBG : {}}>
 					<Left>
 						<Thumbnail source={imageSrc} />
