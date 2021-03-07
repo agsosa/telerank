@@ -9,6 +9,7 @@ export function formatLanguageCode(langCode) {
 	}
 }
 
+// Slice long strings and add ... at the end
 export function truncateWithEllipses(str, max, add) {
 	const x = add || '...';
 	return typeof str === 'string' && str.length > max ? str.substring(0, max) + x : str;

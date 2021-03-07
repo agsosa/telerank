@@ -30,7 +30,10 @@ const StatsModal = React.forwardRef((props, ref) => {
 		refreshData();
 	}, []);
 
-	const show = () => setVisible(true);
+	const show = () => {
+		refreshData();
+		setVisible(true);
+	};
 	const hide = () => setVisible(false);
 	React.useImperativeHandle(ref, () => ({
 		show() {
