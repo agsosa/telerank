@@ -13,12 +13,9 @@ import AddMediaInfoBanner from '../../components/infobanners/AddMediaInfoBanner'
 import FeatureInfoBanner from '../../components/infobanners/FeatureInfoBanner';
 import { colors } from '../../config/Styles';
 import InfoBanner from '../../components/infobanners/InfoBanner';
+import Filters from '../../components/entries/Filters';
 
 const styles = StyleSheet.create({
-	checkboxLabel: {
-		color: colors.tgDarkGray,
-		top: 6,
-	},
 	descriptionText: (bold = false) => ({
 		color: 'gray',
 		fontSize: 17,
@@ -26,13 +23,6 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontWeight: bold ? 'bold' : 'normal',
 	}),
-	filterText: {
-		padding: 5,
-	},
-	itemView: { alignItems: 'stretch', alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', marginRight: 15, width: 'auto' },
-	listView: {
-		flexDirection: 'row',
-	},
 	mainView: {
 		alignContent: 'center',
 		alignItems: 'center',
@@ -95,41 +85,7 @@ export default function TopTab() {
 				<Text style={styles.descriptionText()}>This is a list of the best 100 Telegram channels, groups, bots and stickers in our directory ordered by ratings and member count.</Text>
 				<Text style={styles.descriptionText(true)}>Tell your community to rate you in this app to get better rankings!</Text>
 
-				<SectionTitle style={styles.filterText} size={15} text='Types' />
-
-				<View style={styles.listView}>
-					<View style={styles.itemView}>
-						<Checkbox status='checked' color={colors.main} />
-						<Text style={styles.checkboxLabel}>Channels</Text>
-					</View>
-					<View style={styles.itemView}>
-						<Checkbox status='checked' color={colors.main} />
-						<Text style={styles.checkboxLabel}>Groups</Text>
-					</View>
-					<View style={styles.itemView}>
-						<Checkbox status='checked' color={colors.main} />
-						<Text style={styles.checkboxLabel}>Bots</Text>
-					</View>
-					<View style={styles.itemView}>
-						<Checkbox status='checked' color={colors.main} />
-						<Text style={styles.checkboxLabel}>Stickers</Text>
-					</View>
-				</View>
-				<SectionTitle style={styles.filterText} size={15} text='Languages' />
-				<View style={styles.listView}>
-					<View style={styles.itemView}>
-						<Checkbox />
-						<Text style={styles.checkboxLabel} color={colors.main}>
-							English
-						</Text>
-					</View>
-					<View style={styles.itemView}>
-						<Checkbox />
-						<Text style={styles.checkboxLabel} color={colors.main}>
-							Español
-						</Text>
-					</View>
-				</View>
+				<Filters />
 			</View>
 		);
 	}

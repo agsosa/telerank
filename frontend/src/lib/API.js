@@ -79,6 +79,7 @@ const API_MODULES = {
 };
 
 // TODO: Save storage cache to memory instead of loading from storage everytime.
+// TODO: Prevent concurrent calls for each apiModule (campo isLoading)
 /*
 	getModuleData: Get data from cache.
 	Params:
@@ -144,4 +145,6 @@ export function getModuleData(apiModule, payload, ignoreCache = false) {
 	});
 }
 
-export function getEntryData(username) {}
+export function getEntryExtraData(id) {
+	// Return: { description, comments } for id
+}

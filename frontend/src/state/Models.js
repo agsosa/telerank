@@ -26,11 +26,24 @@ export const settings = {
 	state: { hiddenComponentKeys: [], language: getBestAvailableLanguage().languageTag },
 	reducers: {
 		addHiddenComponentKey(state, payload) {
+			// Payload: string
 			return !state.hiddenComponentKeys.includes(payload) ? { ...state, hiddenComponentKeys: [...state.hiddenComponentKeys, payload] } : state;
 		},
 		setLanguage(state, payload) {
+			// Payload: string, language code
 			const isPayloadValid = payload && typeof payload === 'string' && Languages.some((q) => q.code === payload);
 			return isPayloadValid ? { ...state, language: payload } : state;
+		},
+	},
+};
+
+export const currentFilters = {
+	name: 'currentFilters',
+	state: { languages: [getBestAvailableLanguage().languageTag], types: ['channel', 'bot', 'sticker', 'group'], category: ['all'] },
+	reducers: {
+		setFilters(state, payload) {
+			// Payload: Object
+			return payload && payload instanceof Object ? { ...state, payload } : state;
 		},
 	},
 };
@@ -41,6 +54,7 @@ export const apiErrorActive = {
 	state: false,
 	reducers: {
 		setAPIErrorStatus(state, payload) {
+			// Payload: bool
 			return typeof payload === 'boolean' ? payload : state;
 		},
 	},
@@ -52,9 +66,11 @@ export const drawerState = {
 	state: { navigation: null, isOpen: false },
 	reducers: {
 		setIsOpen(state, payload) {
+			// Payload: bool
 			return typeof payload === 'boolean' ? { ...state, isOpen: payload } : state;
 		},
 		setNavigation(state, payload) {
+			// Payload: react navigation object
 			return payload instanceof Object ? { ...state, navigation: payload } : state;
 		},
 	},
