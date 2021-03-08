@@ -49,10 +49,10 @@ export default function HomeTab() {
 		return (
 			<View>
 				<GlobalSearch />
-				<AddMediaInfoBanner navigation={navigation} />
 				<SectionTitle text='Recently Added' />
 				<HorizontalList data={entriesData} loading={loading} />
-				<SectionTitle text='Featured List' />
+				<AddMediaInfoBanner navigation={navigation} />
+				<SectionTitle text='Featured' />
 			</View>
 		);
 	}

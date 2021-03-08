@@ -22,7 +22,7 @@ export const ShareTelegram = (username) => {
 		const tgUrl = `https://t.me/${username}`;
 		Share.share({
 			url: tgUrl,
-			message: `@${username} is on Telegram! ${tgUrl}`,
+			message: `@${username} (${tgUrl}) is listed on the Telerank directory! Download the app: ${STORE_URL}`,
 		});
 	} catch (error) {
 		console.log(error.message);

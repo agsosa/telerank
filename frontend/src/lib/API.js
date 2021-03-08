@@ -4,7 +4,7 @@ import moment from 'moment';
 import { MMKV } from 'react-native-mmkv';
 import { store } from '../state/Store';
 
-const BASE_URL = 'http://ab1abe503d37.ngrok.io/api'; // Base URL for the API calls
+const BASE_URL = 'http://a20a49778015.ngrok.io/api'; // Base URL for the API calls
 
 rax.attach();
 const retryConfig = {
@@ -32,7 +32,7 @@ const API_MODULES = {
 		// data: array [] of {} EntryModel including all the featured and recent added entries.
 		// payload: none
 		validateData: (data) => data && Array.isArray(data),
-		getURL: (payload) => `${BASE_URL}/entries?page=0&limit=10`, // TODO: Change endpoint
+		getURL: (payload) => `${BASE_URL}/entries?page=0&limit=5`, // TODO: Change endpoint
 	},
 	stats: {
 		// data: object {} of statistics (GetStatsFromDatabase)
@@ -40,8 +40,45 @@ const API_MODULES = {
 		validateData: (data) => data,
 		getURL: (payload) => `${BASE_URL}/stats`,
 	},
+	search: {
+		// data: array [] of {} EntryModel including all the featured and recent added entries.
+		// payload: none
+		validateData: (data) => data && Array.isArray(data),
+		getURL: (payload) => `${BASE_URL}/entries?page=0&limit=10`, // TODO: Change endpoint
+	},
+	top: {
+		// data: array [] of {} EntryModel ordered by rating (descending)
+		// payload: none
+		validateData: (data) => data && Array.isArray(data),
+		getURL: (payload) => `${BASE_URL}/top?page=0`,
+	},
+	channels: {
+		// data: array [] of {} EntryModel with type channel
+		// payload: page
+		validateData: (data) => data && Array.isArray(data),
+		getURL: (payload) => `${BASE_URL}/entries?type=channels&page=0`,
+	},
+	groups: {
+		// data: array [] of {} EntryModel with type group
+		// payload: page
+		validateData: (data) => data && Array.isArray(data),
+		getURL: (payload) => `${BASE_URL}/entries?type=groups&page=0`,
+	},
+	bots: {
+		// data: array [] of {} EntryModel with type bot
+		// payload: page
+		validateData: (data) => data && Array.isArray(data),
+		getURL: (payload) => `${BASE_URL}/entries?type=bots&page=0`,
+	},
+	stickers: {
+		// data: array [] of {} EntryModel with type sticker
+		// payload: page
+		validateData: (data) => data && Array.isArray(data),
+		getURL: (payload) => `${BASE_URL}/entries?type=stickers&page=0`,
+	},
 };
 
+// TODO: Save storage cache to memory instead of loading from storage everytime.
 /*
 	getModuleData: Get data from cache.
 	Params:

@@ -16,6 +16,9 @@ const styles = StyleSheet.create({
 	flatList: {
 		marginBottom: -15,
 	},
+	view: {
+		marginBottom: -30,
+	},
 });
 
 export default function HorizontalList({ data }) {
@@ -31,7 +34,7 @@ export default function HorizontalList({ data }) {
 	});
 
 	return (
-		<View>
+		<View style={styles.view}>
 			<FlatList
 				onViewableItemsChanged={onViewableItemsChanged.current}
 				viewabilityConfig={viewabilityConfig.current}

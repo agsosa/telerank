@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, ViewPropTypes } from 'react-native';
 import { Headline } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
 import { colors } from '../config/Styles';
@@ -7,23 +7,19 @@ import { colors } from '../config/Styles';
 const styles = StyleSheet.create({
 	headline: { alignSelf: 'center', color: colors.pink, fontSize: 20, fontWeight: 'bold' },
 	view: {
-		/* borderBottomLeftRadius: 50,
-		borderBottomRightRadius: 50,
-		borderBottomWidth: 2,
-		borderColor: colors.pink, 
-		marginHorizontal: '25%', */
 		padding: 2,
 	},
 });
 
-export default function SectionTitle({ text }) {
+export default function SectionTitle({ text, style }) {
 	return (
 		<View style={styles.view}>
-			<Headline style={styles.headline}>
+			<Headline style={[styles.headline, style]}>
 				<Text>{text || ''}</Text>
 			</Headline>
 		</View>
 	);
 }
 
-SectionTitle.propTypes = { text: PropTypes.string.isRequired };
+SectionTitle.defaultProps = { style: {} };
+SectionTitle.propTypes = { text: PropTypes.string.isRequired, style: ViewPropTypes.style };

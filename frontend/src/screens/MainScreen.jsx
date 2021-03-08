@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { commonStyles } from '../config/Styles';
 import HomeTab from './tabscreens/HomeTab';
 import APIErrorSnackbar from '../components/APIErrorSnackbar';
+import TopTab from './tabscreens/TopTab';
 
 const styles = StyleSheet.create({
 	tabs: { backgroundColor: 'white', elevation: 5, marginTop: 5 },
@@ -23,10 +24,10 @@ const MainScreen = ({ setDrawerNavigation }) => {
 		<View style={commonStyles.flex}>
 			<Tabs iconPosition='leading' style={styles.tabs} mode='scrollable' showLeadingSpace>
 				<TabScreen label='Inicio' icon='home'>
-					<HomeTab style={styles.view} />
+					<HomeTab />
 				</TabScreen>
 				<TabScreen label='Top 100' icon='crown'>
-					<View />
+					<TopTab />
 				</TabScreen>
 				<TabScreen label='Canales' icon='bullhorn'>
 					<View />
