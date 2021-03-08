@@ -2,38 +2,14 @@ import * as React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import Stats from '../entries/Stats';
-import { getModuleData } from '../../lib/API';
-
-const styles = StyleSheet.create({
-	text: { fontSize: 18, top: 5 },
-	view: { flexDirection: 'row' },
-});
 
 const StatsModal = React.forwardRef((props, ref) => {
 	const [visible, setVisible] = React.useState(false);
-	const [statsData, setStatsData] = React.useState({});
-	const [loading, setLoading] = React.useState(true);
-
-	const refreshData = async () => {
-		setLoading(true);
-		getModuleData('Stats')
-			.then((result) => {
-				if (setStatsData) setStatsData(result);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-			})
-			.then(() => setLoading(false));
-	};
-
-	React.useEffect(() => {
-		refreshData();
-	}, []);
 
 	const show = () => {
-		refreshData();
 		setVisible(true);
 	};
+
 	const hide = () => setVisible(false);
 	React.useImperativeHandle(ref, () => ({
 		show() {
@@ -51,7 +27,7 @@ const StatsModal = React.forwardRef((props, ref) => {
 					<Text>Statistics</Text>
 				</Dialog.Title>
 				<Dialog.ScrollArea>
-					<Stats data={statsData} loading={loading} />
+					<Stats />
 				</Dialog.ScrollArea>
 				<Dialog.Actions>
 					<Button onPress={hide}>

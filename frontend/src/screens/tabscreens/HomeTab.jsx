@@ -11,7 +11,6 @@ import AddMediaInfoBanner from '../../components/infobanners/AddMediaInfoBanner'
 import FeatureInfoBanner from '../../components/infobanners/FeatureInfoBanner';
 
 export default function HomeTab() {
-	const [statsData, setStatsData] = useState({});
 	const [entriesData, setEntriesData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const navigation = useNavigation();
@@ -30,15 +29,8 @@ export default function HomeTab() {
 				console.log(`getModuleData rejected with reason ${reason}`);
 			});
 
-		const b = getModuleData('Stats')
-			.then((result) => {
-				if (setStatsData) setStatsData(result);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-			});
-
-		await Promise.all([a, b]).then(() => setLoading(false));
+		await a;
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -62,7 +54,7 @@ export default function HomeTab() {
 			<View>
 				<FeatureInfoBanner navigation={navigation} />
 				<SectionTitle text='Estadísticas' />
-				<Stats data={statsData} loading={loading} />
+				<Stats />
 			</View>
 		);
 	}

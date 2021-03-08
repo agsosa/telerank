@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, ScrollView } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
-import { PropTypes } from 'prop-types';
 import { formattedNumber } from '../../lib/Helpers';
 import { colors } from '../../config/Styles';
 import LoadingIndicator from '../LoadingIndicator';
+import { getModuleData } from '../../lib/API';
 
 const styles = StyleSheet.create({
 	col: {
@@ -39,7 +39,28 @@ const styles = StyleSheet.create({
 	text: { padding: 15, textAlign: 'center' },
 });
 
-export default function Stats({ data, loading }) {
+export default function Stats() {
+	const [data, setData] = useState({});
+	const [loading, setLoading] = useState(true);
+
+	const refreshData = async () => {
+		setLoading(true);
+
+		await getModuleData('Stats')
+			.then((result) => {
+				if (setData) setData(result);
+			})
+			.catch((reason) => {
+				console.log(`getModuleData rejected with reason ${reason}`);
+			});
+
+		setLoading(false);
+	};
+
+	useEffect(() => {
+		refreshData();
+	}, []);
+
 	if (loading || !data || !data.channels) return <LoadingIndicator />;
 
 	return (
@@ -92,8 +113,3 @@ export default function Stats({ data, loading }) {
 		</ScrollView>
 	);
 }
-
-Stats.propTypes = {
-	data: PropTypes.any.isRequired,
-	loading: PropTypes.bool.isRequired,
-};
