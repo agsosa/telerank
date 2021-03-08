@@ -26,7 +26,7 @@ const MainScreen = ({ setDrawerNavigation }) => {
 				<TabScreen label='Inicio' icon='home'>
 					<HomeTab />
 				</TabScreen>
-				<TabScreen label='Top 100' icon='crown'>
+				<TabScreen label='Featured' icon='star'>
 					<TopTab />
 				</TabScreen>
 				<TabScreen label='Canales' icon='bullhorn'>

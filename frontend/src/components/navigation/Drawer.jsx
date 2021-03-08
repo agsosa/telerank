@@ -99,11 +99,12 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
 					<List.Item title='Add channels' left={(props) => <List.Icon {...props} icon='bullhorn' />} onPress={() => onMenuItemSelected('AddMedia')} />
 					<List.Item title='Add groups' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('AddMedia')} />
 					<List.Item title='Add bots' left={(props) => <List.Icon {...props} icon='robot' />} onPress={() => onMenuItemSelected('AddMedia')} />
-					<List.Item title='Add stickers' left={(props) => <List.Icon {...props} icon='sticker' />} onPress={() => onMenuItemSelected('Promote')} />
+					<List.Item title='Add stickers' left={(props) => <List.Icon {...props} icon='sticker' />} onPress={() => onMenuItemSelected('AddMedia')} />
 					<List.Item
 						style={{ backgroundColor: colors.featuredLight }}
 						titleStyle={styles.featuredItemTitle}
 						title='Promote/Feature'
+						onPress={() => onMenuItemSelected('Promote')}
 						left={(props) => <List.Icon {...props} icon='star' color={colors.featured} />}
 					/>
 				</List.Section>

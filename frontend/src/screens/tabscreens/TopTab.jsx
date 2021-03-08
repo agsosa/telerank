@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
 		fontWeight: bold ? 'bold' : 'normal',
 	}),
 	filterText: {
-		fontSize: 15,
 		padding: 5,
 	},
 	itemView: { alignItems: 'stretch', alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', marginRight: 15, width: 'auto' },
@@ -96,7 +95,7 @@ export default function TopTab() {
 				<Text style={styles.descriptionText()}>This is a list of the best 100 Telegram channels, groups, bots and stickers in our directory ordered by ratings and member count.</Text>
 				<Text style={styles.descriptionText(true)}>Tell your community to rate you in this app to get better rankings!</Text>
 
-				<SectionTitle style={styles.filterText} text='Types' />
+				<SectionTitle style={styles.filterText} size={15} text='Types' />
 
 				<View style={styles.listView}>
 					<View style={styles.itemView}>
@@ -116,7 +115,7 @@ export default function TopTab() {
 						<Text style={styles.checkboxLabel}>Stickers</Text>
 					</View>
 				</View>
-				<SectionTitle style={styles.filterText} text='Languages' />
+				<SectionTitle style={styles.filterText} size={15} text='Languages' />
 				<View style={styles.listView}>
 					<View style={styles.itemView}>
 						<Checkbox />
