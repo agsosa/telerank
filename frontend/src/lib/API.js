@@ -25,7 +25,7 @@ const retryConfig = {
 };
 
 const STORAGE_KEY_PREFIX = 'tr_'; // Prefix added to the storage keys
-const CACHE_EXPIRATION_MINUTES = 1; // Minutes to consider the cache expired
+const CACHE_EXPIRATION_MINUTES = 3; // Minutes to consider the cache expired
 
 const API_MODULES = {
 	home: {
@@ -40,58 +40,25 @@ const API_MODULES = {
 		pendingPromise: null,
 		getURL: () => `${BASE_URL}/stats`,
 	},
-	search: {
-		validateData: (data) => data && Array.isArray(data),
-		getURL: (payload) => `${BASE_URL}/entries?page=0&limit=10`,
-	},
-	top: {
-		validateData: (data) => data && Array.isArray(data),
-		getURL: (payload) => `${BASE_URL}/top?page=0`,
-	},
-	channels: {
-		validateData: (data) => data && Array.isArray(data),
-		getURL: (payload) => `${BASE_URL}/entries?type=channels&page=0`,
-	},
-	groups: {
-		validateData: (data) => data && Array.isArray(data),
-		getURL: (payload) => `${BASE_URL}/entries?type=groups&page=0`,
-	},
-	bots: {
-		validateData: (data) => data && Array.isArray(data),
-		getURL: (payload) => `${BASE_URL}/entries?type=bots&page=0`,
-	},
-	stickers: {
-		validateData: (data) => data && Array.isArray(data),
-		getURL: (payload) => `${BASE_URL}/entries?type=stickers&page=0`,
-	},
+	// search, top, groups, channels, bots, stickers
 };
 
-// TODO: Save storage cache to memory instead of loading from storage everytime.
-// TODO: Prevent race condition for each api module
 /*
-	getModuleData: Get data from cache.
+	getModuleData: Get data from cache (memory/storage) or server
 	Params:
-		apiModule (string): String used to get an API_MODULES object matching by this key (examples: 'home', 'stats')
+		apiModule (string): String used to get an API_MODULES object matching by key (examples: 'home', 'stats')
 		payload (object): Passed to the getURL method of apiModule object to build the URL query (examples: {page: 0, limit: 10})
 		ignoreCache (bool): To use or not the data saved in local storage
 	Return:
-		Promise - Resolved with a data object if the server responds and the validateData method of the apiModule object returns true.
+		Promise - Resolve with a data object validated with the validateData method of the apiModule object
 */
 export function getModuleData(apiModule = 'stats', payload = {}, ignoreCache = false) {
 	const apiModuleStr = apiModule.toLowerCase();
 	const moduleInfo = API_MODULES[apiModuleStr];
 
-	console.log('---------');
-
-	// Prevent concurrent calls for this api module
-	if (moduleInfo.pendingPromise) {
-		console.log(`Prevented concurrent promise for ${apiModuleStr}`);
-		return moduleInfo.pendingPromise;
-	}
+	if (moduleInfo.pendingPromise) return moduleInfo.pendingPromise; // Prevent concurrent promises/race condition for the same api module
 
 	moduleInfo.pendingPromise = new Promise((resolve, reject) => {
-		if (!apiModuleStr || !API_MODULES[apiModuleStr]) reject(new Error('Invalid api module'));
-
 		console.log(`Running promise for ${apiModuleStr}`);
 
 		const CACHE_STORAGE_KEY = STORAGE_KEY_PREFIX + apiModuleStr;
@@ -114,11 +81,9 @@ export function getModuleData(apiModule = 'stats', payload = {}, ignoreCache = f
 
 			// Check cache expiration time
 			if (cacheParsed && cacheParsed.expirationTime) {
-				// Get time from cache and calculate seconds remaining
+				// Calculate cache expiration seconds remaining and determine if it's expired
 				const cacheMoment = moment(cacheParsed.expirationTime);
 				const secondsRemaining = cacheMoment ? cacheMoment.diff(moment(), 'seconds') : 0;
-				console.log(`getModuleData ${apiModule}: cache seconds remaining ${secondsRemaining}`);
-
 				if (secondsRemaining <= 0) cacheExpired = true;
 			}
 		} catch (e) {
@@ -139,7 +104,7 @@ export function getModuleData(apiModule = 'stats', payload = {}, ignoreCache = f
 						const expTime = moment().add(CACHE_EXPIRATION_MINUTES, 'minutes'); // Calculate next expiration time
 						const obj = { data: resultData, expirationTime: expTime };
 						MMKV.set(CACHE_STORAGE_KEY, JSON.stringify(obj)); // Cache save
-						moduleInfo.currentData = obj;
+						moduleInfo.currentData = obj; // Save to memory to prevent unnecessary storage reads
 						resolve(resultData);
 					} else reject(new Error('Data from server is not valid'));
 				})
