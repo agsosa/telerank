@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Image, StyleSheet } from 'react-native';
+import { View, ScrollView, Image, StyleSheet, Linking, TouchableOpacity } from 'react-native';
 import { Right, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from 'native-base';
 import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
@@ -60,32 +60,44 @@ const DetailsScreen = ({ route }) => {
 	const data = route.params;
 	const imageSrc = data.image && data.image.includes('storage.googleapis') ? { uri: data.image } : placeholderImage;
 
+	const openTelegram = () => {
+		try {
+			Linking.openURL(`https://t.me/${data.username}`);
+		} catch (e) {
+			console.log(`openTelegram link error: ${e.message}`);
+			alert('An error occurred while trying to open Telegram.');
+		}
+	};
+
 	return (
 		<View style={styles.mainView}>
 			<ScrollView centerContent>
 				<Card key={data._id} style={styles.card}>
-					<CardItem style={data.featured && styles.featuredBG}>
-						<Left>
-							<Thumbnail source={imageSrc} />
-							<Body>
-								<Text>@{data.username}</Text>
-							</Body>
-						</Left>
-						{data.featured && (
-							<Right style={styles.featuredBadgeContainer}>
-								<FeaturedBadge />
-							</Right>
-						)}
-					</CardItem>
-					<CardItem style={styles.titleCard}>
-						<Text style={styles.centeredText}>{data.title}</Text>
-						<Text note>
-							{data.type} / {data.category} / {formatLanguageCode(data.language)}
-						</Text>
-					</CardItem>
+					<TouchableOpacity onPress={openTelegram} activeOpacity={0.7}>
+						<CardItem style={data.featured ? styles.featuredBG : {}}>
+							<Left>
+								<Thumbnail source={imageSrc} />
+								<Body>
+									<Text>@{data.username}</Text>
+								</Body>
+							</Left>
+							{data.featured && (
+								<Right style={styles.featuredBadgeContainer}>
+									<FeaturedBadge />
+								</Right>
+							)}
+						</CardItem>
+						<CardItem style={styles.titleCard}>
+							<Text style={styles.centeredText}>{data.title}</Text>
+							<Text note>
+								{data.type} / {data.category} / {formatLanguageCode(data.language)}
+							</Text>
+						</CardItem>
 
-					<Image source={imageSrc} style={styles.image} />
-					<Button compact style={stylesBtn.telegramBtn}>
+						<Image source={imageSrc} style={styles.image} />
+					</TouchableOpacity>
+
+					<Button compact style={stylesBtn.telegramBtn} onPress={openTelegram}>
 						<Icon name='paper-plane' style={stylesBtn.telegramContent} />
 						<Text style={stylesBtn.telegramContent}> Open Telegram</Text>
 					</Button>
