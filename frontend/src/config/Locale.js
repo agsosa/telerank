@@ -37,7 +37,6 @@ const setI18nConfig = (forceLanguage = null) => {
 	i18n.defaultLocale = 'en';
 	i18n.fallbacks = true;
 	i18n.locale = languageTag;
-	console.log(`Current locale: ${i18n.locale}`);
 };
 
 const Locale = ({ language }) => {

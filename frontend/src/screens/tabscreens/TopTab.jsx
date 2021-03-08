@@ -43,39 +43,7 @@ const styles = StyleSheet.create({
 });
 
 export default function TopTab() {
-	const [statsData, setStatsData] = useState({});
-	const [entriesData, setEntriesData] = useState([]);
-	const [loading, setLoading] = useState(true);
 	const navigation = useNavigation();
-
-	// TODO: Modularizar
-	const refreshData = async () => {
-		setLoading(true);
-		setEntriesData([]);
-
-		// TODO: Cancel promises on unmount
-		const a = getModuleData('Home')
-			.then((result) => {
-				if (setEntriesData) setEntriesData(result);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-			});
-
-		const b = getModuleData('Stats')
-			.then((result) => {
-				if (setStatsData) setStatsData(result);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-			});
-
-		await Promise.all([a, b]).then(() => setLoading(false));
-	};
-
-	useEffect(() => {
-		refreshData();
-	}, []);
 
 	function HeaderRenderer() {
 		return (
@@ -94,5 +62,6 @@ export default function TopTab() {
 		return <View />;
 	}
 
-	return <VerticalList Header={HeaderRenderer} Footer={FooterRenderer} data={entriesData} loading={loading} refreshFunc={refreshData} />;
+	return null;
+	// return <VerticalList Header={HeaderRenderer} Footer={FooterRenderer} data={entriesData} loading={loading} refreshFunc={refreshData} />;
 }
