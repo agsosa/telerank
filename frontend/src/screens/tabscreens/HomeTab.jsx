@@ -11,38 +11,14 @@ import AddMediaInfoBanner from '../../components/infobanners/AddMediaInfoBanner'
 import FeatureInfoBanner from '../../components/infobanners/FeatureInfoBanner';
 
 export default function HomeTab() {
-	const [entriesData, setEntriesData] = useState([]);
-	const [loading, setLoading] = useState(true);
 	const navigation = useNavigation();
-
-	// TODO: Modularizar
-	const refreshData = async () => {
-		setLoading(true);
-		setEntriesData([]);
-
-		// TODO: Cancel promises on unmount
-		const a = getModuleData('Home')
-			.then((result) => {
-				if (setEntriesData) setEntriesData(result);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-			});
-
-		await a;
-		setLoading(false);
-	};
-
-	useEffect(() => {
-		refreshData();
-	}, []);
 
 	function HeaderRenderer() {
 		return (
 			<View>
 				<GlobalSearch />
 				<SectionTitle text='Recently Added' />
-				<HorizontalList data={entriesData} loading={loading} />
+				<HorizontalList apiModule='home' />
 				<AddMediaInfoBanner navigation={navigation} />
 				<SectionTitle text='Featured' />
 			</View>
@@ -59,5 +35,5 @@ export default function HomeTab() {
 		);
 	}
 
-	return <VerticalList Header={HeaderRenderer} Footer={FooterRenderer} data={entriesData} loading={loading} refreshFunc={refreshData} />;
+	return <VerticalList Header={HeaderRenderer} Footer={FooterRenderer} apiModule='home' />;
 }

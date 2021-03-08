@@ -1,9 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { Pagination } from 'react-native-snap-carousel';
 import { PropTypes } from 'prop-types';
 import { colors } from '../../config/Styles';
 import HorizontalCard from './HorizontalCard';
+import { getModuleData } from '../../lib/API';
+import LoadingIndicator from '../LoadingIndicator';
 
 const styles = StyleSheet.create({
 	dot: {
@@ -21,8 +23,29 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default function HorizontalList({ data }) {
+export default function HorizontalList({ apiModule }) {
 	const [currentIdx, setCurrentIdx] = useState(0);
+	const [data, setData] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	const refreshData = async () => {
+		setLoading(true);
+		setData([]);
+
+		await getModuleData(apiModule)
+			.then((result) => {
+				if (setData) setData(result);
+			})
+			.catch((reason) => {
+				console.log(`getModuleData rejected with reason ${reason}`);
+			});
+
+		setLoading(false);
+	};
+
+	useEffect(() => {
+		refreshData();
+	}, []);
 
 	const onViewableItemsChanged = useRef(({ viewableItems }) => {
 		setCurrentIdx((oldCurrentIdx) => (viewableItems[0] && oldCurrentIdx !== viewableItems[0].index ? viewableItems[0].index : oldCurrentIdx));
@@ -32,6 +55,8 @@ export default function HorizontalList({ data }) {
 		minimumViewTime: 1,
 		itemVisiblePercentThreshold: 80,
 	});
+
+	if (loading || !data || !Array.isArray(data) || data.length <= 0) return <LoadingIndicator />;
 
 	return (
 		<View style={styles.view}>
@@ -50,5 +75,5 @@ export default function HorizontalList({ data }) {
 }
 
 HorizontalList.propTypes = {
-	data: PropTypes.any.isRequired,
+	apiModule: PropTypes.string.isRequired,
 };
