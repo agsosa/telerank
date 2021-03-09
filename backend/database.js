@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const EntryModel = require('./models/EntryModel');
 const moment = require('moment');
+const mongooseCachebox = require('mongoose-cachebox');
 
 /* MongoDB connection */
 const mongoDB = 'mongodb://localhost/telerank';
@@ -11,7 +12,15 @@ mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-/* Entries */
+var cacheOptions = {
+	cache: true,
+	ttl: 60, // secs
+};
+
+mongooseCachebox(mongoose, cacheOptions);
+
+/* DB Methods */
+
 function AddEntry(obj, onResult) {
 	EntryModel.create(obj, function (err, instance) {
 		if (err) return console.log(err);
