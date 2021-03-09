@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, ScrollView } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
-import { formattedNumber } from '../../lib/Helpers';
+import { formattedNumber, useIsMounted } from '../../lib/Helpers';
 import { colors } from '../../config/Styles';
 import LoadingIndicator from '../LoadingIndicator';
 import { getModuleData } from '../../lib/API';
@@ -40,21 +40,19 @@ const styles = StyleSheet.create({
 });
 
 export default function Stats() {
+	const isMounted = useIsMounted();
 	const [data, setData] = useState({});
 	const [loading, setLoading] = useState(true);
 
 	const refreshData = async () => {
 		setLoading(true);
 
-		await getModuleData('Stats')
-			.then((result) => {
-				if (setData) setData(result);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-			});
-
-		setLoading(false);
+		await getModuleData('Stats').then((result) => {
+			if (isMounted) {
+				setData(result);
+				setLoading(false);
+			}
+		});
 	};
 
 	useEffect(() => {

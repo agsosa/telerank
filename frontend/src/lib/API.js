@@ -26,6 +26,7 @@ const retryConfig = {
 
 const STORAGE_KEY_PREFIX = 'tr_'; // Prefix added to the storage keys
 const CACHE_EXPIRATION_MINUTES = 3; // Minutes to consider the cache expired
+const PROMISE_RETRY_TIMEOUT = 1000;
 
 const API_MODULES = {
 	home: {
@@ -44,13 +45,13 @@ const API_MODULES = {
 };
 
 /*
-	getModuleData: Get data from cache (memory/storage) or server
+	getModuleData: Get data from cache (memory/storage) or server.
 	Params:
 		apiModule (string): String used to get an API_MODULES object matching by key (examples: 'home', 'stats')
 		payload (object): Passed to the getURL method of apiModule object to build the URL query (examples: {page: 0, limit: 10})
 		ignoreCache (bool): To use or not the data saved in local storage
 	Return:
-		Promise - Resolve with a data object validated with the validateData method of the apiModule object
+		Promise - Always (no timeout, no retry limit) resolve with a data object validated with the validateData method of the apiModule object
 */
 export function getModuleData(apiModule = 'stats', payload = {}, ignoreCache = false) {
 	const apiModuleStr = apiModule.toLowerCase();
@@ -58,7 +59,7 @@ export function getModuleData(apiModule = 'stats', payload = {}, ignoreCache = f
 
 	if (moduleInfo.pendingPromise) return moduleInfo.pendingPromise; // Prevent concurrent promises/race condition for the same api module
 
-	moduleInfo.pendingPromise = new Promise((resolve, reject) => {
+	moduleInfo.pendingPromise = new Promise(function cb(resolve, reject) {
 		console.log(`Running promise for ${apiModuleStr}`);
 
 		const CACHE_STORAGE_KEY = STORAGE_KEY_PREFIX + apiModuleStr;
@@ -106,14 +107,14 @@ export function getModuleData(apiModule = 'stats', payload = {}, ignoreCache = f
 						MMKV.set(CACHE_STORAGE_KEY, JSON.stringify(obj)); // Cache save
 						moduleInfo.currentData = obj; // Save to memory to prevent unnecessary storage reads
 						resolve(resultData);
-					} else reject(new Error('Data from server is not valid'));
+					} else setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT); // Retry promise if server returned invalid data
 				})
 				.catch((error) => {
 					// Retry done, server failed. Resolve with the data from cache if it's available.
 					store.dispatch.apiErrorActive.setAPIErrorStatus(true); // Used to display a UI component to notify the user about the error
 					console.log(`axios error : ${error}`);
 					if (cacheParsed && cacheParsed.data) resolve(cacheParsed.data);
-					else reject(new Error("Couldn't get data from server/local storage"));
+					else setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT); // Retry promise if cache is invalid
 				});
 		} else resolve(cacheParsed.data); // Cache is still valid, return data from cache
 	}).then((data) => {

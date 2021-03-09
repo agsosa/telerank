@@ -6,6 +6,7 @@ import { colors } from '../../config/Styles';
 import HorizontalCard from './HorizontalCard';
 import { getModuleData } from '../../lib/API';
 import LoadingIndicator from '../LoadingIndicator';
+import { useIsMounted } from '../../lib/Helpers';
 
 const styles = StyleSheet.create({
 	dot: {
@@ -16,14 +17,15 @@ const styles = StyleSheet.create({
 		width: 10,
 	},
 	flatList: {
-		marginBottom: -15,
+		marginBottom: -20,
 	},
 	view: {
-		marginBottom: -30,
+		marginBottom: -20,
 	},
 });
 
 export default function HorizontalList({ apiModule }) {
+	const isMounted = useIsMounted();
 	const [currentIdx, setCurrentIdx] = useState(0);
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -32,15 +34,12 @@ export default function HorizontalList({ apiModule }) {
 		setLoading(true);
 		setData([]);
 
-		await getModuleData(apiModule)
-			.then((result) => {
-				if (setData) setData(result);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-			});
-
-		setLoading(false);
+		getModuleData(apiModule).then((result) => {
+			if (isMounted) {
+				setData(result);
+				setLoading(false);
+			}
+		});
 	};
 
 	useEffect(() => {

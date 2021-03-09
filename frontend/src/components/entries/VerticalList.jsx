@@ -17,15 +17,12 @@ export default function VerticalList({ Header, Footer, useSearchBar, apiModule }
 		setLoading(true);
 		setData([]);
 
-		await getModuleData(apiModule)
-			.then((result) => {
-				if (setData) setData(result);
-			})
-			.catch((reason) => {
-				console.log(`getModuleData rejected with reason ${reason}`);
-			});
-
-		setLoading(false);
+		await getModuleData(apiModule).then((result) => {
+			if (setData) {
+				setData(result);
+				setLoading(false);
+			}
+		});
 	};
 
 	useEffect(() => {
