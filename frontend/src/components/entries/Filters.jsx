@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Checkbox } from 'react-native-paper';
+import { Checkbox, Button } from 'react-native-paper';
 import { connect } from 'react-redux';
+import Collapsible from 'react-native-collapsible';
 import SectionTitle from '../SectionTitle';
 import { colors } from '../../config/Styles';
 
@@ -16,48 +17,62 @@ const styles = StyleSheet.create({
 	itemView: { alignItems: 'stretch', alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', marginRight: 15, width: 'auto' },
 	listView: {
 		flexDirection: 'row',
+		marginVertical: -10,
 	},
-	mainView: { alignItems: 'center' },
+	mainView: { alignItems: 'center', paddingBottom: 20 },
 });
 
-const Filters = () => (
-	<View style={styles.mainView}>
-		<SectionTitle style={styles.filterText} size={15} text='Types' />
+const checkedColor = colors.pink;
 
-		<View style={styles.listView}>
-			<View style={styles.itemView}>
-				<Checkbox status='checked' color={colors.main} />
-				<Text style={styles.checkboxLabel}>Channels</Text>
-			</View>
-			<View style={styles.itemView}>
-				<Checkbox status='checked' color={colors.main} />
-				<Text style={styles.checkboxLabel}>Groups</Text>
-			</View>
-			<View style={styles.itemView}>
-				<Checkbox status='checked' color={colors.main} />
-				<Text style={styles.checkboxLabel}>Bots</Text>
-			</View>
-			<View style={styles.itemView}>
-				<Checkbox status='checked' color={colors.main} />
-				<Text style={styles.checkboxLabel}>Stickers</Text>
-			</View>
+const Filters = ({ enabledFilters }) => {
+	const [collapsed, setCollapsed] = useState(true); // TODO: Pasar a redux
+
+	return (
+		<View>
+			<Button icon={collapsed ? 'filter-menu' : 'filter-minus'} onPress={() => setCollapsed(!collapsed)}>
+				<Text>{collapsed ? 'Show' : 'Hide'} filters</Text>
+			</Button>
+			<Collapsible collapsed={collapsed}>
+				<View style={styles.mainView}>
+					<SectionTitle style={styles.filterText} size={15} text='Types' />
+
+					<View style={styles.listView}>
+						<View style={styles.itemView}>
+							<Checkbox status='checked' color={checkedColor} />
+							<Text style={styles.checkboxLabel}>Channels</Text>
+						</View>
+						<View style={styles.itemView}>
+							<Checkbox status='checked' color={checkedColor} />
+							<Text style={styles.checkboxLabel}>Groups</Text>
+						</View>
+						<View style={styles.itemView}>
+							<Checkbox status='checked' color={checkedColor} />
+							<Text style={styles.checkboxLabel}>Bots</Text>
+						</View>
+						<View style={styles.itemView}>
+							<Checkbox status='checked' color={checkedColor} />
+							<Text style={styles.checkboxLabel}>Stickers</Text>
+						</View>
+					</View>
+					<SectionTitle style={styles.filterText} size={15} text='Languages' />
+					<View style={styles.listView}>
+						<View style={styles.itemView}>
+							<Checkbox />
+							<Text style={styles.checkboxLabel} color={checkedColor}>
+								English
+							</Text>
+						</View>
+						<View style={styles.itemView}>
+							<Checkbox />
+							<Text style={styles.checkboxLabel} color={checkedColor}>
+								Español
+							</Text>
+						</View>
+					</View>
+				</View>
+			</Collapsible>
 		</View>
-		<SectionTitle style={styles.filterText} size={15} text='Languages' />
-		<View style={styles.listView}>
-			<View style={styles.itemView}>
-				<Checkbox />
-				<Text style={styles.checkboxLabel} color={colors.main}>
-					English
-				</Text>
-			</View>
-			<View style={styles.itemView}>
-				<Checkbox />
-				<Text style={styles.checkboxLabel} color={colors.main}>
-					Español
-				</Text>
-			</View>
-		</View>
-	</View>
-);
+	);
+};
 
 export default Filters;
