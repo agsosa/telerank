@@ -1,42 +1,31 @@
-var Ddos = require('ddos'); // TODO: Test this library https://github.com/animir/node-rate-limiter-flexible
 const express = require('express');
-var compression = require('compression');
+const compression = require('compression');
+const bodyParser = require('body-parser');
+const helmet = require('helmet');
+//const morgan = require('morgan');
+const cors = require('cors');
+
 const scraper_jobs = require('./scraper_jobs');
 const firebase = require('./firebase');
 const database = require('./database');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-require('./scraper');
+const scraper = require('./scraper');
 
 // TODO: Para cada media scrapeado subir la imagen a bucket de google storage ya que los archivos de imagen de telegram expiran
 
-function byteLength(str) {
-	// TODO: Remove or move to utils
-	// returns the byte length of an utf8 string
-	var s = str.length;
-	for (var i = str.length - 1; i >= 0; i--) {
-		var code = str.charCodeAt(i);
-		if (code > 0x7f && code <= 0x7ff) s++;
-		else if (code > 0x7ff && code <= 0xffff) s += 2;
-		if (code >= 0xdc00 && code <= 0xdfff) i--; //trail surrogate
-	}
-	return s;
-}
-
-var ddos = new Ddos({ burst: 10, limit: 15 });
 const app = express();
 const port = 4001;
+
+app.use(helmet());
+//app.use(morgan('combined'));
+app.use(compression());
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 firebase.initialize();
 //scraper_jobs.initialize();
 //database.AddEntry({username: "usuarioxd", type: "channel", language: "es", category: "cryptocurrencies", title: "loleta", description:"esta es una descripcion", members:50, image:"404.jpg", created_date: Date.now(), updated_date: Date.now(), likes: 50, dislikes: 150, featured: false})
 //database.GetAllEntries(null);
-
-app.use(compression());
-app.use(ddos.express);
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
 	res.send('OK');
