@@ -53,7 +53,7 @@ export default function GlobalSearch() {
 	return (
 		<View style={styles.mainView}>
 			<Text style={styles.titleText}>Discover your next community</Text>
-			<Text style={styles.descriptionText}>Search more than 5000 Telegram Channels, Groups, Bots and Stickers.</Text>
+			<Text style={styles.descriptionText}>Search more than 3000 Telegram Channels, Groups, Bots and Stickers.</Text>
 			<Searchbar style={styles.searchBar} placeholder='Search' onChangeText={onChangeSearch} value={searchQuery} />
 			<View style={styles.buttonsView}>
 				<Button style={styles.buttonBase} color='white' icon='cached' mode='contained' onPress={onRandomClick}>

@@ -18,6 +18,7 @@ export const colors = {
 	red: '#F44336',
 	green: '#4CAF50',
 	grayAlt: '#5A5A5A',
+	grayAlt2: '#666666',
 };
 
 export const commonStyles = StyleSheet.create({

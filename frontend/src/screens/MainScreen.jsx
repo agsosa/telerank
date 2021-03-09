@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { commonStyles } from '../config/Styles';
 import HomeTab from './tabscreens/HomeTab';
 import APIErrorSnackbar from '../components/APIErrorSnackbar';
-import TopTab from './tabscreens/TopTab';
+import FeaturedTab from './tabscreens/FeaturedTab';
 
 const styles = StyleSheet.create({
 	tabs: { backgroundColor: 'white', elevation: 5, marginTop: 5 },
@@ -27,7 +27,7 @@ const MainScreen = ({ setDrawerNavigation }) => {
 					<HomeTab />
 				</TabScreen>
 				<TabScreen label='Featured' icon='star'>
-					<TopTab />
+					<FeaturedTab />
 				</TabScreen>
 				<TabScreen label='Canales' icon='bullhorn'>
 					<View />

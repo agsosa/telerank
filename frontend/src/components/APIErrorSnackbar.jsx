@@ -17,15 +17,14 @@ const APIErrorSnackbar = ({ apiErrorActive, setAPIErrorStatus }) => {
 			visible={apiErrorActive}
 			style={styles.snackbar}
 			onDismiss={onDismissSnackBar}
-			duration={20000}
+			duration={30000}
 			action={{
 				label: 'OK',
 				onPress: () => {
 					setAPIErrorStatus(false);
 				},
 			}}>
-			<Text>{`An error occurred while requesting the information. You may see outdated information.
-Pull to refresh the screen now or restart the app.`}</Text>
+			<Text>An error occurred while requesting the information.</Text>
 		</Snackbar>
 	);
 };
