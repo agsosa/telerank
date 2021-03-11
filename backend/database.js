@@ -124,8 +124,6 @@ async function GetStatsFromDatabase(onResult) {
 	if (onResult) onResult(result);
 }
 
-GetStats();
-
 exports.AddEntry = AddEntry;
 exports.GetAllEntries = GetAllEntries;
 exports.ListEntries = ListEntries;

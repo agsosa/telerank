@@ -13,6 +13,7 @@
     "cors": "^2.8.5",
     "ddos": "^0.2.1",
     "express": "^4.17.1",
+    "express-rate-limit": "^5.2.6",
     "firebase-admin": "^9.5.0",
     "helmet": "^4.4.1",
     "lodash": "^4.17.20",

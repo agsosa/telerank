@@ -39,7 +39,7 @@ export const settings = {
 
 export const currentFilters = {
 	name: 'currentFilters',
-	state: { languages: [getBestAvailableLanguage().languageTag], types: ['channel', 'bot', 'sticker', 'group'], category: ['all'] },
+	state: { collapsed: true, languages: [getBestAvailableLanguage().languageTag], types: ['channel', 'bot', 'sticker', 'group'], category: ['all'] },
 	reducers: {
 		setFilters(state, payload) {
 			// Payload: Object

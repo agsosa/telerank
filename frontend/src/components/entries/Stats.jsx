@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 		color: 'gray',
 		fontSize: 15,
 	},
-	text: { padding: 15, textAlign: 'center' },
+	text: { marginTop: -10, padding: 5, textAlign: 'center' },
 });
 
 export default function Stats() {

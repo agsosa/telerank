@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 //const morgan = require('morgan');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 
 const scraper_jobs = require('./scraper_jobs');
 const firebase = require('./firebase');
@@ -21,6 +22,16 @@ app.use(compression());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//app.enable('trust proxy'); // reverse proxy (heroku, nginx) https://expressjs.com/en/guide/behind-proxies.html
+
+var limiter = new rateLimit({
+	windowMs: 10 * 60 * 1000,
+	max: 50,
+	delayMs: 0,
+});
+
+app.use(limiter);
 
 firebase.initialize();
 //scraper_jobs.initialize();
