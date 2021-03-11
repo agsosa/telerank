@@ -28,14 +28,14 @@ try:
     imageBlob = bucket.blob("/")
     imagePath = "./"+x+".jpg"
 
-    # ptimize photo
+    # Optimize photo
     img = Image.open(imagePath)
     new_width  = 640
     new_height = 640
     img = img.resize((new_width, new_height), Image.ANTIALIAS)
     img.save(imagePath, optimize = True,  quality = 10)
 
-    # upload photo
+    # upload photo to google storage
     imageBlob = bucket.blob(x+".jpg")
     imageBlob.upload_from_filename(imagePath)
     os.remove("./"+x+".jpg")
@@ -43,4 +43,5 @@ try:
     print(json.dumps({"image": imageBlob.public_url, "title": result.chats[0].title, "description": result.full_chat.about, "members": result.full_chat.participants_count}))
 except Exception as e:
     print("ERROR "+str(e))
+
 sys.stdout.flush()

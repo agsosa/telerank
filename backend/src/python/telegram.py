@@ -15,15 +15,16 @@ bucket = storage_client.get_bucket('telerank-e9b37.appspot.com')
 
 loop = asyncio.get_event_loop()
 
+arg = sys.argv[1]
+usernames = arg.split(",")
+
 async def grabInfo(x):
-    print("xd")
 
     # get channel title, member count, description
     result = await client(functions.channels.GetFullChannelRequest(
         channel=x
     ))
 
-    print(x)
     # Download photo and upload to Firebase Storage
     await client.download_profile_photo(x)
 
@@ -32,25 +33,20 @@ async def grabInfo(x):
 
     print("b")
 
-    # ptimize photo
+    # Optimize photo
     img = Image.open(imagePath)
     new_width  = 640
     new_height = 640
     img = img.resize((new_width, new_height), Image.ANTIALIAS)
-    print("c")
     img.save(imagePath, optimize = True,  quality = 10)
     
-    print("d")
-    # upload photo
+    # Upload photo to google storage
     imageBlob = bucket.blob(x+".jpg")
     imageBlob.upload_from_filename(imagePath)
-    print("e")
     os.remove("./"+x+".jpg")
 
     return {"image": imageBlob.public_url, "title": result.chats[0].title, "description": result.full_chat.about, "members": result.full_chat.participants_count}
 
-arg = sys.argv[1]
-usernames = arg.split(",")
 
 def getAllInfos():
     final = []
