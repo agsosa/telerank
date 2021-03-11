@@ -3,3 +3,4 @@ serviceAccountKey.json
 tg.session
 tg.session-journal
 /python/test.py
+/dist
