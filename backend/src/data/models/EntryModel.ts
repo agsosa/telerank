@@ -66,11 +66,8 @@ export function ListEntries(perPage: number, page: number): Promise<IEntry[]> {
       .limit(perPage)
       .skip(perPage * page)
       .exec((err, entries: IEntry[]) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(entries);
-        }
+        if (err) reject(err);
+        resolve(entries);
       });
   });
 }

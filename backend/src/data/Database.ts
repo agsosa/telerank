@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import moment from "moment";
-import EntryModel from "./models/EntryModel";
 
 const mongoURL = "mongodb://localhost/telerank";
 
