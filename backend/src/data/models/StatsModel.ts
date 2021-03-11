@@ -41,7 +41,7 @@ const stats: IStatsObj = {
   },
 };
 
-export function GetStatsFromDatabase(): Promise<IStats> {
+function GetStatsFromDatabase(): Promise<IStats> {
   // eslint-disable-next-line
   return new Promise(async (resolve, reject) => {
     try {
@@ -102,7 +102,6 @@ export function GetStatsFromDatabase(): Promise<IStats> {
       });
 
       // Resolve
-      console.log(result);
       resolve(result);
     } catch (error) {
       reject(error);
@@ -111,7 +110,7 @@ export function GetStatsFromDatabase(): Promise<IStats> {
 }
 
 export function GetStats(): Promise<IStats> {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const cacheSecondsRemaining = stats.expirationTime
       ? moment(stats.expirationTime).diff(moment.now(), "seconds")
       : 0;
