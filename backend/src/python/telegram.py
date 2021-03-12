@@ -4,86 +4,51 @@ from firebase import firebase
 import os, sys, json, asyncio
 from PIL import Image
 
-api_id = 2231021
-api_hash = '63b5a11ccd236e46ee28222132920ccf'
-client = TelegramClient('tg', api_id, api_hash)
-client.start()
-firebase = firebase.FirebaseApplication('https://telerank-e9b37-default-rtdb.firebaseio.com/')
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= "./serviceAccountKey.json"
-storage_client = storage.Client()
-bucket = storage_client.get_bucket('telerank-e9b37.appspot.com')
+# Get Telegram info (image, title, description, members) by username. The image will be uploaded to a google cloud storage bucket.
+# Returns { image: public url returned by google cloud storage, title: string, description: string, members: number}
 
-loop = asyncio.get_event_loop()
+# TODO CHECK FOR ERRORS AND USERNAME NOT VALID
 
-arg = sys.argv[1]
-usernames = arg.split(",")
+try:
+    # Initialize Telegram client
+    api_id = 2231021
+    api_hash = '63b5a11ccd236e46ee28222132920ccf'
+    client = TelegramClient('tg', api_id, api_hash)
+    client.start()
 
-async def grabInfo(x):
+    # Initialize Google Cloud Storage
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"]= "./serviceAccountKey.json"
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket('telerank-e9b37.appspot.com')
 
-    # get channel title, member count, description
-    result = await client(functions.channels.GetFullChannelRequest(
-        channel=x
+    # Get username from arguments
+    username = sys.argv[1]
+
+    # Get information from Telegram
+    result = client(functions.channels.GetFullChannelRequest(
+        channel = username
     ))
 
-    # Download photo and upload to Firebase Storage
-    await client.download_profile_photo(x)
-
-    imageBlob = bucket.blob("/")
-    imagePath = "./"+x+".jpg"
-
-    print("b")
+    # Download photo
+    client.download_profile_photo(username)
+    imagePath = "./"+username+".jpg"
 
     # Optimize photo
     img = Image.open(imagePath)
-    new_width  = 640
-    new_height = 640
-    img = img.resize((new_width, new_height), Image.ANTIALIAS)
-    img.save(imagePath, optimize = True,  quality = 10)
-    
+    new_width  = 425
+    new_height = 425
+    resized = img.resize((new_width, new_height), Image.ANTIALIAS)
+    resized.save(imagePath, optimize = True,  quality = 10)
+
     # Upload photo to google storage
-    imageBlob = bucket.blob(x+".jpg")
+    imageBlob = bucket.blob(username+".jpg")
     imageBlob.upload_from_filename(imagePath)
-    os.remove("./"+x+".jpg")
+    os.remove(imagePath)
 
-    return {"image": imageBlob.public_url, "title": result.chats[0].title, "description": result.full_chat.about, "members": result.full_chat.participants_count}
+    # Send result
+    print(json.dumps({"image": imageBlob.public_url, "title": result.chats[0].title, "description": result.full_chat.about, "members": result.full_chat.participants_count}))
+    
+except Exception as e:
+    print("ERROR "+str(e))
 
-
-def getAllInfos():
-    final = []
-
-    for x in usernames:
-        result = client(functions.channels.GetFullChannelRequest(
-            channel=x
-        ))
-
-        # Download photo and upload to Firebase Storage
-        client.download_profile_photo(x)
-
-        imageBlob = bucket.blob("/")
-        imagePath = "./"+x+".jpg"
-
-        # ptimize photo
-        img = Image.open(imagePath)
-        new_width  = 640
-        new_height = 640
-        img = img.resize((new_width, new_height), Image.ANTIALIAS)
-        img.save(imagePath, optimize = True,  quality = 10)
-        
-        # upload photo
-        imageBlob = bucket.blob(x+".jpg")
-        imageBlob.upload_from_filename(imagePath)
-        os.remove("./"+x+".jpg")
-
-        final.append({"image": imageBlob.public_url, "title": result.chats[0].title, "description": result.full_chat.about, "members": result.full_chat.participants_count})
-
-    print(json.dumps(final))
-    sys.stdout.flush()
-
-getAllInfos()
-
-
-#async def main():
-    #result = await asyncio.gather(*[grabInfo(x) for x in usernames])
-    #print(result)
-
-#loop.run_until_complete(main())
+sys.stdout.flush()
