@@ -28,7 +28,7 @@ export async function uploadImage(
       // Optimize with imagemin/mozjpeg
       await imagemin([path], {
         plugins: [imageminMozjpeg({ quality: 80 })],
-        destination: "./",
+        destination: path,
       });
     }
 
