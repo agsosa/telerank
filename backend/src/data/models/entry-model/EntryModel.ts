@@ -1,9 +1,13 @@
-import { model, Schema, Model, Document } from "mongoose";
+import { model, Schema, Model } from "mongoose";
+import IEntry from "./IEntry";
+import EnumLanguages from "./EnumLanguage";
+
+// TODO: Implement EnumCategories
 
 const EntryModelSchema = new Schema({
   username: { type: String, required: true, unique: true },
   type: { type: String, required: true },
-  language: { type: String, required: true, default: "English" },
+  language: { type: String, required: true, default: EnumLanguages.ENGLISH },
   category: { type: String, required: true, default: "Other" },
   title: { type: String, required: false },
   description: { type: String, required: false },
@@ -16,29 +20,10 @@ const EntryModelSchema = new Schema({
   featured: { type: Boolean, required: false, default: false },
   reports: { type: Number, required: false, default: 0 },
   pending: { type: Boolean, required: true, default: true },
+  scam: { type: Boolean, required: true, default: false },
   removed: { type: Boolean, required: true, default: true },
   views: { type: Number, required: false, default: 0 },
 });
-
-export interface IEntry extends Document {
-  username: string;
-  type: string;
-  language: string;
-  category: string; // TODO: EnumCategory, EnumType, EnumLanguage, etc
-  title: string;
-  description: string;
-  members: number;
-  image: string;
-  createdDate: Date;
-  updatedDate: Date;
-  likes: number;
-  dislikes: number;
-  featured: boolean;
-  reports: number;
-  pending: boolean;
-  removed: boolean;
-  views: number;
-}
 
 export const EntryModel: Model<IEntry> = model("EntryModel", EntryModelSchema);
 

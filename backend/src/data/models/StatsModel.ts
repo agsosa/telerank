@@ -1,5 +1,5 @@
 import moment from "moment";
-import * as EntryModel from "./EntryModel";
+import * as EntryModel from "./entry-model/EntryModel";
 
 const STATS_CACHE_EXPIRATION_SECONDS = 60;
 

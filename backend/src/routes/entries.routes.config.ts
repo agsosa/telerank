@@ -1,6 +1,6 @@
 import express from "express";
 import CommonRoutesConfig from "./common.routes.config";
-import * as EntryModel from "../data/models/EntryModel";
+import * as EntryModel from "../data/models/entry-model/EntryModel";
 
 export default class EntriesRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
