@@ -1,9 +1,9 @@
 /*eslint-disable */
-enum EnumType {
+enum EnumEntryType {
   CHANNEL = "Channel",
   BOT = "Bot",
   GROUP = "Group",
   STICKER = "Sticker",
 }
 
-export default EnumType;
+export default EnumEntryType;

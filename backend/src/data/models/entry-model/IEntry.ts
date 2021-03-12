@@ -1,10 +1,10 @@
 import { Document } from "mongoose";
 import EnumLanguage from "./EnumLanguage";
-import EnumType from "./EnumType";
+import EnumEntryType from "./EnumEntryType";
 
 interface IEntry extends Document {
   username: string;
-  type: EnumType;
+  type: EnumEntryType;
   language: EnumLanguage;
   category: string; // TODO: Implement EnumCategory
   title: string;
