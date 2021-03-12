@@ -1,7 +1,7 @@
 import scrapeIt, { ScrapeResult } from "scrape-it";
 import _ from "lodash";
 import IScrapedMedia from "./IScrapedMedia";
-import { capitalizeStr } from "../../lib/helpers";
+import { capitalizeStr } from "../../lib/Helpers";
 
 /*
  * TelegramChannels.me scraper

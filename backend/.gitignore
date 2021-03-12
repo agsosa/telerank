@@ -4,3 +4,4 @@ tg.session
 tg.session-journal
 /python/test.py
 /dist
+/src/lib/secret.ts

@@ -8,9 +8,9 @@ import InitializeDatabase from "./src/data/Database";
 import CommonRoutesConfig from "./src/routes/common.routes.config";
 import EntriesRoutes from "./src/routes/entries.routes.config";
 import StatsRoutes from "./src/routes/stats.routes.config";
-import scrapeTelegramChannels from "./src/scrapers/content-scrapers/telegramchannels.me.scraper";
+import { PopulateDatabase } from "./src/scrapers/ScraperJobs";
 
-scrapeTelegramChannels();
+PopulateDatabase();
 
 const port = 4001;
 const limiterOptions = rateLimit({

@@ -5,6 +5,7 @@
   "main": "App.ts",
   "dependencies": {
     "@cryptography/aes": "^0.1.1",
+    "@google-cloud/storage": "^5.8.1",
     "@types/compression": "^1.7.0",
     "async-mutex": "^0.3.0",
     "big-integer": "^1.6.48",
