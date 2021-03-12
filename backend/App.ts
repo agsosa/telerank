@@ -8,8 +8,9 @@ import InitializeDatabase from "./src/data/Database";
 import CommonRoutesConfig from "./src/routes/common.routes.config";
 import EntriesRoutes from "./src/routes/entries.routes.config";
 import StatsRoutes from "./src/routes/stats.routes.config";
+import scrapeTelegramChannels from "./src/scrapers/content-scrapers/telegramchannels.me.scraper";
 
-// TODO: Para cada channel/bot/etc scrapeado subir la imagen a bucket de google storage ya que las URL de imagen de telegram expiran
+scrapeTelegramChannels();
 
 const port = 4001;
 const limiterOptions = rateLimit({

@@ -4,7 +4,7 @@ import moment from 'moment';
 import { MMKV } from 'react-native-mmkv';
 import { store } from '../state/Store';
 
-const BASE_URL = 'http://a20a49778015.ngrok.io/api'; // Base URL for the API calls
+const BASE_URL = 'http://0f00d145c0da.ngrok.io'; // Base URL for the API calls
 
 rax.attach();
 const retryConfig = {
