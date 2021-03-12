@@ -4,6 +4,7 @@ from firebase import firebase
 import os, sys, json, asyncio
 from PIL import Image
 
+# Unused
 # Get Telegram info (image, title, description, members) by username. The image will be uploaded to a google cloud storage bucket.
 # Returns { image: public url returned by google cloud storage, title: string, description: string, members: number}
 
