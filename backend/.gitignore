@@ -5,3 +5,4 @@ tg.session-journal
 /python/test.py
 /dist
 /src/lib/secret.ts
+/src/scrapers/telegram-proto/TelegramSecrets.ts
