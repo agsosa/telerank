@@ -4,7 +4,7 @@ import EnumEntryType from "../../data/models/entry-model/EnumEntryType";
 interface ITelegramInfo {
   scrapedMedia?: IScrapedMedia;
   username: string;
-  downloadedPhotoPath: string;
+  photoBytes: Uint8Array;
   members: number;
   title: string;
   type: EnumEntryType;

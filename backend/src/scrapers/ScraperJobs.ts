@@ -1,10 +1,34 @@
 import { spawn } from "child_process";
 import IScrapedMedia from "./content-scrapers/IScrapedMedia";
 import TelegramChannelsMe from "./content-scrapers/telegramchannels.me.scraper";
-import * as EntryModel from "../data/models/EntryModel";
+import * as EntryModel from "../data/models/entry-model/EntryModel";
+import { getTelegramInfo } from "./telegram-proto/TelegramProto";
+import { uploadPhoto } from "../lib/GCloud";
+import { log } from "../lib/Helpers";
 
-export async function PopulateDatabase(): Promise<void> {
-  try {
+/* 
+  PopulateDatabaseJob():
+    This function will scrape real Telegram channels, bots, users, stickers 
+    from different websites and add them to the database (EntryModel) 
+    if they're not already added.
+
+    1) Execute the scrapers from content-scrapers to find new usernames and try to categorize them
+    2) Discard usernames already added to the database
+    3) --- For each scraped username:
+      - Get all the info (title, description, photo, etc) using the TelegramProto module
+      - Process the info (i.e. upload the photo to Google Cloud Storage)
+      - Construct a IEntry object
+    4) Save each IEntry object from (3) to the database (EntryModel)
+*/
+export async function PopulateDatabaseJob(): Promise<void> {
+  // TODO: Test cases: Bot, Group, Channel, big group/channel, invalid, IScrapedMedia
+  const info = await getTelegramInfo("cordobabitcoin"); // dealtrackerbot, cordobabitcoin, unfolded
+  if (info) {
+    const imageUrl = await uploadPhoto(info.photoBytes, info.username);
+    log.info(imageUrl);
+  }
+
+  /* try {
     console.time("PopulateDatabase");
 
     let media: IScrapedMedia[] = [];
@@ -27,17 +51,6 @@ export async function PopulateDatabase(): Promise<void> {
               `Received invalid data from Python ${data} for username ${q.username}`
             );
 
-          /* q.title = data.title;
-        q.description = data.description;
-        q.members = data.members;
-        q.image = data.image;
-        q.created_date = Date.now();
-        q.updated_date = Date.now();
-        q.likes = 0;
-        q.dislikes = 0;
-        q.featured = false;
-
-        console.log(`final q = ${JSON.stringify(q)}`); */
 
           console.log(`${q.username} ${res}`);
 
@@ -55,11 +68,7 @@ export async function PopulateDatabase(): Promise<void> {
     console.timeEnd("PopulateDatabase");
   } catch (err) {
     console.log(`ScraperJobs: PopulateDatabase error: ${err}`);
-  }
+  } */
 }
 
-export function RefreshAllTelegramInfos() {}
-
-export function ScrapeTelegramInfo(obj: IScrapedMedia): void;
-export function ScrapeTelegramInfo(username: string): void;
-export function ScrapeTelegramInfo(target: IScrapedMedia | string): void {}
+// export function RefreshAllTelegramInfosJob() {}
