@@ -1,19 +1,18 @@
 import scrapeIt, { ScrapeResult } from "scrape-it";
 import _ from "lodash";
 import IScrapedMedia from "./IScrapedMedia";
-import { capitalizeStr } from "../../lib/Helpers";
+import { capitalizeStr, log } from "../../lib/Helpers";
+
+// TODO: Extender clase Scraper
 
 /*
- * TelegramChannels.me scraper
+ * TelegramChannels.me Scraper
  */
 
 const LANGUAGES_TO_SCRAPE = ["es"]; // TODO: add en
 const TYPES_TO_SCRAPE = ["channels", "groups"]; // TODO: add bots, stickers
-
 const getListURL = (lang: string, type: string, page: number) =>
   `https://telegramchannels.me/${lang}/${type}?category=all&sort=newest&page=${page}`;
-
-const log = (msg: string) => console.log(`[TelegramChannels.me]: ${msg}`);
 
 // Start the TelegramChannels.me scraper
 export default async function run(): Promise<IScrapedMedia[]> {
@@ -40,7 +39,7 @@ export default async function run(): Promise<IScrapedMedia[]> {
   resultEntries = _.uniqBy(resultEntries, "username");
 
   // Return final result
-  log(`Done. Total Entries = ${resultEntries.length}`);
+  log.info(`Done. Total Entries = ${resultEntries.length}`);
 
   return resultEntries;
 }
@@ -67,14 +66,14 @@ async function getMaxPages(type: string, lang: string): Promise<number> {
     // Process ScrapeIt Result
     const { pages } = result.data;
     const maxPages = parseInt(pages[pages.length - 1], 10);
-    log(`Found max_pages = ${maxPages}`);
+    log.info(`Found max_pages = ${maxPages}`);
 
     // Return result
     if (Number.isNaN(maxPages)) throw new Error("Can't get max pages");
     return maxPages;
   } catch (err) {
     // TODO: Handle error
-    log(err);
+    log.error(err);
     return 0;
   }
 }
@@ -149,7 +148,7 @@ async function scrapePages(
   await Promise.allSettled(promises);
 
   // Return result
-  log(`Scraping ${lang}_${type} done. Found ${entries.length} entries`);
+  log.info(`Scraping ${lang}_${type} done. Found ${entries.length} entries`);
 
   return entries;
 }

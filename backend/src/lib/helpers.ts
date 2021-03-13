@@ -1,3 +1,22 @@
+import log4js from "log4js";
+
+log4js.configure({
+  appenders: {
+    out: {
+      type: "stdout",
+      layout: {
+        type: "pattern",
+        pattern: "%d %p %c %f:%l %m%n",
+      },
+    },
+  },
+  categories: {
+    default: { appenders: ["out"], level: "info", enableCallStack: true },
+  },
+});
+
+export const log = log4js.getLogger();
+
 // "flavio" -> "Flavio"
 export function capitalizeStr(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { log } from "../lib/Helpers";
 
 const mongoURL = "mongodb://localhost/telerank";
 
@@ -13,15 +14,12 @@ export default function InitializeDatabase(): void {
     },
     (err) => {
       if (err) {
-        console.error(`mongoose.connect failed on startup - retrying\n${err}`);
+        log.error(`mongoose.connect failed on startup - retrying\n${err}`);
         setTimeout(InitializeDatabase, 3000);
       } else {
         mongoose.Promise = global.Promise;
         const db = mongoose.connection;
-        db.on(
-          "error",
-          console.error.bind(console, "MongoDB connection error: ")
-        );
+        db.on("error", (e) => log.error(e));
       }
     }
   );

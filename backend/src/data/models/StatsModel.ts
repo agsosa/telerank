@@ -1,5 +1,6 @@
 import moment from "moment";
 import * as EntryModel from "./entry-model/EntryModel";
+import { log } from "../../lib/Helpers";
 
 const STATS_CACHE_EXPIRATION_SECONDS = 60;
 
@@ -117,7 +118,6 @@ export function GetStats(): Promise<IStats> {
 
     if (!stats.data || cacheSecondsRemaining <= 0) {
       // Get from database if cache is not valid
-      console.log("GetStats cache data expired, fetching from database");
       GetStatsFromDatabase()
         .then((data) => {
           stats.data = data;
@@ -129,12 +129,11 @@ export function GetStats(): Promise<IStats> {
           resolve(stats.data);
         })
         .catch((error) => {
-          console.log(`GetStats error: ${error}`);
-          resolve(stats.data);
+          log.error(`GetStats error: ${error}`);
+          resolve(stats.data); // Resolve with cache on error
         });
     } else {
       // Cache is still valid, return cache
-      console.log("GetStats cache is valid, returning cache");
       resolve(stats.data);
     }
   });

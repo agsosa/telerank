@@ -8,9 +8,10 @@ import InitializeDatabase from "./src/data/Database";
 import CommonRoutesConfig from "./src/routes/common.routes.config";
 import EntriesRoutes from "./src/routes/entries.routes.config";
 import StatsRoutes from "./src/routes/stats.routes.config";
-import { PopulateDatabase } from "./src/scrapers/ScraperJobs";
+import { PopulateDatabaseJob } from "./src/scrapers/ScraperJobs";
+import { log } from "./src/lib/Helpers";
 
-PopulateDatabase();
+PopulateDatabaseJob();
 
 const port = 4001;
 const limiterOptions = rateLimit({
@@ -32,6 +33,7 @@ const routes: CommonRoutesConfig[] = [];
 routes.push(new EntriesRoutes(app));
 routes.push(new StatsRoutes(app));
 
+// Telerank
 InitializeDatabase();
 // scraper_jobs.initialize();
 
@@ -40,8 +42,8 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+  log.info(`Server listening on port ${port}`);
   routes.forEach((route: CommonRoutesConfig) => {
-    console.log(`Routes configured for ${route.getName()}`);
+    log.info(`Routes configured for ${route.getName()}`);
   });
 });

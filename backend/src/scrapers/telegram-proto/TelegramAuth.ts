@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable camelcase */
+
 // https://github.com/alik0211/mtproto-core/blob/master/docs/authentication.md
 
 import { getSRPParams } from "@mtproto/core";
