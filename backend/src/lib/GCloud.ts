@@ -29,12 +29,14 @@ export async function uploadPhoto(
 
     if (!overrideUploaded) {
       const file = bucket.file(PATH);
-      const publicUrl = file.publicUrl();
-      if (publicUrl) {
-        log.info(`Returning publicUrl = ${publicUrl}`);
-        return publicUrl;
+      const exists = await file.exists();
+      if (exists[0]) {
+        const publicUrl = file.publicUrl();
+        if (publicUrl) {
+          return publicUrl;
+        }
       }
-    } else log.info(`Uploading new photo for ${username}`);
+    }
 
     if (optimize) {
       // Resize with sharp
