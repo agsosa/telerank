@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Checkbox, Button } from 'react-native-paper';
@@ -52,35 +52,33 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default function MostRated() {
-	const navigation = useNavigation();
+const tabs = {
+	featured: { apiModule: 'home', title: 'Featured', icon: 'star', color: colors.featured, subtitle: 'Premium channels and groups' },
+	mostRated: { apiModule: 'home', title: 'Top Rated', icon: 'crown', color: colors.grayAlt2, subtitle: 'Tell your community to rate you to get better rankings!' },
+	mostMembers: { apiModule: 'home', title: 'Popular', icon: 'fire', color: colors.grayAlt2, subtitle: 'Most-viewed channels, bots, groups and stickers' },
+	mostViewed: { apiModule: 'home', title: 'Biggest', icon: 'account-group', color: colors.grayAlt2, subtitle: 'Biggest channels and groups by members' },
+};
 
-	const tabs = {
-		featured: { apiModule: 'home', title: 'Featured', icon: 'star', color: colors.featured, subtitle: 'Premium channels and groups' },
-		mostRated: { apiModule: 'home', title: 'Top Rated', icon: 'crown', color: colors.grayAlt2, subtitle: 'Tell your community to rate you to get better rankings!' },
-		mostMembers: { apiModule: 'home', title: 'Popular', icon: 'fire', color: colors.grayAlt2, subtitle: 'Most-viewed channels, bots, groups and stickers' },
-		mostViewed: { apiModule: 'home', title: 'Biggest', icon: 'account-group', color: colors.grayAlt2, subtitle: 'Biggest channels and groups by members' },
-	};
+export default function Featured() {
+	const navigation = useNavigation();
 
 	const [currTab, setCurrTab] = useState('featured');
 
-	function CustomTabs() {
-		return (
-			<View style={tabStyles.mainView}>
-				<ScrollView showsHorizontalScrollIndicator={false} horizontal style={tabStyles.scrollView}>
-					{Object.keys(tabs).map((q) => {
-						const t = tabs[q];
-						const isActive = currTab === q;
-						return (
-							<Button key={q} icon={t.icon} contentStyle={tabStyles.btnContent} style={tabStyles.btn(t.color, isActive)} color={t.color} onPress={() => setCurrTab(q)}>
-								<Text style={tabStyles.btnText}>{t.title}</Text>
-							</Button>
-						);
-					})}
-				</ScrollView>
-			</View>
-		);
-	}
+	const CustomTabs = () => (
+		<View style={tabStyles.mainView}>
+			<ScrollView showsHorizontalScrollIndicator={false} horizontal style={tabStyles.scrollView}>
+				{Object.keys(tabs).map((q) => {
+					const t = tabs[q];
+					const isActive = currTab === q;
+					return (
+						<Button key={q} icon={t.icon} contentStyle={tabStyles.btnContent} style={tabStyles.btn(t.color, isActive)} color={t.color} onPress={() => setCurrTab(q)}>
+							<Text style={tabStyles.btnText}>{t.title}</Text>
+						</Button>
+					);
+				})}
+			</ScrollView>
+		</View>
+	);
 
 	function HeaderRenderer() {
 		return (
@@ -95,13 +93,9 @@ export default function MostRated() {
 		);
 	}
 
-	function FooterRenderer() {
-		return <View />;
-	}
-
 	return (
 		<View style={commonStyles.flex}>
-			<VerticalList Header={HeaderRenderer} Footer={FooterRenderer} apiModule={tabs[currTab].apiModule} />
+			<VerticalList Header={HeaderRenderer} apiModule={tabs[currTab].apiModule} />
 		</View>
 	);
 }

@@ -29,13 +29,5 @@ export default function HomeTab() {
 		);
 	}
 
-	function FooterRenderer() {
-		return (
-			<View>
-				<FeatureInfoBanner navigation={navigation} />
-			</View>
-		);
-	}
-
-	return <VerticalList Header={HeaderRenderer} Footer={FooterRenderer} apiModule='home' />;
+	return <VerticalList Header={HeaderRenderer} apiModule='home' />;
 }
