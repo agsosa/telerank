@@ -31,7 +31,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
             const limit = isQueryLimitValid ? queryLimit : 10;
             const page = isQueryPageValid ? queryPage : 0;
 
-            EntryModel.ListEntries(limit, page)
+            EntryModel.GetList(limit, page)
               .then((result) => {
                 // TODO: Remove description field to optimize
                 /* resultEx = JSON.parse(JSON.stringify(result));

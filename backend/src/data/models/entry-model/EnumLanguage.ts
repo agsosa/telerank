@@ -1,7 +1,7 @@
 /*eslint-disable */
-enum EnumLanguages {
+enum EnumLanguage {
   SPANISH = "Español",
   ENGLISH = "English",
 }
 
-export default EnumLanguages;
+export default EnumLanguage;

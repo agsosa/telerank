@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 import EnumLanguage from "./EnumLanguage";
 import EnumEntryType from "./EnumEntryType";
 
-interface IEntry extends Document {
+export interface IEntry {
   username: string;
   type: EnumEntryType;
   language: EnumLanguage;
@@ -18,9 +18,8 @@ interface IEntry extends Document {
   featured: boolean;
   reports: number;
   pending: boolean;
-  scam: boolean;
   removed: boolean;
   views: number;
 }
 
-export default IEntry;
+export interface IEntryDocument extends IEntry, Document {}
