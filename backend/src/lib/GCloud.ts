@@ -12,17 +12,30 @@ const storage = new Storage({
 
 const bucket = storage.bucket("telerank-e9b37.appspot.com");
 
-/* Upload an image to a Google Cloud Storage bucket, by default it will resize and optimize the image before uploading it.
- * the file will be uploaded as username.jpg
+/*
+ * Upload an image to a Google Cloud Storage bucket.
+ * If the parameter overrideUploaded is false and the username's photo is already in the bucket, it will return the public url without uploading it again-
+ * The photo will be uploaded as <username>.jpg
  * Returns the public url
  */
 export async function uploadPhoto(
   photoBytes: Uint8Array,
   username: string,
+  overrideUploaded = false,
   optimize = true
 ): Promise<string | undefined> {
   try {
     const PATH = `${username}.jpg`;
+
+    if (!overrideUploaded) {
+      const file = bucket.file(PATH);
+      const publicUrl = file.publicUrl();
+      if (publicUrl) {
+        log.info(`Returning publicUrl = ${publicUrl}`);
+        return publicUrl;
+      }
+    } else log.info(`Uploading new photo for ${username}`);
+
     if (optimize) {
       // Resize with sharp
       const width = 400;
