@@ -7,6 +7,7 @@ import HorizontalCard from './HorizontalCard';
 import { getModuleData } from '../../lib/API';
 import LoadingIndicator from '../LoadingIndicator';
 import { useIsMounted } from '../../lib/Helpers';
+import NoEntriesFound from './NoEntriesFound';
 
 const styles = StyleSheet.create({
 	dot: {
@@ -55,7 +56,9 @@ export default function HorizontalList({ apiModule }) {
 		itemVisiblePercentThreshold: 80,
 	});
 
-	if (loading || !data || !Array.isArray(data) || data.length <= 0) return <LoadingIndicator />;
+	if (loading || !data || !Array.isArray(data)) return <LoadingIndicator />;
+
+	if (data.length === 0) return <NoEntriesFound />;
 
 	return (
 		<View style={styles.view}>

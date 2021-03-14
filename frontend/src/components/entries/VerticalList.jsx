@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, FlatList } from 'react-native';
-import { Searchbar } from 'react-native-paper';
+import { View, FlatList, Text } from 'react-native';
+import { Searchbar, Chip } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
 import { commonStyles } from '../../config/Styles';
 import VerticalCard from './VerticalCard';
 import LoadingIndicator from '../LoadingIndicator';
 import { getModuleData } from '../../lib/API';
+import NoEntriesFound from './NoEntriesFound';
 
 export default function VerticalList({ Header, Footer, useSearchBar, apiModule }) {
 	const verticalFlatListRef = useRef();
@@ -63,14 +64,14 @@ export default function VerticalList({ Header, Footer, useSearchBar, apiModule }
 	);
 
 	const renderFooter = () => <View>{Footer && <Footer />}</View>;
-
-	if (loading || !data || !Array.isArray(data) || data.length <= 0) return <LoadingIndicator />;
+	if (loading || !data || !Array.isArray(data)) return <LoadingIndicator />;
 
 	return (
 		<View style={commonStyles.flex}>
 			<FlatList
 				ref={verticalFlatListRef}
 				data={data}
+				ListEmptyComponent={NoEntriesFound}
 				renderItem={(q) => <VerticalCard item={q.item} />}
 				keyExtractor={(item) => item._id}
 				ItemSeparatorComponent={null}

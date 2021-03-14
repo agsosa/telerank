@@ -48,7 +48,9 @@ export default function Stats() {
 		setLoading(true);
 
 		await getModuleData('Stats').then((result) => {
+			console.log(`stats received${JSON.stringify(result)}`);
 			if (isMounted) {
+				console.log('ismounted');
 				setData(result);
 				setLoading(false);
 			}
@@ -59,7 +61,7 @@ export default function Stats() {
 		refreshData();
 	}, []);
 
-	if (loading || !data || !data.channels) return <LoadingIndicator />;
+	if (loading || !data) return <LoadingIndicator />;
 
 	return (
 		<ScrollView>
