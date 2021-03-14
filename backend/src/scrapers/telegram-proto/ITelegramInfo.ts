@@ -10,7 +10,7 @@ interface ITelegramInfo {
   type: EnumEntryType;
   description: string;
   scam: boolean;
-  creationDate: number;
+  creationDate: Date;
 }
 
 export default ITelegramInfo;

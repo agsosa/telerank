@@ -12,14 +12,18 @@ export const mtproto = new MTProto({
   api_hash: TelegramSecrets.apiHash,
 });
 
+// mtproto wrapper with anti flood and dc handle
 export const api = {
   call(method: string, params = {}, options = {}): Promise<any> {
     return mtproto.call(method, params, options).catch(async (error) => {
       const { error_code, error_message } = error;
 
       if (error_code === 420) {
+        log.error(error_message);
         const seconds = +error_message.split("FLOOD_WAIT_")[1];
         const ms = seconds * 1000;
+
+        log.info(`TELEGRAM FLOOD_WAIT ${seconds} seconds`);
 
         await sleep(ms);
 
@@ -76,12 +80,10 @@ export async function getTelegramInfo(
         // Get properties
         const { scam, photo, access_hash, id, date } = data;
         const title = type === EnumEntryType.BOT ? data.first_name : data.title; // TODO: Add support for tickers
-        const members =
-          type === EnumEntryType.GROUP || type === EnumEntryType.CHANNEL
-            ? data.participants_count
-            : 0;
+
         let description = ""; // TODO: Support tickers if they have description
         let peer = null; // Required to download photo
+        let members = 0;
 
         // Get description (about) and build the peer (InputPeer) object required to download the photo
         // We need this since the data object doesn't contain the about/description field
@@ -94,17 +96,8 @@ export async function getTelegramInfo(
             },
           });
 
-          api
-            .call("channels.getFullChannel", {
-              channel: {
-                _: "inputChannel",
-                channel_id: -1001003399994,
-                access_hash: 4872913646325428232,
-              },
-            })
-            .catch((e) => log.error(e.message));
-
           description = fullChannelData.full_chat.about;
+          members = fullChannelData.full_chat.participants_count;
           peer = { _: "inputPeerChannel", channel_id: id, access_hash }; // Required to download photo
         }
         if (type === EnumEntryType.BOT) {
@@ -115,13 +108,13 @@ export async function getTelegramInfo(
               access_hash,
             },
           });
+
           description = fullUserData.about;
           peer = { _: "inputPeerUser", user_id: id, access_hash }; // Required to download photo
         }
         // TODO: Sticker case
 
         // Download photo
-        log.info(photo);
         const fileLocation = photo.photo_small;
 
         const file = await api.call("upload.getFile", {
@@ -136,14 +129,12 @@ export async function getTelegramInfo(
           offset: 0,
         }); // The photo will be returned by Telegram as uint8Array
 
-        log.info(file);
-
         const result: ITelegramInfo = {
           scam,
           title,
           type,
           username,
-          creationDate: date,
+          creationDate: new Date(date * 1000),
           members,
           photoBytes: file.bytes,
           description,

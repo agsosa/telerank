@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable camelcase */
 
-// https://github.com/alik0211/mtproto-core/blob/master/docs/authentication.md
+// Original source https://github.com/alik0211/mtproto-core/blob/master/docs/authentication.md
 
 import { getSRPParams } from "@mtproto/core";
 import TelegramSecrets from "./TelegramSecrets";
