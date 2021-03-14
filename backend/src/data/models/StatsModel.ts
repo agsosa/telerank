@@ -47,10 +47,10 @@ function GetStatsFromDatabase(): Promise<IStats> {
   return new Promise(async (resolve, reject) => {
     try {
       const project = {
-        channels: { $arrayElemAt: ["$channels.channels", 0] },
-        groups: { $arrayElemAt: ["$groups.groups", 0] },
-        bots: { $arrayElemAt: ["$bots.bots", 0] },
-        stickers: { $arrayElemAt: ["$stickers.stickers", 0] },
+        channels: { $arrayElemAt: ["$channels.Channel", 0] },
+        groups: { $arrayElemAt: ["$groups.Group", 0] },
+        bots: { $arrayElemAt: ["$bots.Bot", 0] },
+        stickers: { $arrayElemAt: ["$stickers.Sticker", 0] },
         spanish: { $arrayElemAt: ["$spanish.spanish", 0] },
         english: { $arrayElemAt: ["$english.english", 0] },
         members: { $arrayElemAt: ["$members.members", 0] },
@@ -64,16 +64,10 @@ function GetStatsFromDatabase(): Promise<IStats> {
       const result: IStats = await EntryModel.EntryModel.aggregate([
         {
           $facet: {
-            channels: [
-              { $match: { type: "Channels" } },
-              { $count: "channels" },
-            ],
-            groups: [{ $match: { type: "Groups" } }, { $count: "groups" }],
-            bots: [{ $match: { type: "Bots" } }, { $count: "bots" }],
-            stickers: [
-              { $match: { type: "Stickers" } },
-              { $count: "stickers" },
-            ],
+            channels: [{ $match: { type: "Channel" } }, { $count: "Channel" }],
+            groups: [{ $match: { type: "Group" } }, { $count: "Group" }],
+            bots: [{ $match: { type: "Bot" } }, { $count: "Bot" }],
+            stickers: [{ $match: { type: "Sticker" } }, { $count: "Sticker" }],
             spanish: [{ $match: { language: "es" } }, { $count: "spanish" }],
             english: [{ $match: { language: "en" } }, { $count: "english" }],
             members: [{ $group: { _id: null, members: { $sum: "$members" } } }],
