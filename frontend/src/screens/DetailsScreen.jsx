@@ -3,6 +3,7 @@ import { View, ScrollView, Image, StyleSheet, Linking, TouchableOpacity } from '
 import { Right, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from 'native-base';
 import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
+import moment from 'moment';
 import NumberTag from '../components/NumberTag';
 import { formatLanguageCode } from '../lib/Helpers';
 import { colors } from '../config/Styles';
@@ -17,8 +18,8 @@ const stylesBtn = StyleSheet.create({
 	reportContent: { color: colors.red, fontSize: 12 },
 	shareBtn: { borderColor: colors.mainLight, borderWidth: 0.3, marginTop: 10 },
 	shareContent: { color: colors.mainLight, fontSize: 12 },
-	telegramBtn: { alignSelf: 'center', backgroundColor: colors.alt2, elevation: 5, width: '100%' },
-	telegramContent: { color: 'white', fontSize: 22, fontWeight: 'normal' },
+	telegramBtn: { alignSelf: 'center', backgroundColor: 'transparent', borderColor: colors.main, marginTop: 15, width: '100%' },
+	telegramContent: { color: colors.main, fontSize: 22, fontWeight: 'normal' },
 	viewButtons: { flex: 1, flexDirection: 'row', alignSelf: 'center', justifyContent: 'space-evenly', marginVertical: 5 },
 });
 
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
 		elevation: 0.25,
 	},
 	centeredText: { textAlign: 'center' },
-	descriptionText: { margin: 10, paddingTop: 5, textAlign: 'center' },
+	descriptionText: { margin: 5, textAlign: 'center' },
 	disclaimerText: {
 		margin: 10,
 		marginBottom: 20,
@@ -125,8 +126,8 @@ const DetailsScreen = ({ route }) => {
 							<NumberTag icon='chart-bar' number={data.views} />
 							<NumberTag icon='account' number={data.members} />
 						</View>
-						<Text note>Date Added: {new Date().toDateString()}</Text>
-						<Text note>Last Updated: {new Date().toDateString()}</Text>
+						<Text note>Creation Date: {moment(data.createdDate).format('YYYY-MM-DD')}</Text>
+						<Text note>Update Date: {moment(data.updatedDate).format('YYYY-MM-DD')}</Text>
 					</CardItem>
 				</Card>
 
