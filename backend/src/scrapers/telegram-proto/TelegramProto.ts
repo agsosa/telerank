@@ -19,7 +19,6 @@ export const api = {
       const { error_code, error_message } = error;
 
       if (error_code === 420) {
-        log.error(error_message);
         const seconds = +error_message.split("FLOOD_WAIT_")[1];
         const ms = seconds * 1000;
 

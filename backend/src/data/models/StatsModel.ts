@@ -2,7 +2,7 @@ import moment from "moment";
 import * as EntryModel from "./entry-model/EntryModel";
 import { log } from "../../lib/Helpers";
 
-const STATS_CACHE_EXPIRATION_SECONDS = 60;
+const STATS_CACHE_EXPIRATION_SECONDS = 5 * 60;
 
 export interface IStats {
   channels: number;
