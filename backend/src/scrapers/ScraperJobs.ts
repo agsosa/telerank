@@ -1,3 +1,6 @@
+/* eslint-disable no-await-in-loop  */
+/* eslint-disable no-loop-func  */
+
 import { spawn } from "child_process";
 import { Document } from "mongoose";
 import IScrapedMedia from "./content-scrapers/IScrapedMedia";
@@ -5,18 +8,19 @@ import scrapeTelegramChannelsMe from "./content-scrapers/telegramchannels.me.scr
 import * as EntryModel from "../data/models/entry-model/EntryModel";
 import { getTelegramInfo } from "./telegram-proto/TelegramProto";
 import { uploadPhoto } from "../lib/GCloud";
-import { log } from "../lib/Helpers";
+import { capitalizeStr, log, sleep } from "../lib/Helpers";
 import { IEntry } from "../data/models/entry-model/IEntry";
 import ITelegramInfo from "./telegram-proto/ITelegramInfo";
 import EnumLanguage from "../data/models/entry-model/EnumLanguage";
 
+// TODO: Implement a job queue library
 const isJobRunning = false; // True if a job is already running
 
 /* 
   PopulateDatabaseJob():
     This function will scrape real Telegram channels, bots, users, stickers 
     from different websites and add them to the database (EntryModel) 
-    if they're not already added.
+    if they're not already added. The state for the new entries will be "Pending" (needs manual review)
 
     1) Execute the scrapers from content-scrapers to find new usernames and try to categorize them
     2) Discard usernames already added to the database, discard usernames with scam=true
@@ -33,53 +37,62 @@ export async function PopulateDatabaseJob(): Promise<void> {
     console.time("PopulateDatabase");
 
     const mediaList: IScrapedMedia[] = await scrapeTelegramChannelsMe();
-    const entryList: IEntry[] = [];
+
+    log.info(`PopulateDatabaseJob() will process ${mediaList.length} entries`);
+
     const uploadPromises: Promise<any>[] = [];
+    let added = 0;
+    let skipped = 0;
 
     for (let i = 0; i < mediaList.length; i += 1) {
       const q = mediaList[i];
 
-      // TODO: Check if username is already on database, if not continue
+      const exists = await EntryModel.isUsernameSaved(q.username);
 
-      log.info(`Executing getTelegramInfo for ${q.username}`);
+      if (!exists) {
+        log.info(`Executing getTelegramInfo for ${q.username}`);
 
-      // eslint-disable-next-line
-      const info = await getTelegramInfo(q.username); // !IMPORTANT: Wait for each getTelegramInfo() to avoid Telegram API limits
+        // !IMPORTANT: Wait for each getTelegramInfo() to avoid Telegram API limits
+        await sleep(1 * 1000); // TODO: Optimize/automatically find the best rate to avoid TELEGRAM_FLOOD_WAITS
+        const info = await getTelegramInfo(q.username);
 
-      log.info("ok");
+        if (info && !info.scam) {
+          uploadPromises.push(
+            uploadPhoto(info.photoBytes, info.username).then((imgURL) => {
+              const entry: IEntry = {
+                username: info.username.toLowerCase(),
+                type: info.type,
+                language: q.language as EnumLanguage,
+                category: capitalizeStr(q.category),
+                title: info.title,
+                description: info.description,
+                members: info.members,
+                image: imgURL || "",
+                createdDate: info.creationDate,
+                updatedDate: new Date(),
+                likes: 0,
+                dislikes: 0,
+                featured: false,
+                reports: 0,
+                pending: true,
+                removed: false,
+                views: 0,
+              };
 
-      if (info && !info.scam) {
-        uploadPromises.push(
-          uploadPhoto(info.photoBytes, info.username).then((imgURL) => {
-            const entry: IEntry = {
-              username: info.username,
-              type: info.type,
-              language: q.language as EnumLanguage,
-              category: q.category,
-              title: info.title,
-              description: info.description,
-              members: info.members,
-              image: imgURL || "",
-              createdDate: info.creationDate,
-              updatedDate: new Date(),
-              likes: 0,
-              dislikes: 0,
-              featured: false,
-              reports: 0,
-              pending: true,
-              removed: false,
-              views: 0,
-            };
-
-            entryList.push(entry);
-          })
-        );
-      }
+              EntryModel.Insert(entry).then(() => {
+                added += 1;
+              });
+            })
+          );
+        }
+      } else skipped += 1;
     }
 
     await Promise.all(uploadPromises);
-    EntryModel.Insert(entryList);
 
+    log.info(
+      `PopulateDatabaseJob() is done. Added Entries: ${added}/${mediaList.length} (skipped: ${skipped})`
+    );
     // eslint-disable-next-line
     console.timeEnd("PopulateDatabase");
   } catch (err) {
