@@ -1,6 +1,9 @@
+import EnumEntryType from "../../data/models/entry-model/EnumEntryType";
+import EnumLanguage from "../../data/models/entry-model/EnumLanguage";
+
 export default interface IScrapedMedia {
   username: string;
-  type: string;
+  type: EnumEntryType;
   category: string;
-  language: string;
+  language: EnumLanguage;
 }

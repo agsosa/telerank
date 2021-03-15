@@ -2,6 +2,12 @@ import scrapeIt, { ScrapeResult } from "scrape-it";
 import _ from "lodash";
 import IScrapedMedia from "./IScrapedMedia";
 import { capitalizeStr, log } from "../../lib/Helpers";
+import EnumEntryType, {
+  parseEntryType,
+} from "../../data/models/entry-model/EnumEntryType";
+import EnumLanguage, {
+  parseLanguage,
+} from "../../data/models/entry-model/EnumLanguage";
 
 // TODO: Extender clase Scraper
 
@@ -10,7 +16,7 @@ import { capitalizeStr, log } from "../../lib/Helpers";
  */
 
 const LANGUAGES_TO_SCRAPE = ["es"]; // TODO: add en
-const TYPES_TO_SCRAPE = ["channels", "groups"]; // TODO: add bots, stickers
+const TYPES_TO_SCRAPE = ["groups"]; // TODO: add channels, bots, stickers
 const getListURL = (lang: string, type: string, page: number) =>
   `https://telegramchannels.me/${lang}/${type}?category=all&sort=newest&page=${page}`;
 
@@ -118,7 +124,11 @@ async function scrapeMediaCards(
   const { entries } = result.data;
   const final: IScrapedMedia[] = [];
   entries.forEach((q) => {
-    final.push({ ...q, type: capitalizeStr(type), language: lang }); // Add extra fields, final result will be { category:string, username:string, type:string, language:string}
+    final.push({
+      ...q,
+      type: parseEntryType(type) as EnumEntryType,
+      language: parseLanguage(lang) as EnumLanguage,
+    }); // Add extra fields, final result will be { category:string, username:string, type:string, language:string}
   });
 
   // Return result
