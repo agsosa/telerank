@@ -62,8 +62,8 @@ export async function PopulateDatabaseJob(): Promise<void> {
               const entry: IEntry = {
                 username: info.username.toLowerCase(),
                 type: info.type,
-                language: q.language as EnumLanguage,
-                category: capitalizeStr(q.category),
+                language: q.language,
+                category: capitalizeStr(q.category) || "Other",
                 title: info.title,
                 description: info.description,
                 members: info.members,
