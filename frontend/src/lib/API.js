@@ -4,7 +4,7 @@ import moment from 'moment';
 import { MMKV } from 'react-native-mmkv';
 import { store } from '../state/Store';
 
-const BASE_URL = 'http://0f00d145c0da.ngrok.io'; // Base URL for the API calls
+const BASE_URL = 'http://15492280b511.ngrok.io'; // Base URL for the API calls
 
 rax.attach();
 const retryConfig = {
@@ -29,11 +29,11 @@ const CACHE_EXPIRATION_MINUTES = 3; // Minutes to consider the cache expired
 const PROMISE_RETRY_TIMEOUT = 1000;
 
 const API_MODULES = {
-	home: {
+	featured: {
 		validateData: (data) => data && Array.isArray(data), // data: array [] of {} EntryModel including all the featured and recent added entries.
 		currentData: null, // loaded data from server or cache to prevent unnecessary storage reads
 		pendingPromise: null, // prevent concurrent promises
-		getURL: () => `${BASE_URL}/entries?page=0&limit=5`, // endpoint/query
+		getURL: () => `${BASE_URL}/entries/featured`, // API URL
 	},
 	stats: {
 		validateData: (data) => data, // data: object {} of statistics (GetStatsFromDatabase)

@@ -21,7 +21,7 @@ export default function HomeTab() {
 				<GlobalSearch />
 				<AddMediaInfoBanner navigation={navigation} />
 				<SectionTitle text='Recently Added' />
-				<HorizontalList apiModule='home' />
+				<HorizontalList apiModule='featured' />
 
 				<SectionTitle text='Featured' />
 				<FeatureInfoBanner navigation={navigation} />
@@ -29,5 +29,5 @@ export default function HomeTab() {
 		);
 	}
 
-	return <VerticalList Header={HeaderRenderer} apiModule='home' />;
+	return <VerticalList Header={HeaderRenderer} apiModule='featured' />;
 }

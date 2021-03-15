@@ -53,10 +53,10 @@ const styles = StyleSheet.create({
 });
 
 const tabs = {
-	featured: { apiModule: 'home', title: 'Featured', icon: 'star', color: colors.featured, subtitle: 'Premium channels and groups' },
-	mostRated: { apiModule: 'home', title: 'Top Rated', icon: 'crown', color: colors.grayAlt2, subtitle: 'Tell your community to rate you to get better rankings!' },
-	mostMembers: { apiModule: 'home', title: 'Popular', icon: 'fire', color: colors.grayAlt2, subtitle: 'Most-viewed channels, bots, groups and stickers' },
-	mostViewed: { apiModule: 'home', title: 'Biggest', icon: 'account-group', color: colors.grayAlt2, subtitle: 'Biggest channels and groups by members' },
+	featured: { apiModule: 'featured', title: 'Featured', icon: 'star', color: colors.featured, subtitle: 'Premium channels and groups' },
+	mostRated: { apiModule: 'top', title: 'Top Rated', icon: 'crown', color: colors.grayAlt2, subtitle: 'Tell your community to rate you to get better rankings!' },
+	mostMembers: { apiModule: 'popular', title: 'Popular', icon: 'fire', color: colors.grayAlt2, subtitle: 'Most-viewed channels, bots, groups and stickers' },
+	mostViewed: { apiModule: 'biggest', title: 'Biggest', icon: 'account-group', color: colors.grayAlt2, subtitle: 'Biggest channels and groups by members' },
 };
 
 export default function Featured() {
