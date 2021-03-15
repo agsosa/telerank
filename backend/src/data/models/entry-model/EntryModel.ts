@@ -35,17 +35,43 @@ export const EntryModel: Model<IEntryDocument> = model(
   EntryModelSchema
 );
 
-/* export function GetAll(): Promise<IEntry[]> {
+function getCommonSelectExcludeFields(includeDescription = true): string {
+  let result = `-reports -pending -removed`;
+  if (!includeDescription) result += " -description";
+  return result;
+}
+
+export function GetPaginatedList(
+  perPage: number,
+  page: number,
+  includeDescription = true,
+  query: Record<string, unknown> = {}
+): Promise<IEntry[]> {
   return new Promise((resolve, reject) => {
-    EntryModel.find(
-      {  },
-      (err, res: IEntry[]) => {
+    EntryModel.find({ pending: false, removed: false, ...query })
+      .limit(perPage)
+      .select(getCommonSelectExcludeFields(includeDescription))
+      .skip(perPage * page)
+      .exec((err, entries) => {
         if (err) reject(err);
-        resolve(res);
-      }
-    );
+        resolve(entries);
+      });
   });
-} */
+}
+
+export function GetList(
+  query: Record<string, unknown> = {},
+  includeDescription = true
+): Promise<IEntry[]> {
+  return new Promise((resolve, reject) => {
+    EntryModel.find({ pending: false, removed: false, ...query })
+      .select(getCommonSelectExcludeFields(includeDescription))
+      .exec((err, entries) => {
+        if (err) reject(err);
+        resolve(entries);
+      });
+  });
+}
 
 export async function Insert(obj: IEntry | IEntry[]): Promise<void> {
   return new Promise((resolve, reject) => {
@@ -60,22 +86,6 @@ export async function Insert(obj: IEntry | IEntry[]): Promise<void> {
         resolve();
       });
     }
-  });
-}
-
-export function GetList(
-  perPage: number,
-  page: number,
-  query: Record<string, unknown> = {}
-): Promise<IEntry[]> {
-  return new Promise((resolve, reject) => {
-    EntryModel.find({ pending: false, removed: false, ...query })
-      .limit(perPage)
-      .skip(perPage * page)
-      .exec((err, entries) => {
-        if (err) reject(err);
-        resolve(entries);
-      });
   });
 }
 
