@@ -18,8 +18,9 @@ log4js.configure({
 export const log = log4js.getLogger();
 
 // "flavio" -> "Flavio"
-export function capitalizeStr(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+export function capitalizeStr(str?: string): string | undefined {
+  if (str) return str.charAt(0).toUpperCase() + str.slice(1);
+  return undefined;
 }
 
 export function sleep(ms: number): Promise<void> {
