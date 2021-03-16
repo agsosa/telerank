@@ -16,7 +16,7 @@ PopulateDatabaseJob();
 const port = 4001;
 const limiterOptions = rateLimit({
   windowMs: 10 * 60 * 1000,
-  max: 100,
+  max: 150,
 });
 const app = express();
 
