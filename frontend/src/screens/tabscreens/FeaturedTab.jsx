@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { Button } from 'react-native-paper';
+import { Tabs, TabScreen } from 'react-native-paper-tabs';
+import { Header } from 'react-native/Libraries/NewAppScreen';
 import VerticalList from '../../components/entries/VerticalList';
 import { colors, commonStyles } from '../../config/Styles';
 import Filters from '../../components/entries/Filters';
+
+const tabStyles2 = StyleSheet.create({
+	tabs: { backgroundColor: 'white', elevation: 5, marginTop: 5 },
+});
 
 const tabStyles = StyleSheet.create({
 	btn: (color, active) => ({
@@ -42,15 +48,15 @@ const styles = StyleSheet.create({
 	},
 });
 
-const tabs = {
-	featured: { apiModule: 'featured', title: 'Featured', icon: 'star', color: colors.featured, subtitle: 'Premium channels and groups' },
-	mostRated: { apiModule: 'top', title: 'Top Rated', icon: 'crown', color: colors.grayAlt2, subtitle: 'Tell your community to rate you in our app to get better rankings!' },
-	mostViewed: { apiModule: 'biggest', title: 'Biggest', icon: 'account-group', color: colors.grayAlt2, subtitle: 'Top 100 biggest channels and groups by members' },
-	mostMembers: { apiModule: 'popular', title: 'Popular', icon: 'fire', color: colors.grayAlt2, subtitle: 'Top 100 most viewed channels, bots, groups and stickers' },
-};
+const tabs = [
+	{ apiModule: 'featured', title: 'Featured', icon: 'star', color: colors.featured, subtitle: 'Premium channels and groups' },
+	{ apiModule: 'top', title: 'Top Rated', icon: 'crown', color: colors.grayAlt2, subtitle: 'Tell your community to rate you in our app to get better rankings!' },
+	{ apiModule: 'biggest', title: 'Biggest', icon: 'account-group', color: colors.grayAlt2, subtitle: 'Top 100 biggest channels and groups by members' },
+	{ apiModule: 'popular', title: 'Popular', icon: 'fire', color: colors.grayAlt2, subtitle: 'Top 100 most viewed channels, bots, groups and stickers' },
+];
 
 export default function Featured() {
-	const [currTab, setCurrTab] = useState('featured');
+	const [currTab, setCurrTab] = useState(0);
 
 	const CustomTabs = () => (
 		<View style={tabStyles.mainView}>
@@ -68,13 +74,13 @@ export default function Featured() {
 		</View>
 	);
 
-	function HeaderRenderer() {
+	function HeaderRenderer(idx) {
 		return (
 			<View>
-				<CustomTabs />
+				{/* <CustomTabs /> */}
 				<View style={styles.labelsContainer}>
-					<Text style={styles.titleText}>{tabs[currTab].title}</Text>
-					<Text style={styles.subtitleText}>{tabs[currTab].subtitle}</Text>
+					<Text style={styles.titleText}>{tabs[idx].title}</Text>
+					<Text style={styles.subtitleText}>{tabs[idx].subtitle}</Text>
 					<Filters />
 				</View>
 			</View>
@@ -83,7 +89,14 @@ export default function Featured() {
 
 	return (
 		<View style={commonStyles.flex}>
-			<VerticalList Header={HeaderRenderer} apiModule={tabs[currTab].apiModule} />
+			<Tabs iconPosition='leading' mode='scrollable' showLeadingSpace style={tabStyles2.tabs}>
+				{tabs.map((q, i) => (
+					<TabScreen key={q.apiModule} label={q.title} icon={q.icon}>
+						<VerticalList Header={() => HeaderRenderer(i)} apiModule={q.apiModule} />
+					</TabScreen>
+				))}
+			</Tabs>
+			{/* <VerticalList Header={HeaderRenderer} apiModule={tabs[currTab].apiModule} /> */}
 		</View>
 	);
 }
