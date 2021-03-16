@@ -39,13 +39,31 @@ const API_MODULES = {
 		getURL: () => `${BASE_URL}/entries/featured`, // API URL
 	},
 	recent: {
-		validateData: (data) => data && Array.isArray(data), // data: array [] of {} EntryModel including all the featured and recent added entries.
-		current: null, // loaded object from server or file storage { data, expirationTime}
-		pendingPromise: null, // prevent concurrent promises
-		getURL: () => `${BASE_URL}/entries/recent`, // API URL
+		validateData: (data) => data && Array.isArray(data),
+		current: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries/recent`,
+	},
+	popular: {
+		validateData: (data) => data && Array.isArray(data),
+		current: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries/popular`,
+	},
+	biggest: {
+		validateData: (data) => data && Array.isArray(data),
+		current: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries/biggest`,
+	},
+	top: {
+		validateData: (data) => data && Array.isArray(data),
+		current: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries/top`,
 	},
 	stats: {
-		validateData: (data) => data, // data: object {} of statistics (GetStatsFromDatabase)
+		validateData: (data) => data,
 		currentData: null,
 		pendingPromise: null,
 		getURL: () => `${BASE_URL}/stats`,
