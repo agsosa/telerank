@@ -1,39 +1,40 @@
-// TODO: Convert to TypeScript enums
+// TODO: Convert to TypeScript if possible
 
+// Categories object: Keys will be used as enums, the values are "locale object" including the available translations identified by language code (es/en).
 export const Categories = Object.freeze({
-	ANIMALS: { es: 'Otros', en: 'Animals' },
-	EDUCATION: { es: 'Otros', en: 'Education' },
+	ANIMALS: { es: 'Animales', en: 'Animals' },
+	EDUCATION: { es: 'Educación', en: 'Education' },
 	OTHER: { es: 'Otros', en: 'Other' },
-	ART_DESIGN: { es: 'Otros', en: 'Art & Design' },
-	ENTERTAINMENT: { es: 'Otros', en: 'Entertainment' },
-	PHOTO: { es: 'Otros', en: 'Photo' },
+	ART_DESIGN: { es: 'Arte y Diseño', en: 'Art & Design' },
+	ENTERTAINMENT: { es: 'Entretenimiento', en: 'Entertainment' },
+	PHOTO: { es: 'Foto', en: 'Photo' },
 	AUTO_MOTO: { es: 'Otros', en: 'Auto & Moto' },
-	FASHION_BEAUTY: { es: 'Otros', en: 'Fashion & Beauty' },
-	SCIENCE: { es: 'Otros', en: 'Science' },
-	BETTING: { es: 'Otros', en: 'Betting' },
+	FASHION_BEAUTY: { es: 'Moda y belleza', en: 'Fashion & Beauty' },
+	SCIENCE: { es: 'Ciencia', en: 'Science' },
+	BETTING: { es: 'Apuesta', en: 'Betting' },
 	FOOD: { es: 'Otros', en: 'Food' },
-	SELF_DEVELOPMENT: { es: 'Otros', en: 'Self Development' },
+	SELF_DEVELOPMENT: { es: 'Autodesarrollo', en: 'Self Development' },
 	BLOGS: { es: 'Blogs', en: 'Blogs' },
-	GAMES_APPS: { es: 'Blogs', en: 'Games & Apps' },
-	SHOP: { es: 'Blogs', en: 'Shop' },
-	BOOKS_MAGAZINE: { es: 'Blogs', en: 'Books & Magazine' },
-	HEALTH: { es: 'Blogs', en: 'Health' },
-	SPORTS_FITNESS: { es: 'Blogs', en: 'Sports & Fitness' },
-	BUSINESS_STARTUPS: { es: 'Blogs', en: 'Business & Startups' },
-	LANGUAGES: { es: 'Blogs', en: 'Languages' },
-	TECHNOLOGY: { es: 'Blogs', en: 'Technology' },
+	GAMES_APPS: { es: 'Juegos y apps', en: 'Games & Apps' },
+	SHOP: { es: 'Comprar', en: 'Shop' },
+	BOOKS_MAGAZINE: { es: 'Libros y revistas', en: 'Books & Magazine' },
+	HEALTH: { es: 'Salud', en: 'Health' },
+	SPORTS_FITNESS: { es: 'Deporte y Fitness', en: 'Sports & Fitness' },
+	BUSINESS_STARTUPS: { es: 'Negocios y Startups', en: 'Business & Startups' },
+	LANGUAGES: { es: 'Idiomas', en: 'Languages' },
+	TECHNOLOGY: { es: 'Tecnología', en: 'Technology' },
 	CELEBRITIES: { es: 'Blogs', en: 'Celebrities' },
-	LOVE: { es: 'Blogs', en: 'Love' },
-	TELEGRAM: { es: 'Blogs', en: 'Telegram' },
-	COMMUNICATION: { es: 'Blogs', en: 'Communication' },
-	MARKETING: { es: 'Blogs', en: 'Marketing' },
-	TRAVEL: { es: 'Blogs', en: 'Travel' },
+	LOVE: { es: 'Amor', en: 'Love' },
+	TELEGRAM: { es: 'Telegram', en: 'Telegram' },
+	COMMUNICATION: { es: 'Comunicación', en: 'Communication' },
+	MARKETING: { es: 'Marketing', en: 'Marketing' },
+	TRAVEL: { es: 'Viajes', en: 'Travel' },
 	CRYPTOCURRENCIES: { es: 'Criptomonedas', en: 'Cryptocurrencies' },
-	MUSIC: { es: 'Blogs', en: 'Music' },
-	UTILITIES_TOOLS: { es: 'Blogs', en: 'Utilities & Tools' },
-	ECONOMICS_FINANCE: { es: 'Blogs', en: 'Economics & Finance' },
-	NEWS_MEDIA: { es: 'Blogs', en: 'News & Media' },
-	VIDEOS_MOVIES: { es: 'Blogs', en: 'Videos & Movies' },
+	MUSIC: { es: 'Música', en: 'Music' },
+	UTILITIES_TOOLS: { es: 'Utilidades y Herramientas', en: 'Utilities & Tools' },
+	ECONOMICS_FINANCE: { es: 'Economía y Finanzas', en: 'Economics & Finance' },
+	NEWS_MEDIA: { es: 'Noticias y Medios', en: 'News & Media' },
+	VIDEOS_MOVIES: { es: 'Videos y peliculas', en: 'Videos & Movies' },
 });
 
 /*
@@ -43,7 +44,7 @@ export const Categories = Object.freeze({
  */
 export function getLocaleObjectFromCategory(category) {
 	if (category && typeof category == 'string') {
-		return Categories[category];
+		return Categories[category.toUpperCase()];
 	}
 	return undefined;
 }
@@ -51,13 +52,14 @@ export function getLocaleObjectFromCategory(category) {
 /*
  * Accepts a locale string (i.e. "Videos & Movies")
  * Returns a Categories key (i.e. "NEWS_MEDIA")
- * Case insensitive
+ * Case insensitive, ignores accents
  */
 export function getCategoryFromLocaleString(localeStr) {
 	if (localeStr && typeof localeStr == 'string') {
 		const keys = Object.keys(Categories);
 		const str = localeStr.toLowerCase();
+		// TODO: Use regex or something to make the comparisons more flexible (i.e. possibility to convert "News" or "Media News" to the NEWS_MEDIA category)
 		return keys.find((q) => Categories[q].es.toLowerCase() === str || Categories[q].en.toLowerCase() === str);
 	}
-	return undefined;
+	return undefined; // TODO: Return OTHER instead of undefined?
 }
