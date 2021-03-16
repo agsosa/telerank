@@ -3,7 +3,7 @@ import { IEntry, IEntryDocument } from "./IEntry";
 import EnumLanguage from "./EnumLanguage";
 
 // TODO: Implement cache?
-// TODO: Implement EnumCategories
+// TODO: Implement EnumCategories/Categories from /shared/
 
 const EntryModelSchema = new Schema({
   username: { type: String, required: true, unique: true },
