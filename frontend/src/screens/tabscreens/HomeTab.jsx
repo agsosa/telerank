@@ -17,7 +17,7 @@ export default function HomeTab() {
 				<GlobalSearch />
 				<AddMediaInfoBanner navigation={navigation} />
 				<SectionTitle text='Recently Added' />
-				<HorizontalList apiModule='featured' />
+				<HorizontalList apiModule='recent' />
 
 				<SectionTitle text='Featured' />
 				<FeatureInfoBanner navigation={navigation} />

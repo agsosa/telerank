@@ -38,6 +38,12 @@ const API_MODULES = {
 		pendingPromise: null, // prevent concurrent promises
 		getURL: () => `${BASE_URL}/entries/featured`, // API URL
 	},
+	recent: {
+		validateData: (data) => data && Array.isArray(data), // data: array [] of {} EntryModel including all the featured and recent added entries.
+		current: null, // loaded object from server or file storage { data, expirationTime}
+		pendingPromise: null, // prevent concurrent promises
+		getURL: () => `${BASE_URL}/entries/recent`, // API URL
+	},
 	stats: {
 		validateData: (data) => data, // data: object {} of statistics (GetStatsFromDatabase)
 		currentData: null,

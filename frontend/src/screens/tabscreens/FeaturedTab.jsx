@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native-paper';
 import VerticalList from '../../components/entries/VerticalList';
 import { colors, commonStyles } from '../../config/Styles';
@@ -45,9 +44,9 @@ const styles = StyleSheet.create({
 
 const tabs = {
 	featured: { apiModule: 'featured', title: 'Featured', icon: 'star', color: colors.featured, subtitle: 'Premium channels and groups' },
-	mostRated: { apiModule: 'top', title: 'Top Rated', icon: 'crown', color: colors.grayAlt2, subtitle: 'Tell your community to rate you to get better rankings!' },
-	mostMembers: { apiModule: 'popular', title: 'Popular', icon: 'fire', color: colors.grayAlt2, subtitle: 'Most-viewed channels, bots, groups and stickers' },
-	mostViewed: { apiModule: 'biggest', title: 'Biggest', icon: 'account-group', color: colors.grayAlt2, subtitle: 'Biggest channels and groups by members' },
+	mostRated: { apiModule: 'top', title: 'Top Rated', icon: 'crown', color: colors.grayAlt2, subtitle: 'Tell your community to rate you in our app to get better rankings!' },
+	mostViewed: { apiModule: 'biggest', title: 'Biggest', icon: 'account-group', color: colors.grayAlt2, subtitle: 'Top 100 biggest channels and groups by members' },
+	mostMembers: { apiModule: 'popular', title: 'Popular', icon: 'fire', color: colors.grayAlt2, subtitle: 'Top 100 most viewed channels, bots, groups and stickers' },
 };
 
 export default function Featured() {
