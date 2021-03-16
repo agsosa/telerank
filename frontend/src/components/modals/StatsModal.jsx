@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text } from 'react-native';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import Stats from '../entries/Stats';
 

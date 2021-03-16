@@ -1,18 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Checkbox, Button } from 'react-native-paper';
-import { ListItem, CheckBox, Body } from 'native-base';
-import Stats from '../../components/entries/Stats';
-import GlobalSearch from '../../components/entries/GlobalSearch';
+import { Button } from 'react-native-paper';
 import VerticalList from '../../components/entries/VerticalList';
-import SectionTitle from '../../components/SectionTitle';
-import { getModuleData } from '../../lib/API';
-import HorizontalList from '../../components/entries/HorizontalList';
-import AddMediaInfoBanner from '../../components/infobanners/AddMediaInfoBanner';
-import FeatureInfoBanner from '../../components/infobanners/FeatureInfoBanner';
 import { colors, commonStyles } from '../../config/Styles';
-import InfoBanner from '../../components/infobanners/InfoBanner';
 import Filters from '../../components/entries/Filters';
 
 const tabStyles = StyleSheet.create({
@@ -60,8 +51,6 @@ const tabs = {
 };
 
 export default function Featured() {
-	const navigation = useNavigation();
-
 	const [currTab, setCurrTab] = useState('featured');
 
 	const CustomTabs = () => (

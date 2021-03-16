@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, FlatList, Text } from 'react-native';
-import { Searchbar, Chip } from 'react-native-paper';
+import { View, FlatList } from 'react-native';
+import { Searchbar } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
 import { commonStyles } from '../../config/Styles';
 import VerticalCard from './VerticalCard';

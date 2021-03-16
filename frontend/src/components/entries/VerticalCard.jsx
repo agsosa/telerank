@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import NumberTag from '../NumberTag';
 import { formatLanguageCode } from '../../lib/Helpers';
-import { commonStyles, colors } from '../../config/Styles';
+import { colors } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({

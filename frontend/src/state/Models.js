@@ -1,24 +1,3 @@
-/* export const media = {
-	name: 'media',
-	state: [],
-	reducers: {
-		clear: () => {
-			console.log('clear');
-			return [];
-		}, // Clear the current media list array
-		set: (_, payload) => Array.isArray(payload) && payload, // Replace the current media list array
-	},
-	effects: (dispatch) => ({
-		async getFromServerAsync(apiFunc, state) {
-			dispatch.media.clear();
-			apiFunc().then((data) => {
-				console.log(`received model ${Date.now()}`);
-				dispatch.media.set(data);
-			});
-		},
-	}),
-}; */
-
 import { Languages, getBestAvailableLanguage } from '../config/Locale';
 
 export const settings = {
@@ -75,3 +54,24 @@ export const drawerState = {
 		},
 	},
 };
+
+/* export const media = {
+	name: 'media',
+	state: [],
+	reducers: {
+		clear: () => {
+			console.log('clear');
+			return [];
+		}, // Clear the current media list array
+		set: (_, payload) => Array.isArray(payload) && payload, // Replace the current media list array
+	},
+	effects: (dispatch) => ({
+		async getFromServerAsync(apiFunc, state) {
+			dispatch.media.clear();
+			apiFunc().then((data) => {
+				console.log(`received model ${Date.now()}`);
+				dispatch.media.set(data);
+			});
+		},
+	}),
+}; */
