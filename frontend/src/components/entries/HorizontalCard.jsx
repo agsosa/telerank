@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 	cardContentView: { flex: 1, flexDirection: 'row', marginTop: 5, flexWrap: 'wrap', justifyContent: 'space-between', padding: 5 },
 	cardFeatured: { backgroundColor: colors.featuredLight, borderColor: colors.featured, borderLeftWidth: 5 },
 	coverImg: { resizeMode: 'cover', width: '100%' },
-	featuredBadgeContainer: { position: 'absolute', right: 0, zIndex: 1 },
+	featuredBadgeContainer: { position: 'absolute', right: -10, top: -5, zIndex: 1 },
 	mainView: { flex: 1, padding: 5 },
 	membersCount: { alignSelf: 'flex-start' },
 });

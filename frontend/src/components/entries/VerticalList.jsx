@@ -30,6 +30,10 @@ export default function VerticalList({ Header, Footer, useSearchBar, apiModule }
 		refreshData();
 	}, []);
 
+	useEffect(() => {
+		refreshData();
+	}, [apiModule]);
+
 	/*
 	 * Search & Filter
 	 */
@@ -55,7 +59,7 @@ export default function VerticalList({ Header, Footer, useSearchBar, apiModule }
 	/*
 	 *	Renders
 	 */
-	const renderHeader = () => (
+	const RenderHeader = () => (
 		<View>
 			{Header && <Header />}
 
@@ -75,7 +79,8 @@ export default function VerticalList({ Header, Footer, useSearchBar, apiModule }
 				renderItem={(q) => <VerticalCard item={q.item} />}
 				keyExtractor={(item) => item._id}
 				ItemSeparatorComponent={null}
-				ListHeaderComponent={renderHeader}
+				getItemLayout={(data, index) => ({ length: 200, offset: 200 * index, index })}
+				ListHeaderComponent={RenderHeader}
 				ListFooterComponent={renderFooter}
 				onRefresh={refreshData}
 				refreshing={loading}
