@@ -9,7 +9,7 @@ import { uploadPhoto } from "../lib/GCloud";
 import { capitalizeStr, log, sleep } from "../lib/Helpers";
 import { IEntry } from "../data/models/entry-model/IEntry";
 
-// TODO: Implement a job queue library
+// TODO: Implement a job queue library or use cron jobs to automatically run the jobs every X hours
 const isJobRunning = false; // True if a job is already running
 
 /* 
@@ -29,6 +29,7 @@ const isJobRunning = false; // True if a job is already running
 
     P.S. Add the entries to the database one by one to be safe.
 */
+// TODO: Save the amount of new entries since the last run to display later on stats panel/graph
 export async function PopulateDatabaseJob(): Promise<void> {
   try {
     // eslint-disable-next-line
@@ -101,6 +102,7 @@ export async function PopulateDatabaseJob(): Promise<void> {
 
 // Refresh the Telegram information (title, description, member count, photo, etc) for all the saved entries in the database
 // TODO: Grab the Telegram Info from the telegram-proto module. If the username is now flagged as SCAM by Telegram, update the EntryModel field "removed" to true and skip
+// TODO: Save the difference of members since the last run to display later on stats panel/graph
 export function RefreshEntriesTelegramInfoJob() {
   throw new Error("NotImplemented");
 }

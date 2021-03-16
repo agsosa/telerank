@@ -7,7 +7,13 @@ import EnumEntryType, {
 } from "../data/models/entry-model/EnumEntryType";
 import EnumLanguage from "../data/models/entry-model/EnumLanguage";
 
+// TODO: Implementar LIMIT_PER_PAGE para biggest, recent, popular, top
+
 const LIMIT_PER_PAGE = 10; // Limit of objects returned per page
+const LIMIT_RECENT = 10; // Max entries returned by /entries/recent
+const LIMIT_POPULAR = 10; // Max entries returned by /entries/popular
+const LIMIT_BIGGEST = 10; // Max entries returned by /entries/biggest
+const LIMIT_TOP = 10; // Max entries returned by /entries/top
 
 export default class EntriesRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
@@ -41,7 +47,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
               !Number.isNaN(queryPage) && queryPage % 1 === 0;
 
             // Query param: type
-            const queryType: string | undefined = req.query.type?.toString();
+            const queryType = req.query.type?.toString();
             const parsedQueryType = queryType
               ? parseEntryType(queryType)
               : undefined;
@@ -120,7 +126,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           next: express.NextFunction
         ) => {
           try {
-            EntryModel.GetList({}, { members: "desc" }, false, 100)
+            EntryModel.GetList({}, { members: "desc" }, false, LIMIT_BIGGEST)
               .then((result) => {
                 res.status(200).send(result);
               })
@@ -155,7 +161,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           next: express.NextFunction
         ) => {
           try {
-            EntryModel.GetList({}, { views: "desc" }, false, 100)
+            EntryModel.GetList({}, { views: "desc" }, false, LIMIT_POPULAR)
               .then((result) => {
                 res.status(200).send(result);
               })
@@ -194,7 +200,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
               {},
               { likes: "desc", dislikes: "asc" },
               false,
-              100
+              LIMIT_TOP
             )
               .then((result) => {
                 res.status(200).send(result);
@@ -230,7 +236,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           next: express.NextFunction
         ) => {
           try {
-            EntryModel.GetList({}, { dateAdded: "desc" }, false, 10)
+            EntryModel.GetList({}, { dateAdded: "desc" }, false, LIMIT_RECENT)
               .then((result) => {
                 res.status(200).send(result);
               })

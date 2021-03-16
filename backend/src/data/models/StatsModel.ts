@@ -4,6 +4,7 @@ import { log } from "../../lib/Helpers";
 
 const STATS_CACHE_EXPIRATION_SECONDS = 5 * 60;
 
+// TODO: Move interfaces to /shared/
 export interface IStats {
   channels: number;
   groups: number;
@@ -104,6 +105,9 @@ function GetStatsFromDatabase(): Promise<IStats> {
   });
 }
 
+/*
+ * Returns a IStats object from database or cache.
+ */
 export function GetStats(): Promise<IStats> {
   return new Promise((resolve) => {
     const cacheSecondsRemaining = stats.expirationTime
