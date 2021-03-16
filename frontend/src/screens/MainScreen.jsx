@@ -8,6 +8,10 @@ import { commonStyles } from '../config/Styles';
 import HomeTab from './tabscreens/HomeTab';
 import APIErrorSnackbar from '../components/APIErrorSnackbar';
 import FeaturedTab from './tabscreens/FeaturedTab';
+import StickersTab from './tabscreens/StickersTab';
+import GroupsTab from './tabscreens/GroupsTab';
+import BotsTab from './tabscreens/BotsTab';
+import ChannelsTab from './tabscreens/ChannelsTab';
 
 const styles = StyleSheet.create({
 	tabs: { backgroundColor: 'white', elevation: 5, marginTop: 5 },
@@ -30,16 +34,16 @@ const MainScreen = ({ setDrawerNavigation }) => {
 					<FeaturedTab />
 				</TabScreen>
 				<TabScreen label='Canales' icon='bullhorn'>
-					<View />
+					<ChannelsTab />
 				</TabScreen>
 				<TabScreen label='Grupos' icon='forum'>
-					<View />
+					<GroupsTab />
 				</TabScreen>
 				<TabScreen label='Bots' icon='robot'>
-					<View />
+					<BotsTab />
 				</TabScreen>
 				<TabScreen label='Stickers' icon='sticker'>
-					<View />
+					<StickersTab />
 				</TabScreen>
 			</Tabs>
 

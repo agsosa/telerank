@@ -68,12 +68,36 @@ const API_MODULES = {
 		pendingPromise: null,
 		getURL: () => `${BASE_URL}/stats`,
 	},
-	// search, top, groups, channels, bots, stickers
+	channels: {
+		validateData: (data) => data,
+		currentData: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries?type=Channel&page=0`,
+	},
+	bots: {
+		validateData: (data) => data,
+		currentData: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries?type=Bot&page=0`,
+	},
+	stickers: {
+		validateData: (data) => data,
+		currentData: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries?type=Sticker&page=0`,
+	},
+	groups: {
+		validateData: (data) => data,
+		currentData: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries?type=Group&page=0`,
+	},
+	// search,  groups, channels, bots, stickers
 };
 
 function getCacheFromStorage(storageKey) {
 	try {
-		const cacheParsed = JSON.parse(MMKV.getString(storageKey));
+		const cacheParsed = JSON.parse(MMKV.getString(storageKey)); // TODO: Benchmark
 		return cacheParsed;
 	} catch (e) {
 		console.log(`Error while trying to get data from memory/storage: ${e.message}`);
