@@ -48,9 +48,7 @@ export default function Stats() {
 		setLoading(true);
 
 		await getModuleData('Stats').then((result) => {
-			console.log(`stats received${JSON.stringify(result)}`);
 			if (isMounted) {
-				console.log('ismounted');
 				setData(result);
 				setLoading(false);
 			}
