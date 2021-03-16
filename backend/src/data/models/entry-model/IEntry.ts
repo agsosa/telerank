@@ -12,6 +12,7 @@ export interface IEntry {
   members: number;
   image: string;
   createdDate: Date;
+  addedDate: Date;
   updatedDate: Date;
   likes: number;
   dislikes: number;

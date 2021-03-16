@@ -70,6 +70,7 @@ export async function PopulateDatabaseJob(): Promise<void> {
                 image: imgURL || "",
                 createdDate: info.creationDate,
                 updatedDate: new Date(),
+                addedDate: new Date(),
                 likes: 0,
                 dislikes: 0,
                 featured: false,

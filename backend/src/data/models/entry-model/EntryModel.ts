@@ -21,6 +21,7 @@ const EntryModelSchema = new Schema({
   image: { type: String, required: false },
   createdDate: { type: Date, required: false, default: Date.now },
   updatedDate: { type: Date, required: false, default: Date.now },
+  addedDate: { type: Date, required: false, default: Date.now },
   likes: { type: Number, required: false, default: 0 },
   dislikes: { type: Number, required: false, default: 0 },
   featured: { type: Boolean, required: false, default: false, index: true },
@@ -44,14 +45,16 @@ function getCommonSelectExcludeFields(includeDescription = true): string {
 export function GetPaginatedList(
   perPage: number,
   page: number,
-  includeDescription = true,
-  query: Record<string, unknown> = {}
+  includeDescription = false,
+  query: Record<string, unknown> = {},
+  sort: Record<string, unknown> = {}
 ): Promise<IEntry[]> {
   return new Promise((resolve, reject) => {
     EntryModel.find({ pending: false, removed: false, ...query })
       .limit(perPage)
-      .select(getCommonSelectExcludeFields(includeDescription))
       .skip(perPage * page)
+      .select(getCommonSelectExcludeFields(includeDescription))
+      .sort(sort)
       .exec((err, entries) => {
         if (err) reject(err);
         resolve(entries);
@@ -61,11 +64,15 @@ export function GetPaginatedList(
 
 export function GetList(
   query: Record<string, unknown> = {},
-  includeDescription = true
+  sort: Record<string, unknown> = {},
+  includeDescription = false,
+  maxEntries = 0
 ): Promise<IEntry[]> {
   return new Promise((resolve, reject) => {
     EntryModel.find({ pending: false, removed: false, ...query })
+      .limit(maxEntries)
       .select(getCommonSelectExcludeFields(includeDescription))
+      .sort(sort)
       .exec((err, entries) => {
         if (err) reject(err);
         resolve(entries);
