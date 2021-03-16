@@ -1,8 +1,6 @@
 /* eslint-disable no-await-in-loop  */
 /* eslint-disable no-loop-func  */
 
-import { spawn } from "child_process";
-import { Document } from "mongoose";
 import IScrapedMedia from "./content-scrapers/IScrapedMedia";
 import scrapeTelegramChannelsMe from "./content-scrapers/telegramchannels.me.scraper";
 import * as EntryModel from "../data/models/entry-model/EntryModel";
@@ -10,26 +8,26 @@ import { getTelegramInfo } from "./telegram-proto/TelegramProto";
 import { uploadPhoto } from "../lib/GCloud";
 import { capitalizeStr, log, sleep } from "../lib/Helpers";
 import { IEntry } from "../data/models/entry-model/IEntry";
-import ITelegramInfo from "./telegram-proto/ITelegramInfo";
-import EnumLanguage from "../data/models/entry-model/EnumLanguage";
 
 // TODO: Implement a job queue library
 const isJobRunning = false; // True if a job is already running
 
 /* 
   PopulateDatabaseJob():
-    This function will scrape real Telegram channels, bots, users, stickers 
-    from different websites and add them to the database (EntryModel) 
-    if they're not already added. The state for the new entries will be "Pending" (needs manual review)
+    This function will scrape real Telegram channels, bots, users, stickers (usernames)
+    from different websites and add them to the database (EntryModel) if they're not already added. 
+    The state for the new entries will be "Pending" (needs manual review)
 
-    1) Execute the scrapers from content-scrapers to find new usernames and try to categorize them
-    2) Discard usernames already added to the database, discard usernames with scam=true
+    1) Execute the scrapers from content-scrapers to find new usernames (some scrapers will include a category and extra info)
+    2) Discard usernames already added to the database
     3) --- For each scraped username:
     
-      - Get all the info (title, description, photo, etc) using the TelegramProto module
+      - Get all the info (title, description, photo bytes, member count, etc) from Telegram using the TelegramProto module
       - Discard usernames with info.scam = true
-      - Process the info (i.e. upload the photo to Google Cloud Storage)
+      - Process the info (i.e. upload the photo to Google Cloud Storage or grab the public URL if it's already uploaded)
       - Add to the database (EntryModel)
+
+    P.S. Add the entries to the database one by one to be safe.
 */
 export async function PopulateDatabaseJob(): Promise<void> {
   try {
@@ -101,8 +99,8 @@ export async function PopulateDatabaseJob(): Promise<void> {
   }
 }
 
-export function RefreshAllTelegramInfosJob() {
+// Refresh the Telegram information (title, description, member count, photo, etc) for all the saved entries in the database
+// TODO: Grab the Telegram Info from the telegram-proto module. If the username is now flagged as SCAM by Telegram, update the EntryModel field "removed" to true and skip
+export function RefreshEntriesTelegramInfoJob() {
   throw new Error("NotImplemented");
 }
-
-// TODO: En UpdateSavedInfo revisar si ITelegramInfo scam field = true, en caso de ser true setear IEntry removed = true
