@@ -4,14 +4,14 @@ import { Badge, Icon } from 'native-base';
 import { colors } from '../../config/Styles';
 
 const styles = StyleSheet.create({
-	badge: { backgroundColor: colors.featured, flexDirection: 'row' },
-	icon: { color: '#fff', fontSize: 15, lineHeight: 25 },
-	text: { color: 'white', lineHeight: 25 },
+	badge: { backgroundColor: colors.featured, flexDirection: 'row', transform: [{ scaleX: 0.85 }, { scaleY: 0.85 }] },
+	icon: { color: '#fff', fontSize: 10, lineHeight: 25 },
+	text: { color: 'white', fontWeight: 'bold', lineHeight: 25 },
 });
 
 export default function FeaturedBadge({ style }) {
 	return (
-		<Badge style={[styles.badge, style]}>
+		<Badge style={[styles.badge, style]} small>
 			<Icon name='star' style={styles.icon} />
 			<Text style={styles.text}>Featured</Text>
 		</Badge>
