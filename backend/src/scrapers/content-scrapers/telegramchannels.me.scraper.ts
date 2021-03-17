@@ -15,8 +15,8 @@ import EnumLanguage, {
  * TelegramChannels.me Scraper
  */
 
-const LANGUAGES_TO_SCRAPE = ["es"]; // TODO: add en
-const TYPES_TO_SCRAPE = ["groups"]; // TODO: add channels, bots, stickers
+const LANGUAGES_TO_SCRAPE = ["es", "en"]; // TODO: add en
+const TYPES_TO_SCRAPE = ["groups", "channels", "bots"]; // TODO: add channels, bots, stickers
 const getListURL = (lang: string, type: string, page: number) =>
   `https://telegramchannels.me/${lang}/${type}?category=all&sort=newest&page=${page}`;
 
@@ -78,7 +78,6 @@ async function getMaxPages(type: string, lang: string): Promise<number> {
     if (Number.isNaN(maxPages)) throw new Error("Can't get max pages");
     return maxPages;
   } catch (err) {
-    // TODO: Handle error
     log.error(err);
     return 0;
   }
@@ -145,13 +144,22 @@ async function scrapePages(
   const promises = [];
   const maxPages = await getMaxPages(type, lang);
 
-  // Process the media-card elements for every page in parallel
-  for (let page = 1; page < maxPages; page += 1) {
+  // Couldn't get max pages, maybe it's only 1 page
+  if (maxPages === 0) {
     promises.push(
-      scrapeMediaCards(type, lang, page).then((data) => {
+      scrapeMediaCards(type, lang, 1).then((data) => {
         data.map((q) => entries.push(q)); // Save the results from scrapeMediaCards in our entries array
       })
     );
+  } else {
+    // Process the media-card elements for every page in parallel
+    for (let page = 1; page < maxPages; page += 1) {
+      promises.push(
+        scrapeMediaCards(type, lang, page).then((data) => {
+          data.map((q) => entries.push(q)); // Save the results from scrapeMediaCards in our entries array
+        })
+      );
+    }
   }
 
   // Wait for all the parallel scrapeMediaCards() to complete
