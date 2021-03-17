@@ -40,36 +40,30 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          try {
-            // Query param: page
-            const queryPage = Number(req.query.page);
-            const isQueryPageValid =
-              !Number.isNaN(queryPage) && queryPage % 1 === 0;
+          // Query param: page
+          const queryPage = Number(req.query.page);
+          const isQueryPageValid =
+            !Number.isNaN(queryPage) && queryPage % 1 === 0;
 
-            // Query param: type
-            const queryType = req.query.type?.toString();
-            const parsedQueryType = queryType
-              ? parseEntryType(queryType)
-              : undefined;
+          // Query param: type
+          const queryType = req.query.type?.toString();
+          const parsedQueryType = queryType
+            ? parseEntryType(queryType)
+            : undefined;
 
-            // Final params
-            const type = parsedQueryType ? { type: parsedQueryType } : {};
-            const page = isQueryPageValid ? queryPage : 0;
+          // Final params
+          const type = parsedQueryType ? { type: parsedQueryType } : {};
+          const page = isQueryPageValid ? queryPage : 0;
 
-            EntryModel.GetPaginatedList(LIMIT_PER_PAGE, page, true, type) // TODO: Check EntryModel.GetList parameter includeDescription
-              .then((result) => {
-                res.status(200).send(result);
-              })
-              .catch((e) => {
-                const error = new Error(e.codeName);
-                res.status(400);
-                next(error);
-              });
-          } catch (e) {
-            const error = new Error(e.toString());
-            res.status(400);
-            next(error);
-          }
+          EntryModel.GetPaginatedList(LIMIT_PER_PAGE, page, true, type) // TODO: Check EntryModel.GetList parameter includeDescription
+            .then((result) => {
+              res.status(200).send(result);
+            })
+            .catch((e) => {
+              const error = new Error(e.codeName);
+              res.status(400);
+              next(error);
+            });
         }
       );
 
@@ -90,21 +84,15 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          try {
-            EntryModel.GetList({ featured: true })
-              .then((result) => {
-                res.status(200).send(result);
-              })
-              .catch((e) => {
-                const error = new Error(e.codeName);
-                res.status(400);
-                next(error);
-              });
-          } catch (e) {
-            const error = new Error(e.toString());
-            res.status(400);
-            next(error);
-          }
+          EntryModel.GetList({ featured: true })
+            .then((result) => {
+              res.status(200).send(result);
+            })
+            .catch((e) => {
+              const error = new Error(e.codeName);
+              res.status(400);
+              next(error);
+            });
         }
       );
 
@@ -125,21 +113,15 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          try {
-            EntryModel.GetList({}, { members: "desc" }, false, LIMIT_BIGGEST)
-              .then((result) => {
-                res.status(200).send(result);
-              })
-              .catch((e) => {
-                const error = new Error(e.codeName);
-                res.status(400);
-                next(error);
-              });
-          } catch (e) {
-            const error = new Error(e.toString());
-            res.status(400);
-            next(error);
-          }
+          EntryModel.GetList({}, { members: "desc" }, false, LIMIT_BIGGEST)
+            .then((result) => {
+              res.status(200).send(result);
+            })
+            .catch((e) => {
+              const error = new Error(e.codeName);
+              res.status(400);
+              next(error);
+            });
         }
       );
 
@@ -160,21 +142,15 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          try {
-            EntryModel.GetList({}, { views: "desc" }, false, LIMIT_POPULAR)
-              .then((result) => {
-                res.status(200).send(result);
-              })
-              .catch((e) => {
-                const error = new Error(e.codeName);
-                res.status(400);
-                next(error);
-              });
-          } catch (e) {
-            const error = new Error(e.toString());
-            res.status(400);
-            next(error);
-          }
+          EntryModel.GetList({}, { views: "desc" }, false, LIMIT_POPULAR)
+            .then((result) => {
+              res.status(200).send(result);
+            })
+            .catch((e) => {
+              const error = new Error(e.codeName);
+              res.status(400);
+              next(error);
+            });
         }
       );
 
@@ -195,26 +171,20 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          try {
-            EntryModel.GetList(
-              {},
-              { likes: "desc", dislikes: "asc" },
-              false,
-              LIMIT_TOP
-            )
-              .then((result) => {
-                res.status(200).send(result);
-              })
-              .catch((e) => {
-                const error = new Error(e.codeName);
-                res.status(400);
-                next(error);
-              });
-          } catch (e) {
-            const error = new Error(e.toString());
-            res.status(400);
-            next(error);
-          }
+          EntryModel.GetList(
+            {},
+            { likes: "desc", dislikes: "asc" },
+            false,
+            LIMIT_TOP
+          )
+            .then((result) => {
+              res.status(200).send(result);
+            })
+            .catch((e) => {
+              const error = new Error(e.codeName);
+              res.status(400);
+              next(error);
+            });
         }
       );
 
@@ -235,33 +205,18 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          try {
-            EntryModel.GetList({}, { dateAdded: "desc" }, false, LIMIT_RECENT)
-              .then((result) => {
-                res.status(200).send(result);
-              })
-              .catch((e) => {
-                const error = new Error(e.codeName);
-                res.status(400);
-                next(error);
-              });
-          } catch (e) {
-            const error = new Error(e.toString());
-            res.status(400);
-            next(error);
-          }
+          EntryModel.GetList({}, { dateAdded: "desc" }, false, LIMIT_RECENT)
+            .then((result) => {
+              res.status(200).send(result);
+            })
+            .catch((e) => {
+              const error = new Error(e.codeName);
+              res.status(400);
+              next(error);
+            });
         }
       );
 
     return this.app;
   }
 }
-
-/*            // Query param: rankings
-            const queryRankings:
-              | string
-              | undefined = req.query.special?.toString();
-            const isQueryRankingsValid =
-              queryRankings &&
-              (Object.values(EnumRankings) as string[]).includes(queryRankings);
-              const rankings = isQueryRankingsValid ? */
