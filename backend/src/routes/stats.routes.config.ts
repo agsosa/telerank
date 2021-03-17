@@ -17,21 +17,15 @@ export default class StatsRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          try {
-            GetStats()
-              .then((result) => {
-                res.status(200).send(result);
-              })
-              .catch((e) => {
-                const error = new Error(e.codeName);
-                res.status(400);
-                next(error);
-              });
-          } catch (e) {
-            const error = new Error(e.toString());
-            res.status(400);
-            next(error);
-          }
+          GetStats()
+            .then((result) => {
+              res.status(200).send(result);
+            })
+            .catch((e) => {
+              const error = new Error(e.codeName);
+              res.status(400);
+              next(error);
+            });
         }
       );
 
