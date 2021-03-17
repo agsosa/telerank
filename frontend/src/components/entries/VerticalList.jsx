@@ -9,7 +9,6 @@ import { getModuleData } from '../../lib/API';
 import NoEntriesFound from './NoEntriesFound';
 
 export default function VerticalList({ Header, Footer, useSearchBar, apiModule }) {
-	const verticalFlatListRef = useRef();
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [searchValue, setSearchValue] = useState('');
@@ -29,10 +28,6 @@ export default function VerticalList({ Header, Footer, useSearchBar, apiModule }
 	useEffect(() => {
 		refreshData();
 	}, []);
-
-	useEffect(() => {
-		refreshData();
-	}, [apiModule]);
 
 	/*
 	 * Search & Filter
@@ -73,13 +68,11 @@ export default function VerticalList({ Header, Footer, useSearchBar, apiModule }
 	return (
 		<View style={commonStyles.flex}>
 			<FlatList
-				ref={verticalFlatListRef}
 				data={data}
 				ListEmptyComponent={NoEntriesFound}
 				renderItem={(q) => <VerticalCard item={q.item} />}
 				keyExtractor={(item) => item._id}
 				ItemSeparatorComponent={null}
-				getItemLayout={(data, index) => ({ length: 200, offset: 200 * index, index })}
 				ListHeaderComponent={RenderHeader}
 				ListFooterComponent={renderFooter}
 				onRefresh={refreshData}

@@ -1,10 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Button } from 'react-native-paper';
 import HomeTab from './tabscreens/HomeTab';
 import APIErrorSnackbar from '../components/APIErrorSnackbar';
 import FeaturedTab from './tabscreens/FeaturedTab';
@@ -13,13 +10,19 @@ import GroupsTab from './tabscreens/GroupsTab';
 import BotsTab from './tabscreens/BotsTab';
 import ChannelsTab from './tabscreens/ChannelsTab';
 import NavTabs from '../components/navigation/NavTabs';
-import { colors } from '../config/Styles';
-
-const Tab = createMaterialTopTabNavigator();
 
 /* const styles = StyleSheet.create({
 	tabs: { backgroundColor: 'white', elevation: 5, marginTop: 5 },
 }); */
+
+const tabs = [
+	{ name: 'Inicio', icon: 'home', component: HomeTab },
+	{ name: 'Featured', icon: 'star', component: FeaturedTab },
+	{ name: 'Canales', icon: 'bullhorn', component: ChannelsTab },
+	{ name: 'Grupos', icon: 'forum', component: GroupsTab },
+	{ name: 'Bots', icon: 'robot', component: BotsTab },
+	{ name: 'Stickers', icon: 'sticker', component: StickersTab },
+];
 
 const MainScreen = ({ setDrawerNavigation }) => {
 	const navigation = useNavigation();
@@ -29,15 +32,6 @@ const MainScreen = ({ setDrawerNavigation }) => {
 	React.useEffect(() => {
 		setDrawerNavigation(navigation);
 	}, []);
-
-	const tabs = [
-		{ name: 'Inicio', icon: 'home', component: HomeTab },
-		{ name: 'Featured', icon: 'star', component: FeaturedTab },
-		{ name: 'Canales', icon: 'bullhorn', component: ChannelsTab },
-		{ name: 'Grupos', icon: 'forum', component: GroupsTab },
-		{ name: 'Bots', icon: 'robot', component: BotsTab },
-		{ name: 'Stickers', icon: 'sticker', component: StickersTab },
-	];
 
 	return (
 		<>

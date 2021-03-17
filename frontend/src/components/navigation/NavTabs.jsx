@@ -6,6 +6,18 @@ import { colors } from '../../config/Styles';
 
 const Tab = createMaterialTopTabNavigator();
 
+/*
+
+  TODO: Hacer benchmark comparando con implementacion react-native-paper-tabs
+  			<Tabs iconPosition='leading' mode='scrollable' showLeadingSpace style={tabStyles2.tabs}>
+				{tabs.map((q, i) => (
+					<TabScreen key={q.apiModule} label={q.title} icon={q.icon}>
+						<VerticalList Header={() => HeaderRenderer(i)} apiModule={q.apiModule} />
+					</TabScreen>
+				))}
+			</Tabs>
+*/
+
 const NavTabs = ({ tabs }) => (
 	<Tab.Navigator
 		lazy
@@ -24,6 +36,7 @@ const NavTabs = ({ tabs }) => (
 		}}>
 		{tabs.map((q) => (
 			<Tab.Screen
+				key={q.name}
 				name={q.name}
 				component={q.component}
 				options={{ tabBarLabel: q.name, tabBarIcon: ({ focused }) => <Button icon={q.icon} labelStyle={{ fontSize: 20 }} color={focused ? colors.main : colors.grayAlt2} /> }}
