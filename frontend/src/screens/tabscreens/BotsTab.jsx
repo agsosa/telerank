@@ -15,5 +15,5 @@ export default function BotsTab() {
 		return <View />;
 	}
 
-	return <VerticalList Header={HeaderRenderer} apiModule='bots' />;
+	return <VerticalList useSearchBar Header={HeaderRenderer} apiModule='bots' />;
 }

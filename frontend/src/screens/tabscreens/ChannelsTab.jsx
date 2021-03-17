@@ -15,5 +15,5 @@ export default function ChannelsTab() {
 		return <View />;
 	}
 
-	return <VerticalList Header={HeaderRenderer} apiModule='channels' />;
+	return <VerticalList useSearchBar Header={HeaderRenderer} apiModule='channels' />;
 }

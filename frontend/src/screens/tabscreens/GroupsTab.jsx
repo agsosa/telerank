@@ -15,5 +15,5 @@ export default function GroupsTab() {
 		return <View />;
 	}
 
-	return <VerticalList Header={HeaderRenderer} apiModule='groups' />;
+	return <VerticalList useSearchBar Header={HeaderRenderer} apiModule='groups' />;
 }

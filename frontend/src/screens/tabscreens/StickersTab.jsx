@@ -15,5 +15,5 @@ export default function StickersTab() {
 		return <View />;
 	}
 
-	return <VerticalList Header={HeaderRenderer} apiModule='stickers' />;
+	return <VerticalList useSearchBar Header={HeaderRenderer} apiModule='stickers' />;
 }
