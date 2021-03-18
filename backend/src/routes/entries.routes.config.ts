@@ -10,10 +10,10 @@ import EnumLanguage from "../data/models/entry-model/EnumLanguage";
 // TODO: Implementar LIMIT_PER_PAGE para biggest, recent, popular, top
 
 const LIMIT_PER_PAGE = 10; // Limit of objects returned per page
-const LIMIT_RECENT = 10; // Max entries returned by /entries/recent
-const LIMIT_POPULAR = 10; // Max entries returned by /entries/popular
-const LIMIT_BIGGEST = 10; // Max entries returned by /entries/biggest
-const LIMIT_TOP = 10; // Max entries returned by /entries/top
+const LIMIT_RECENT = 5; // Max entries returned by /entries/recent
+const LIMIT_POPULAR = 50; // Max entries returned by /entries/popular
+const LIMIT_BIGGEST = 50; // Max entries returned by /entries/biggest
+const LIMIT_TOP = 50; // Max entries returned by /entries/top
 
 export default class EntriesRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
@@ -84,7 +84,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          EntryModel.GetList({ featured: true })
+          EntryModel.GetList({ featured: true }, {}, true)
             .then((result) => {
               res.status(200).send(result);
             })
@@ -99,10 +99,10 @@ export default class EntriesRoutes extends CommonRoutesConfig {
     /*
       API Endpoint: /entries/biggest
       Paginated: no
-      Description: Get a list of the top 100 entries by member count
+      Description: Get a list of the top 50 entries by member count
       Query Parameters: none
       Return JSON:
-        Array of max 100 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
+        Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by members count (descending)
     */
     this.app
@@ -113,7 +113,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          EntryModel.GetList({}, { members: "desc" }, false, LIMIT_BIGGEST)
+          EntryModel.GetList({}, { members: "desc" }, true, LIMIT_BIGGEST)
             .then((result) => {
               res.status(200).send(result);
             })
@@ -128,10 +128,10 @@ export default class EntriesRoutes extends CommonRoutesConfig {
     /*
       API Endpoint: /entries/popular
       Paginated: no
-      Description: Get a list of the top 100 entries by views count
+      Description: Get a list of the top 50 entries by views count
       Query Parameters: none
       Return JSON:
-        Array of max 100 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
+        Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by views count (descending)
     */
     this.app
@@ -142,7 +142,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          EntryModel.GetList({}, { views: "desc" }, false, LIMIT_POPULAR)
+          EntryModel.GetList({}, { views: "desc" }, true, LIMIT_POPULAR)
             .then((result) => {
               res.status(200).send(result);
             })
@@ -157,10 +157,10 @@ export default class EntriesRoutes extends CommonRoutesConfig {
     /*
       API Endpoint: /entries/top
       Paginated: no
-      Description: Get a list of the top 100 entries by likes/dislikes
+      Description: Get a list of the top 50 entries by likes/dislikes
       Query Parameters: none
       Return JSON:
-        Array of max 100 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
+        Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by likes (descending) and dislikes(ascending)
     */
     this.app
@@ -174,7 +174,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           EntryModel.GetList(
             {},
             { likes: "desc", dislikes: "asc" },
-            false,
+            true,
             LIMIT_TOP
           )
             .then((result) => {
@@ -205,7 +205,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          EntryModel.GetList({}, { dateAdded: "desc" }, false, LIMIT_RECENT)
+          EntryModel.GetList({}, { dateAdded: "desc" }, true, LIMIT_RECENT)
             .then((result) => {
               res.status(200).send(result);
             })
