@@ -12,18 +12,12 @@ export default class JobsRoutes extends CommonRoutesConfig {
 
   configureRoutes(): express.Application {
     this.app
-      .route(`/jobs/flood-wait`)
+      .route(`/jobs`)
       .get((req: express.Request, res: express.Response) => {
         getCurrentFloodWait().then((result: number) => {
-          res.status(200).send({ FLOOD_WAIT: result });
-        });
-      });
-
-    this.app
-      .route(`/jobs/running`)
-      .get((req: express.Request, res: express.Response) => {
-        getCurrentFloodWait().then((result: number) => {
-          res.status(200).send(getRunningJobs());
+          res
+            .status(200)
+            .send({ FLOOD_WAIT: result, runningJobs: getRunningJobs() });
         });
       });
     return this.app;
