@@ -59,10 +59,11 @@ export function getCurrentFloodWait(): Promise<number> {
   return new Promise((resolve) => {
     mtproto
       .call("contacts.resolveUsername", {
-        username: "pepe",
+        username: "Telegram",
       })
       .then(() => resolve(0))
       .catch(async (error) => {
+        log.info(error);
         const { error_code, error_message } = error;
         if (error_code === 420) {
           const seconds = +error_message.split("FLOOD_WAIT_")[1];
