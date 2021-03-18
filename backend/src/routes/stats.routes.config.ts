@@ -9,6 +9,8 @@ export default class StatsRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes(): express.Application {
+    // Query: none
+    // Return: IStats object
     this.app
       .route(`/stats`)
       .get(
