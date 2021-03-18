@@ -46,7 +46,7 @@ const NavTabs = ({ tabs }) => (
 );
 
 NavTabs.propTypes = {
-	tabs: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired, icon: PropTypes.string.isRequired, component: PropTypes.element.isRequired })).isRequired,
+	tabs: PropTypes.arrayOf(PropTypes.shape({ name: PropTypes.string.isRequired, icon: PropTypes.string.isRequired, component: PropTypes.any.isRequired })).isRequired,
 };
 
 export default NavTabs;
