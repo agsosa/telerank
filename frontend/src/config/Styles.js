@@ -26,3 +26,6 @@ export const commonStyles = StyleSheet.create({
 	transparentBg: { backgroundColor: 'transparent' },
 	whiteText: { color: 'white' },
 });
+
+// eslint-disable-next-line
+export const placeholderImage = require('../../../img/tg_placeholder.jpg');

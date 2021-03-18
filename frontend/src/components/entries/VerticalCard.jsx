@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import NumberTag from '../NumberTag';
 import { formatLanguageCode } from '../../lib/Helpers';
-import { colors } from '../../config/Styles';
+import { colors, placeholderImage } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
 	},
 	textDescription: { color: colors.grayAlt, fontSize: 15, marginTop: -10 },
 });
-
-const placeholderImage = require('../../../img/tg_placeholder.jpg');
 
 export default function VerticalCard({ item }) {
 	const navigation = useNavigation();

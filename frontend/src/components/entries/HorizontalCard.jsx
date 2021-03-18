@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import { truncateWithEllipses, formatLanguageCode } from '../../lib/Helpers';
 import NumberTag from '../NumberTag';
-import { colors } from '../../config/Styles';
+import { colors, placeholderImage } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
@@ -19,8 +19,6 @@ const styles = StyleSheet.create({
 	mainView: { flex: 1, padding: 5 },
 	membersCount: { alignSelf: 'flex-start' },
 });
-
-const placeholderImage = require('../../../img/tg_placeholder.jpg');
 
 export default function HorizontalCard({ item }) {
 	const navigation = useNavigation();

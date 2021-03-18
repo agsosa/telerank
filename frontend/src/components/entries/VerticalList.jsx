@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
