@@ -1,11 +1,19 @@
 /* eslint-disable camelcase */
 import { MTProto } from "@mtproto/core";
+import moment from "moment";
 import { sleep, log } from "../../lib/Helpers";
 import ITelegramInfo from "./ITelegramInfo";
 import TelegramSecrets from "./TelegramSecrets";
 import TelegramAuth from "./TelegramAuth";
 import IScrapedMedia from "../content-scrapers/IScrapedMedia";
 import EnumEntryType from "../../data/models/entry-model/EnumEntryType";
+
+// Flood wait rate https://github.com/danog/MadelineProto/issues/284
+let firstCallTime: moment.Moment; // Time it took to make the api calls before a FLOOD_WAIT error
+const FLOOD_WAIT_RATE_SAFEGUARD_SECONDS = 1;
+let floodWaitRate: number; // Seconds
+let maxCallsPerWaitRate = 0;
+let currentCalls = 0;
 
 export const mtproto = new MTProto({
   api_id: TelegramSecrets.apiId,
@@ -14,21 +22,37 @@ export const mtproto = new MTProto({
 
 // mtproto wrapper with anti flood and dc handle
 export const api = {
-  call(method: string, params = {}, options = {}): Promise<any> {
+  async call(method: string, params = {}, options = {}): Promise<any> {
+    if (!firstCallTime) firstCallTime = moment(); // Set APICallTime during the first call, then we use it to measure the time took to get a floodWaitRate
+
+    if (!floodWaitRate) maxCallsPerWaitRate += 1;
+    // Increment maxCallsPerWaitRate += 1; until we get a FLOOD_WAIT error and set floodWaitRate
+    else if (currentCalls >= maxCallsPerWaitRate) {
+      sleep(floodWaitRate * 1000);
+      currentCalls = 0;
+    } else currentCalls += 1;
+
     return mtproto.call(method, params, options).catch(async (error) => {
       const { error_code, error_message } = error;
 
-      // TODO: Calculate call rate to avoid long flood_wait periods
-
       if (error_code === 420) {
         const seconds = +error_message.split("FLOOD_WAIT_")[1];
-        const ms = seconds * 1000;
+
+        if (!floodWaitRate)
+          floodWaitRate =
+            moment().diff(firstCallTime, "seconds") +
+            seconds +
+            FLOOD_WAIT_RATE_SAFEGUARD_SECONDS;
 
         // TODO: Switch to another phone when the flood wait is too long
 
-        log.info(`TELEGRAM FLOOD_WAIT ${seconds} seconds`);
+        log.info(
+          `TELEGRAM FLOOD_WAIT ${seconds} seconds. Calculate flood wait rate = ${floodWaitRate}`
+        );
 
-        await sleep(ms);
+        await sleep(floodWaitRate * 1000);
+
+        firstCallTime = moment();
 
         return this.call(method, params, options);
       }
@@ -63,7 +87,6 @@ export function getCurrentFloodWait(): Promise<number> {
       })
       .then(() => resolve(0))
       .catch(async (error) => {
-        log.info(error);
         const { error_code, error_message } = error;
         if (error_code === 420) {
           const seconds = +error_message.split("FLOOD_WAIT_")[1];

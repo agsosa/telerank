@@ -47,8 +47,6 @@ export default class PopulateDatabaseJob extends Job {
         const exists = await EntryModel.isUsernameSaved(q.username);
 
         if (!exists) {
-          // !IMPORTANT: Wait for each getTelegramInfo() to avoid Telegram API limits
-          await sleep(1 * 1000); // TODO: Optimize/automatically find the best rate to avoid TELEGRAM_FLOOD_WAITS
           const info = await getTelegramInfo(q.username);
 
           if (info && !info.scam) {
