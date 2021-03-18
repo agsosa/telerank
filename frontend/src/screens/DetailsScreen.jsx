@@ -6,7 +6,7 @@ import { PropTypes } from 'prop-types';
 import moment from 'moment';
 import NumberTag from '../components/NumberTag';
 import { formatLanguageCode } from '../lib/Helpers';
-import { colors } from '../config/Styles';
+import { colors, placeholderImage } from '../config/Styles';
 import FeaturedBadge from '../components/entries/FeaturedBadge';
 import { ShareTelegram } from '../lib/Share';
 
@@ -54,8 +54,6 @@ const styles = StyleSheet.create({
 	statsView: { flex: 1, flexDirection: 'row', justifyContent: 'center', marginVertical: 5 },
 	titleCard: { alignSelf: 'center', flexDirection: 'column', marginVertical: 5 },
 });
-
-const placeholderImage = require('../../img/tg_placeholder.jpg');
 
 const DetailsScreen = ({ route }) => {
 	const data = route.params;

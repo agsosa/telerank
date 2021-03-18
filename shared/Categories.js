@@ -1,4 +1,5 @@
 // TODO: Convert to TypeScript if possible
+// TODO: Add latinize library
 
 // Categories object: Keys will be used as enums, the values are "locale object" including the available translations identified by language code (es/en).
 export const Categories = Object.freeze({
