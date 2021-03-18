@@ -18,9 +18,13 @@ export const api = {
     return mtproto.call(method, params, options).catch(async (error) => {
       const { error_code, error_message } = error;
 
+      // TODO: Calculate call rate to avoid long flood_wait periods
+
       if (error_code === 420) {
         const seconds = +error_message.split("FLOOD_WAIT_")[1];
         const ms = seconds * 1000;
+
+        // TODO: Switch to another phone when the flood wait is too long
 
         log.info(`TELEGRAM FLOOD_WAIT ${seconds} seconds`);
 
@@ -50,6 +54,23 @@ export const api = {
     });
   },
 };
+
+export function getCurrentFloodWait(): Promise<number> {
+  return new Promise((resolve) => {
+    mtproto
+      .call("contacts.resolveUsername", {
+        username: "pepe",
+      })
+      .then(() => resolve(0))
+      .catch(async (error) => {
+        const { error_code, error_message } = error;
+        if (error_code === 420) {
+          const seconds = +error_message.split("FLOOD_WAIT_")[1];
+          resolve(seconds);
+        } else resolve(0);
+      });
+  });
+}
 
 // Get ITelegramInfo for a username, including downloading the photo.
 export async function getTelegramInfo(
