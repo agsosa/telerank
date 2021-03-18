@@ -27,5 +27,6 @@ export const commonStyles = StyleSheet.create({
 	whiteText: { color: 'white' },
 });
 
-// eslint-disable-next-line
-export const placeholderImage = require('../../../img/tg_placeholder.jpg');
+/* eslint-disable global-require */
+export const placeholderImage = require('../../img/tg_placeholder.jpg');
+export const userPlaceholderImage = require('../../img/user.jpg');
