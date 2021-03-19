@@ -11,6 +11,7 @@ import PromoteScreen from '../screens/PromoteScreen';
 import DMCAScreen from '../screens/DMCAScreen';
 import TermsOfServiceScreen from '../screens/TermsOfServiceScreen';
 import SearchResultScreen from '../screens/SearchResultScreen';
+import WebViewScreen from '../screens/WebViewScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,18 +29,6 @@ const ROUTES = [
 		component: DetailsScreen,
 		title: 'Details',
 		extendHeaderGradient: true,
-	},
-	{
-		name: 'PrivacyPolicy',
-		component: PrivacyPolicyScreen,
-		extendHeaderGradient: false,
-		title: 'Privacy Policy',
-	},
-	{
-		name: 'TermsOfService',
-		component: TermsOfServiceScreen,
-		extendHeaderGradient: false,
-		title: 'Terms of Service',
 	},
 	{
 		name: 'Contact',
@@ -60,16 +49,16 @@ const ROUTES = [
 		title: 'Promote/Feature',
 	},
 	{
-		name: 'DMCA',
-		component: DMCAScreen,
-		extendHeaderGradient: false,
-		title: 'DMCA and Abuses',
-	},
-	{
 		name: 'SearchResult',
 		component: SearchResultScreen,
 		extendHeaderGradient: false,
 		title: 'Search Results',
+	},
+	{
+		name: 'WebViewScreen',
+		component: WebViewScreen,
+		extendHeaderGradient: false,
+		title: 'External Content',
 	},
 ];
 

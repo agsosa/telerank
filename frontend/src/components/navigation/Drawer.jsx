@@ -8,7 +8,7 @@ import { colors, commonStyles, userPlaceholderImage } from '../../config/Styles'
 import { ShareApp, RateApp } from '../../lib/Share';
 import LanguageModal from '../modals/LanguageModal';
 import StatsModal from '../modals/StatsModal';
-import { Languages } from '../../config/Locale';
+import { Languages, getLocalizedLegalURLS } from '../../config/Locale';
 
 const window = Dimensions.get('window');
 
@@ -50,27 +50,29 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
 	const onMenuItemSelected = (item) => {
 		setIsOpen(false);
 
-		switch (item) {
-			case 'PrivacyPolicy':
-			case 'DMCA':
-			case 'TermsOfService':
-			case 'Information':
-			case 'AddMedia':
-			case 'Promote':
-			case 'Contact':
+		switch (item.toLowerCase()) {
+			case 'information':
+			case 'addmedia':
+			case 'promote':
+			case 'contact':
 				if (navigation) navigation.navigate(item);
 				break;
-			case 'ShareApp':
+			case 'shareapp':
 				ShareApp();
 				break;
-			case 'RateApp':
+			case 'rateapp':
 				RateApp();
 				break;
-			case 'Stats':
+			case 'stats':
 				statsModalRef.current.show();
 				break;
-			case 'Language':
+			case 'language':
 				languageModalRef.current.show();
+				break;
+			case 'privacy':
+			case 'dmca':
+			case 'tos':
+				if (navigation) navigation.navigate('WebViewScreen', { url: getLocalizedLegalURLS()[item] });
 				break;
 			default:
 				break;
@@ -123,9 +125,9 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
 					<List.Subheader>
 						<Text>Legal</Text>
 					</List.Subheader>
-					<List.Item title='DMCA/Report Abuse' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('DMCA')} />
-					<List.Item title='Privacy Policy' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('PrivacyPolicy')} />
-					<List.Item title='Terms of Service' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('TermsOfService')} />
+					<List.Item title='DMCA/Report Abuse' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('dmca')} />
+					<List.Item title='Privacy Policy' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('privacy')} />
+					<List.Item title='Terms of Service' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('tos')} />
 				</List.Section>
 			</View>
 		</ScrollView>

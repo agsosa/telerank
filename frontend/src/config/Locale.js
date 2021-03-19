@@ -39,6 +39,12 @@ const setI18nConfig = (forceLanguage = null) => {
 	i18n.locale = languageTag;
 };
 
+export const getLocalizedLegalURLS = () => ({
+	dmca: `https://telerank.netlify.app/dmca_${i18n.locale}`,
+	tos: `https://telerank.netlify.app/tos_${i18n.locale}`,
+	privacy: `https://telerank.netlify.app/privacy_${i18n.locale}`,
+});
+
 const Locale = ({ language }) => {
 	// Use this component to initialize and update locale
 
