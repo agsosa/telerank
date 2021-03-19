@@ -4,12 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import NavigationHeader from '../components/navigation/NavigationHeader';
 import MainScreen from '../screens/MainScreen';
 import DetailsScreen from '../screens/DetailsScreen';
-import PrivacyPolicyScreen from '../screens/PrivacyPolicyScreen';
 import ContactScreen from '../screens/ContactScreen';
 import AddMediaScreen from '../screens/AddMediaScreen';
 import PromoteScreen from '../screens/PromoteScreen';
-import DMCAScreen from '../screens/DMCAScreen';
-import TermsOfServiceScreen from '../screens/TermsOfServiceScreen';
 import SearchResultScreen from '../screens/SearchResultScreen';
 import WebViewScreen from '../screens/WebViewScreen';
 
