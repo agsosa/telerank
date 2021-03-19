@@ -91,5 +91,8 @@ export function isUsernameSaved(username: string): Promise<boolean> {
 }
 
 export function getRandomEntry(): Promise<boolean> {
-  return EntryModel.aggregate([{ $sample: { size: 1 } }]).exec();
+  return EntryModel.aggregate([
+    { $match: { pending: false, removed: false } },
+    { $sample: { size: 1 } },
+  ]).exec();
 }
