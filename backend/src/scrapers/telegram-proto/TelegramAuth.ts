@@ -55,6 +55,7 @@ function checkPassword(srp_id: any, A: any, M1: any) {
   });
 }
 
+// TODO: Devolver resultado si esta autentificado o no
 export default async function Auth(): Promise<void> {
   const user = await getUser();
 

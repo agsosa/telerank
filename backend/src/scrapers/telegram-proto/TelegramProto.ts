@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import { MTProto } from "@mtproto/core";
 import moment from "moment";
+import { lowerFirst } from "lodash";
 import { sleep, log } from "../../lib/Helpers";
 import ITelegramInfo from "./ITelegramInfo";
 import TelegramSecrets from "./TelegramSecrets";
@@ -8,12 +9,16 @@ import TelegramAuth from "./TelegramAuth";
 import IScrapedMedia from "../content-scrapers/IScrapedMedia";
 import EnumEntryType from "../../data/models/entry-model/EnumEntryType";
 
+// TODO: Añadir await TelegramAuth();
+
 // Flood wait rate https://github.com/danog/MadelineProto/issues/284
 let firstCallTime: moment.Moment; // Time it took to make the api calls before a FLOOD_WAIT error
 const FLOOD_WAIT_RATE_SAFEGUARD_SECONDS = 1;
 let floodWaitRate: number; // Seconds
 let maxCallsPerWaitRate = 0;
 let currentCalls = 0;
+
+let authenticated = false;
 
 export const mtproto = new MTProto({
   api_id: TelegramSecrets.apiId,
@@ -23,11 +28,18 @@ export const mtproto = new MTProto({
 // mtproto wrapper with anti flood and dc handle
 export const api = {
   async call(method: string, params = {}, options = {}): Promise<any> {
+    if (!authenticated) {
+      await TelegramAuth();
+      // TODO: Revisar resultado de TelegramAuth
+      authenticated = true;
+    }
+
     if (!firstCallTime) firstCallTime = moment(); // Set APICallTime during the first call, then we use it to measure the time took to get a floodWaitRate
 
     if (!floodWaitRate) maxCallsPerWaitRate += 1;
     // Increment maxCallsPerWaitRate += 1; until we get a FLOOD_WAIT error and set floodWaitRate
     else if (currentCalls >= maxCallsPerWaitRate) {
+      log.info(`Waiting flootWaitRate ${floodWaitRate}`);
       sleep(floodWaitRate * 1000);
       currentCalls = 0;
     } else currentCalls += 1;
@@ -101,10 +113,10 @@ export async function getTelegramInfo(
   target: IScrapedMedia | string
 ): Promise<ITelegramInfo | undefined> {
   try {
-    await TelegramAuth(); // Important
-
     // Grab username data with contacts.resolveUsername
+
     const username = typeof target === "string" ? target : target.username;
+
     const userData = await api.call("contacts.resolveUsername", {
       username,
     });
@@ -178,7 +190,7 @@ export async function getTelegramInfo(
           title,
           type,
           username,
-          creationDate: new Date(date * 1000),
+          creationDate: date ? new Date(date * 1000) : new Date(),
           members,
           photoBytes: file.bytes,
           description,
