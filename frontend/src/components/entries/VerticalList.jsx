@@ -7,6 +7,7 @@ import VerticalCard from './VerticalCard';
 import LoadingIndicator from '../LoadingIndicator';
 import { getModuleData } from '../../lib/API';
 import NoEntriesFound from './NoEntriesFound';
+import NoMoreEntries from './NoMoreEntries';
 
 export default function VerticalList({ Header, Footer, useSearchBar, apiModule }) {
 	const [data, setData] = useState([]);
@@ -62,7 +63,12 @@ export default function VerticalList({ Header, Footer, useSearchBar, apiModule }
 		</View>
 	);
 
-	const renderFooter = () => <View>{Footer && <Footer />}</View>;
+	const renderFooter = () => (
+		<View>
+			{data && data.length > 0 && <NoMoreEntries />}
+			{Footer && <Footer />}
+		</View>
+	);
 	if (loading || !data || !Array.isArray(data)) return <LoadingIndicator />;
 
 	return (
