@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
 	featuredBG: { backgroundColor: colors.featuredLight },
 	featuredBadgeContainer: {
 		position: 'absolute',
-		right: -3,
-		top: -3,
+		right: -8,
+		top: -4,
 		zIndex: 5,
 	},
 	flexCardItem: { flex: 1, flexDirection: 'column' },
@@ -125,6 +125,7 @@ const DetailsScreen = ({ route }) => {
 							<NumberTag icon='account' number={data.members} />
 						</View>
 						<Text note>Creation Date: {moment(data.createdDate).format('YYYY-MM-DD')}</Text>
+						<Text note>Added Date: {moment(data.addedDate).format('YYYY-MM-DD')}</Text>
 						<Text note>Update Date: {moment(data.updatedDate).format('YYYY-MM-DD')}</Text>
 					</CardItem>
 				</Card>
