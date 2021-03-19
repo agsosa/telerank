@@ -5,15 +5,15 @@ import { MMKV } from 'react-native-mmkv';
 import { store } from '../state/Store';
 
 // Base URL for the API calls
-const BASE_URL = 'http://49daacc2bde5.ngrok.io';
+const BASE_URL = 'http://c3f3638452f7.ngrok.io';
 
 // Retry config
-const PROMISE_RETRY_TIMEOUT = 5000; // Wait time to retry the promise after failing all retry-axios attempts
+const PROMISE_RETRY_TIMEOUT = 3000; // Wait time to retry the promise after failing all retry-axios attempts
 rax.attach();
 const retryConfig = {
 	retry: 3,
 	noResponseRetries: 3,
-	retryDelay: 5000,
+	retryDelay: 3000,
 	statusCodesToRetry: [
 		[100, 199],
 		[429, 429],
@@ -69,28 +69,35 @@ const API_MODULES = {
 		getURL: () => `${BASE_URL}/stats`,
 	},
 	channels: {
-		validateData: (data) => data,
+		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
 		getURL: () => `${BASE_URL}/entries?type=Channel&page=0`,
 	},
 	bots: {
-		validateData: (data) => data,
+		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
 		getURL: () => `${BASE_URL}/entries?type=Bot&page=0`,
 	},
 	stickers: {
-		validateData: (data) => data,
+		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
+		dataPostProcess: null,
 		getURL: () => `${BASE_URL}/entries?type=Sticker&page=0`,
 	},
 	groups: {
-		validateData: (data) => data,
+		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
 		getURL: () => `${BASE_URL}/entries?type=Group&page=0`,
+	},
+	random: {
+		validateData: (data) => data && Array.isArray(data) && data.length >= 1,
+		currentData: null,
+		pendingPromise: null,
+		getURL: () => `${BASE_URL}/entries/random`,
 	},
 	// search,  groups, channels, bots, stickers
 };
@@ -135,20 +142,20 @@ export function getModuleData(apiModule, payload = {}, ignoreCache = false) {
 		// Try to get data from local storage or memory
 		const storageKey = STORAGE_KEY_PREFIX + apiModuleStr;
 		let cacheParsed;
-		if (moduleInfo.current && moduleInfo.current.data && moduleInfo.current.expirationTime) {
-			// Load from memory
-			console.log('Loaded from memory');
-			cacheParsed = moduleInfo.current;
-		} else {
-			// Load from local storage
-			console.log('Loaded from Storage');
-			cacheParsed = getCacheFromStorage(storageKey, moduleInfo);
-			moduleInfo.current = cacheParsed;
+		if (!ignoreCache) {
+			if (moduleInfo.current && moduleInfo.current.data && moduleInfo.current.expirationTime) {
+				// Load from memory
+				console.log('Loaded from memory');
+				cacheParsed = moduleInfo.current;
+			} else {
+				// Load from local storage
+				console.log('Loaded from Storage');
+				cacheParsed = getCacheFromStorage(storageKey, moduleInfo);
+				moduleInfo.current = cacheParsed;
+			}
 		}
-
 		// Check cache expiration time
 		const cacheExpired = getCacheSecondsRemaining(cacheParsed) <= 0;
-		console.log(cacheExpired);
 
 		// Check cache validity
 		const validCache = !ignoreCache && cacheParsed && !cacheExpired && moduleInfo.validateData(cacheParsed.data);
@@ -176,16 +183,23 @@ export function getModuleData(apiModule, payload = {}, ignoreCache = false) {
 					store.dispatch.apiErrorActive.setAPIErrorStatus(true); // Used to display a UI component to notify the user about the error
 					console.log(`axios error : ${error}`);
 					if (cacheParsed && cacheParsed.data) resolve(cacheParsed.data);
-					else setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT); // Retry promise if cache is invalid
+					else if (!ignoreCache) setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT);
+					// Retry promise if cache is invalid
+					else reject(new Error("Couldn't fetch from the server and no data was found on the storage."));
 				});
 		} else {
 			// Cache is still valid, return data from cache
 			resolve(cacheParsed.data);
 		}
-	}).then((data) => {
-		moduleInfo.pendingPromise = null;
-		return data;
-	});
+	})
+		.then((data) => {
+			moduleInfo.pendingPromise = null;
+			return data;
+		})
+		.catch((error) => {
+			moduleInfo.pendingPromise = null;
+			return error;
+		});
 
 	return moduleInfo.pendingPromise;
 }
