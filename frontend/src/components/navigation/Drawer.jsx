@@ -3,8 +3,8 @@ import SideMenu from 'react-native-side-menu-updated';
 import PropTypes from 'prop-types';
 import { Dimensions, StyleSheet, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { List } from 'react-native-paper';
-import { colors, userPlaceholderImage } from '../../config/Styles';
+import { List, Button } from 'react-native-paper';
+import { colors, commonStyles, userPlaceholderImage } from '../../config/Styles';
 import { ShareApp, RateApp } from '../../lib/Share';
 import LanguageModal from '../modals/LanguageModal';
 import StatsModal from '../modals/StatsModal';
@@ -13,6 +13,10 @@ import { Languages } from '../../config/Locale';
 const window = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+	authBtn: {
+		top: 7,
+	},
+	authBtnText: { alignSelf: 'center', color: 'white' },
 	avatar: {
 		borderRadius: 24,
 		height: 48,
@@ -23,11 +27,6 @@ const styles = StyleSheet.create({
 		marginTop: 30,
 		paddingLeft: 30,
 		paddingVertical: 30,
-	},
-	avatarText: {
-		color: 'white',
-		left: 10,
-		top: 15,
 	},
 	featuredItemTitle: { color: 'orange', fontWeight: 'bold' },
 	headerView: { flexDirection: 'row' },
@@ -84,7 +83,9 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
 				<TouchableOpacity>
 					<View style={styles.headerView}>
 						<Image style={styles.avatar} source={userPlaceholderImage} />
-						<Text style={styles.avatarText}>Telerank</Text>
+						<Button mode='text' style={styles.authBtn}>
+							<Text style={styles.authBtnText}>Conectarse</Text>
+						</Button>
 					</View>
 				</TouchableOpacity>
 			</View>
