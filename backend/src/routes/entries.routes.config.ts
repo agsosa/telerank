@@ -205,7 +205,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           res: express.Response,
           next: express.NextFunction
         ) => {
-          EntryModel.GetList({}, { dateAdded: "desc" }, true, LIMIT_RECENT)
+          EntryModel.GetList({}, { addedDate: "desc" }, true, LIMIT_RECENT)
             .then((result) => {
               res.status(200).send(result);
             })

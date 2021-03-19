@@ -21,7 +21,7 @@ const EntryModelSchema = new Schema({
   image: { type: String, required: false },
   createdDate: { type: Date, required: false, default: Date.now },
   updatedDate: { type: Date, required: false, default: Date.now },
-  addedDate: { type: Date, required: false, default: Date.now },
+  addedDate: { type: Date, required: false, default: Date.now, index: true },
   likes: { type: Number, required: false, default: 0 },
   dislikes: { type: Number, required: false, default: 0 },
   featured: { type: Boolean, required: false, default: false, index: true },
