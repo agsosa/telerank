@@ -217,6 +217,34 @@ export default class EntriesRoutes extends CommonRoutesConfig {
         }
       );
 
+    /*
+      API Endpoint: /entries/random
+      Paginated: no
+      Description: Get a random IEntry
+      Query Parameters: none
+      Return JSON:
+        A random IEntry
+    */
+    this.app
+      .route(`/entries/random`)
+      .get(
+        (
+          req: express.Request,
+          res: express.Response,
+          next: express.NextFunction
+        ) => {
+          EntryModel.getRandomEntry()
+            .then((result) => {
+              res.status(200).send(result);
+            })
+            .catch((e) => {
+              const error = new Error(e.codeName);
+              res.status(400);
+              next(error);
+            });
+        }
+      );
+
     return this.app;
   }
 }

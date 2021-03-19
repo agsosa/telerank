@@ -1,4 +1,4 @@
-import { model, Schema, Model, Document } from "mongoose";
+import { model, Schema, Model } from "mongoose";
 import { IEntry, IEntryDocument } from "./IEntry";
 import EnumLanguage from "./EnumLanguage";
 
@@ -49,17 +49,12 @@ export function GetPaginatedList(
   query: Record<string, unknown> = {},
   sort: Record<string, unknown> = {}
 ): Promise<IEntry[]> {
-  return new Promise((resolve, reject) => {
-    EntryModel.find({ pending: false, removed: false, ...query })
-      .limit(perPage)
-      .skip(perPage * page)
-      .select(getCommonSelectExcludeFields(includeDescription))
-      .sort(sort)
-      .exec((err, entries) => {
-        if (err) reject(err);
-        resolve(entries);
-      });
-  });
+  return EntryModel.find({ pending: false, removed: false, ...query })
+    .limit(perPage)
+    .skip(perPage * page)
+    .select(getCommonSelectExcludeFields(includeDescription))
+    .sort(sort)
+    .exec();
 }
 
 export function GetList(
@@ -68,16 +63,11 @@ export function GetList(
   includeDescription = false,
   maxEntries = 0
 ): Promise<IEntry[]> {
-  return new Promise((resolve, reject) => {
-    EntryModel.find({ pending: false, removed: false, ...query })
-      .limit(maxEntries)
-      .select(getCommonSelectExcludeFields(includeDescription))
-      .sort(sort)
-      .exec((err, entries) => {
-        if (err) reject(err);
-        resolve(entries);
-      });
-  });
+  return EntryModel.find({ pending: false, removed: false, ...query })
+    .limit(maxEntries)
+    .select(getCommonSelectExcludeFields(includeDescription))
+    .sort(sort)
+    .exec();
 }
 
 export async function Insert(obj: IEntry | IEntry[]): Promise<void> {
@@ -97,10 +87,9 @@ export async function Insert(obj: IEntry | IEntry[]): Promise<void> {
 }
 
 export function isUsernameSaved(username: string): Promise<boolean> {
-  return new Promise((resolve, reject) => {
-    EntryModel.exists({ username: username.toLowerCase() }, (err, res) => {
-      if (err) reject(err);
-      resolve(res);
-    });
-  });
+  return EntryModel.exists({ username: username.toLowerCase() });
+}
+
+export function getRandomEntry(): Promise<boolean> {
+  return EntryModel.aggregate([{ $sample: { size: 1 } }]).exec();
 }
