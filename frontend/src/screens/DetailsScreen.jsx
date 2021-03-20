@@ -5,8 +5,8 @@ import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
 import moment from 'moment';
 import NumberTag from '../components/NumberTag';
-import { formatLanguageCode } from '../lib/Helpers';
-import { colors, placeholderImage } from '../config/Styles';
+import { formatLanguageCode, resolveImage } from '../lib/Helpers';
+import { colors } from '../config/Styles';
 import FeaturedBadge from '../components/entries/FeaturedBadge';
 import { ShareTelegram } from '../lib/Share';
 
@@ -57,7 +57,6 @@ const styles = StyleSheet.create({
 
 const DetailsScreen = ({ route }) => {
 	const data = route.params;
-	const imageSrc = data.image && data.image.includes('storage.googleapis') ? { uri: data.image } : placeholderImage;
 
 	const openTelegram = () => {
 		try {
@@ -75,7 +74,7 @@ const DetailsScreen = ({ route }) => {
 					<TouchableOpacity onPress={openTelegram} activeOpacity={0.7}>
 						<CardItem style={data.featured ? styles.featuredBG : {}}>
 							<Left>
-								<Thumbnail source={imageSrc} />
+								<Thumbnail source={resolveImage(data)} />
 								<Body>
 									<Text>@{data.username}</Text>
 								</Body>
@@ -102,7 +101,7 @@ const DetailsScreen = ({ route }) => {
 					</Button>
 
 					<CardItem style={styles.flexCardItem}>
-						<Text style={styles.descriptionText}>{data.description}</Text>
+						<Text style={styles.descriptionText}>{data.description ? data.description : 'No description'}</Text>
 					</CardItem>
 
 					<CardItem style={styles.flexCardItem}>

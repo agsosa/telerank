@@ -1,4 +1,5 @@
 import React from 'react';
+import { placeholderImage } from '../config/Styles';
 
 export function useIsMounted() {
 	const ref = React.useRef(true);
@@ -51,4 +52,14 @@ export function formattedNumber(num, digits = 1) {
 
 export function isNumber(n) {
 	return !Number.isNaN(parseFloat(n)) && !Number.isNaN(n - 0);
+}
+
+/*
+	Function to check if a entry's image field is valid.
+	If it's valid -> return a object with the uri to use on a image component
+	If it's not valid -> return a placeholder image
+*/
+export function resolveImage(entryData) {
+	const imageSrc = entryData && entryData.image && entryData.image.includes('storage.googleapis') ? { uri: entryData.image } : placeholderImage;
+	return imageSrc;
 }

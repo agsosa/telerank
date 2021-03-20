@@ -4,8 +4,8 @@ import { Right, Card, CardItem, Thumbnail, Text, Left, Body } from 'native-base'
 import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import NumberTag from '../NumberTag';
-import { formatLanguageCode } from '../../lib/Helpers';
-import { colors, placeholderImage } from '../../config/Styles';
+import { formatLanguageCode, resolveImage } from '../../lib/Helpers';
+import { colors } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
@@ -28,14 +28,12 @@ const styles = StyleSheet.create({
 export default function VerticalCard({ item }) {
 	const navigation = useNavigation();
 
-	const imageSrc = item.image && item.image.includes('storage.googleapis') ? { uri: item.image } : placeholderImage;
-
 	return (
 		<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
 			<Card style={[styles.card, item.featured && styles.featuredCard]}>
 				<CardItem style={item.featured ? styles.featuredBG : {}}>
 					<Left>
-						<Thumbnail source={imageSrc} />
+						<Thumbnail source={resolveImage(item)} />
 						<Body>
 							<Text>{item.username}</Text>
 							<Text note>
