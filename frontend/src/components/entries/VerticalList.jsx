@@ -8,11 +8,40 @@ import LoadingIndicator from '../LoadingIndicator';
 import { getModuleData } from '../../lib/API';
 import NoEntriesFound from './NoEntriesFound';
 import NoMoreEntries from './NoMoreEntries';
+import Filters from './Filters';
 
-function VerticalList({ Header, Footer, useSearchBar, apiModule }) {
+function CustomSearchBar() {
+	const [searchQuery, setSearchQuery] = useState('');
+
+	const applySearchValue = () => {
+		/* if (data && data.length > 0) {
+			// TODO: Hacer. Quizas cuando el usuario busque pasar data a dataLocal
+			 const newData = data.filter((item) => {
+					const itemData = `${item.username.toUpperCase()} ${item.title.toUpperCase()}`;
+					const textData = searchValue.toUpperCase();
+	
+					return itemData.indexOf(textData) > -1;
+				});
+	
+				if (newData !== data) setData(newData); 
+		} */
+	};
+
+	const onChangeSearch = (value) => {
+		setSearchQuery(value);
+	};
+
+	const onSearchClick = () => {
+		console.log(searchQuery);
+	};
+
+	// eslint-disable-next-line
+	return <Searchbar placeholder='Search' value={searchQuery} onChangeText={onChangeSearch} style={{ marginBottom: 10 }} onIconPress={onSearchClick} onEndEditing={onSearchClick} />;
+}
+
+function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters }) {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
-	const [searchValue, setSearchValue] = useState('');
 
 	const refreshData = async () => {
 		setLoading(true);
@@ -31,35 +60,15 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule }) {
 	}, []);
 
 	/*
-	 * Search & Filter
-	 */
-	const applySearchValue = () => {
-		if (data && data.length > 0) {
-			// TODO: Hacer. Quizas cuando el usuario busque pasar data a dataLocal
-			/* const newData = data.filter((item) => {
-				const itemData = `${item.username.toUpperCase()} ${item.title.toUpperCase()}`;
-				const textData = searchValue.toUpperCase();
-
-				return itemData.indexOf(textData) > -1;
-			});
-
-			if (newData !== data) setData(newData); */
-		}
-	};
-
-	const searchFilterFunction = (text) => {
-		setSearchValue(text);
-		applySearchValue();
-	};
-
-	/*
 	 *	Renders
 	 */
+
 	const RenderHeader = () => (
 		<View>
 			{Header && <Header />}
 
-			{useSearchBar && !loading && <Searchbar placeholder='Search...' onChangeText={searchFilterFunction} value={searchValue} />}
+			{useSearchBar && !loading && <CustomSearchBar />}
+			{useFilters && !loading && <Filters />}
 		</View>
 	);
 
@@ -91,6 +100,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule }) {
 VerticalList.defaultProps = {
 	useSearchBar: false,
 	Header: null,
+	useFilters: false,
 	Footer: null,
 };
 
@@ -99,6 +109,7 @@ VerticalList.propTypes = {
 	Header: PropTypes.func,
 	Footer: PropTypes.func,
 	apiModule: PropTypes.string.isRequired,
+	useFilters: PropTypes.bool,
 };
 
 export default VerticalList;

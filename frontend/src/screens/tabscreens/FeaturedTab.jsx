@@ -79,7 +79,6 @@ export default function Featured() {
 				<View style={styles.labelsContainer}>
 					<Text style={styles.titleText}>{title}</Text>
 					<Text style={styles.subtitleText}>{subtitle}</Text>
-					<Filters />
 				</View>
 			</View>
 		);
@@ -88,29 +87,29 @@ export default function Featured() {
 	function FeaturedComponent() {
 		const apiModule = 'featured';
 		const name = 'Featured';
-		const subtitle = 'Premium channels and groups';
-		return <VerticalList Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
+		const subtitle = 'Premium channels, groups and bots';
+		return <VerticalList useFilters Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
 	}
 
 	function TopComponent() {
 		const apiModule = 'top';
 		const name = 'Top 50';
 		const subtitle = 'Tell your community to rate you in our app to get better rankings!';
-		return <VerticalList Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
+		return <VerticalList useFilters Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
 	}
 
 	function BiggestComponent() {
 		const apiModule = 'biggest';
 		const name = 'Biggest';
 		const subtitle = 'Top 50 biggest channels and groups by members';
-		return <VerticalList Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
+		return <VerticalList useFilters Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
 	}
 
 	function PopularComponent() {
 		const apiModule = 'popular';
 		const name = 'Popular';
 		const subtitle = 'Top 50 most viewed channels, bots, groups and stickers';
-		return <VerticalList Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
+		return <VerticalList useFilters Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
 	}
 
 	/* eslint-disable react/no-this-in-sfc */
