@@ -91,7 +91,7 @@ export default function GlobalSearch() {
 				<LoadingIndicator />
 			) : (
 				<>
-					<Searchbar style={styles.searchBar} placeholder='Search' onChangeText={onChangeSearch} value={searchQuery} />
+					<Searchbar style={styles.searchBar} placeholder='Search' onChangeText={onChangeSearch} value={searchQuery} onSubmitEditing={onSearchClick} />
 					<View style={styles.buttonsView}>
 						<Button style={styles.buttonBase} color='white' icon='cached' mode='contained' onPress={onRandomClick}>
 							<Text style={styles.buttonRandomText}>Aleatorio</Text>

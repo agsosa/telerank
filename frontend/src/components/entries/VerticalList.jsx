@@ -84,6 +84,8 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters }) {
 		<View style={commonStyles.flex}>
 			<FlatList
 				data={data}
+				keyboardDismissMode='drag'
+				keyboardShouldPersistTaps='handled'
 				ListEmptyComponent={NoEntriesFound}
 				renderItem={(q) => <VerticalCard item={q.item} />}
 				keyExtractor={(item) => item._id}
