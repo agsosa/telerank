@@ -1,7 +1,7 @@
 /*eslint-disable */
 enum EnumLanguage {
-  SPANISH = "Español",
-  ENGLISH = "English",
+  SPANISH = "es",
+  ENGLISH = "en",
 }
 
 // Will try to get a EnumLanguage from a str. Returns undefined  if it couldn't parse the string.
