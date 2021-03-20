@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Dimensions, StyleSheet, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { List, Button } from 'react-native-paper';
-import { colors, commonStyles, userPlaceholderImage } from '../../config/Styles';
+import { colors, userPlaceholderImage } from '../../config/Styles';
 import { ShareApp, RateApp } from '../../lib/Share';
 import LanguageModal from '../modals/LanguageModal';
 import StatsModal from '../modals/StatsModal';

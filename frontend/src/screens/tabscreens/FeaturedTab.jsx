@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
-import { Button } from 'react-native-paper';
-import { Tabs, TabScreen } from 'react-native-paper-tabs';
+import React from 'react';
+import { View, StyleSheet, Text } from 'react-native';
 import VerticalList from '../../components/entries/VerticalList';
-import { colors, commonStyles } from '../../config/Styles';
+import { colors } from '../../config/Styles';
 import Filters from '../../components/entries/Filters';
 import NavTabs from '../../components/navigation/NavTabs';
 

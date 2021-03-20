@@ -9,7 +9,7 @@ import { getModuleData } from '../../lib/API';
 import NoEntriesFound from './NoEntriesFound';
 import NoMoreEntries from './NoMoreEntries';
 
-export default function VerticalList({ Header, Footer, useSearchBar, apiModule }) {
+function VerticalList({ Header, Footer, useSearchBar, apiModule }) {
 	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [searchValue, setSearchValue] = useState('');
@@ -100,3 +100,5 @@ VerticalList.propTypes = {
 	Footer: PropTypes.func,
 	apiModule: PropTypes.string.isRequired,
 };
+
+export default VerticalList;

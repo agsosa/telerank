@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Image, StyleSheet, Linking, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Image, StyleSheet, Linking, TouchableOpacity, Alert } from 'react-native';
 import { Right, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from 'native-base';
 import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
@@ -64,7 +64,7 @@ const DetailsScreen = ({ route }) => {
 			Linking.openURL(`https://t.me/${data.username}`);
 		} catch (e) {
 			console.log(`openTelegram link error: ${e.message}`);
-			alert('An error occurred while trying to open Telegram.');
+			Alert.alert('Error', 'An error occurred while trying to open Telegram', [{ text: 'OK' }]);
 		}
 	};
 
