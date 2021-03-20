@@ -4,6 +4,7 @@ import Job from "./Job";
 import PopulateDatabase from "./PopulateDatabaseJob";
 import RefreshEntriesTelegramInfos from "./RefreshEntriesTelegramInfos";
 import { isDatabaseReady } from "../../data/Database";
+import { isTelegramProtoReady } from "../telegram-proto/TelegramProto";
 
 let interval: NodeJS.Timeout;
 const JOBS_INTERVAL_TIME = 15 * 1000; // Time between each jobsInterval() run
@@ -18,7 +19,7 @@ export function isAnyJobRunning(): boolean {
 }
 
 function jobsInterval() {
-  if (isDatabaseReady()) {
+  if (isDatabaseReady() && isTelegramProtoReady()) {
     JOBS.forEach((q) => {
       if (!q.isRunning) {
         if (!q.concurrent) {

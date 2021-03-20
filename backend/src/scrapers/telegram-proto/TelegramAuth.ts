@@ -56,7 +56,7 @@ function checkPassword(srp_id: any, A: any, M1: any) {
 }
 
 // TODO: Devolver resultado si esta autentificado o no
-export default async function Auth(): Promise<void> {
+export default async function Auth(): Promise<boolean> {
   const user = await getUser();
 
   if (!user) {
@@ -64,11 +64,10 @@ export default async function Auth(): Promise<void> {
 
     try {
       const authResult = await signIn(code, phone, phone_code_hash);
-
-      // console.log(`authResult:`, authResult);
+      return true;
     } catch (error) {
       if (error.error_message !== "SESSION_PASSWORD_NEEDED") {
-        return;
+        return false;
       }
 
       // 2FA
@@ -85,8 +84,9 @@ export default async function Auth(): Promise<void> {
       });
 
       const authResult = await checkPassword(srp_id, A, M1);
-
-      // console.log(`authResult:`, authResult);
+      return true;
     }
   }
+
+  return true;
 }

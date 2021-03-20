@@ -7,7 +7,10 @@ import * as EntryModel from "../../data/models/entry-model/EntryModel";
 import { IEntry } from "../../data/models/entry-model/IEntry";
 import IScrapedMedia from "../content-scrapers/IScrapedMedia";
 import { sleep, capitalizeStr, log } from "../../lib/Helpers";
-import { getTelegramInfo } from "../telegram-proto/TelegramProto";
+import {
+  getTelegramInfo,
+  isValidTelegramUsername,
+} from "../telegram-proto/TelegramProto";
 
 /* 
   PopulateDatabaseJob:
@@ -45,8 +48,11 @@ export default class PopulateDatabaseJob extends Job {
         const q = mediaList[i];
 
         const exists = await EntryModel.isUsernameSaved(q.username);
+        const valid = await isValidTelegramUsername(q.username);
 
-        if (!exists) {
+        if (!valid) log.info(`username ${q.username} is not valid`); // TODO: Remove
+
+        if (!exists && valid) {
           const info = await getTelegramInfo(q.username);
 
           if (info && !info.scam) {

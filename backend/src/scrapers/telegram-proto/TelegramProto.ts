@@ -1,47 +1,48 @@
 /* eslint-disable camelcase */
 import { MTProto } from "@mtproto/core";
 import moment from "moment";
-import { lowerFirst } from "lodash";
+import scrapeIt, { ScrapeResult } from "scrape-it";
 import { sleep, log } from "../../lib/Helpers";
 import ITelegramInfo from "./ITelegramInfo";
 import TelegramSecrets from "./TelegramSecrets";
-import TelegramAuth from "./TelegramAuth";
 import IScrapedMedia from "../content-scrapers/IScrapedMedia";
 import EnumEntryType from "../../data/models/entry-model/EnumEntryType";
-
-// TODO: Añadir await TelegramAuth();
+import TelegramAuth from "./TelegramAuth";
 
 // Flood wait rate https://github.com/danog/MadelineProto/issues/284
-let firstCallTime: moment.Moment; // Time it took to make the api calls before a FLOOD_WAIT error
+let callTime: moment.Moment | null; // Time it took to make the api calls before a FLOOD_WAIT error
 const FLOOD_WAIT_RATE_SAFEGUARD_SECONDS = 1;
-let floodWaitRate: number; // Seconds
-let maxCallsPerWaitRate = 0;
+let floodWaitRate: number | null; // Seconds
+let N = 0;
 let currentCalls = 0;
-
-let authenticated = false;
+let initialized = false;
 
 export const mtproto = new MTProto({
   api_id: TelegramSecrets.apiId,
   api_hash: TelegramSecrets.apiHash,
 });
 
+export const InitializeTelegramProto = async (): Promise<void> => {
+  const auth = await TelegramAuth();
+  log.info(`Auth result = ${auth}`);
+  initialized = true;
+};
+
+export const isTelegramProtoReady = (): boolean => initialized;
+
 // mtproto wrapper with anti flood and dc handle
 export const api = {
   async call(method: string, params = {}, options = {}): Promise<any> {
-    if (!authenticated) {
-      await TelegramAuth();
-      // TODO: Revisar resultado de TelegramAuth
-      authenticated = true;
-    }
+    if (!callTime) callTime = moment(); // Set APICallTime during the first call, then we use it to measure the time took to get a floodWaitRate
 
-    if (!firstCallTime) firstCallTime = moment(); // Set APICallTime during the first call, then we use it to measure the time took to get a floodWaitRate
-
-    if (!floodWaitRate) maxCallsPerWaitRate += 1;
-    // Increment maxCallsPerWaitRate += 1; until we get a FLOOD_WAIT error and set floodWaitRate
-    else if (currentCalls >= maxCallsPerWaitRate) {
+    if (!floodWaitRate) N += 1;
+    else if (currentCalls === N) {
       log.info(`Waiting flootWaitRate ${floodWaitRate}`);
       sleep(floodWaitRate * 1000);
       currentCalls = 0;
+      N = 0;
+      callTime = null;
+      floodWaitRate = null;
     } else currentCalls += 1;
 
     return mtproto.call(method, params, options).catch(async (error) => {
@@ -50,21 +51,18 @@ export const api = {
       if (error_code === 420) {
         const seconds = +error_message.split("FLOOD_WAIT_")[1];
 
-        if (!floodWaitRate)
-          floodWaitRate =
-            moment().diff(firstCallTime, "seconds") +
-            seconds +
-            FLOOD_WAIT_RATE_SAFEGUARD_SECONDS;
+        floodWaitRate =
+          moment().diff(callTime, "seconds") +
+          seconds +
+          FLOOD_WAIT_RATE_SAFEGUARD_SECONDS;
 
         // TODO: Switch to another phone when the flood wait is too long
 
         log.info(
-          `TELEGRAM FLOOD_WAIT ${seconds} seconds. Calculate flood wait rate = ${floodWaitRate}`
+          `TELEGRAM FLOOD_WAIT ${seconds} seconds. Calculated flood wait rate = ${floodWaitRate}`
         );
 
         await sleep(floodWaitRate * 1000);
-
-        firstCallTime = moment();
 
         return this.call(method, params, options);
       }
@@ -108,7 +106,34 @@ export function getCurrentFloodWait(): Promise<number> {
   });
 }
 
-// Get ITelegramInfo for a username, including downloading the photo.
+export async function isValidTelegramUsername(
+  username: string
+): Promise<boolean> {
+  try {
+    // ScrapeIt Options
+    const scrapeOptions: scrapeIt.ScrapeOptions = {
+      title: {
+        selector: ".tgme_page_title span",
+      },
+    };
+
+    // Execute ScrapeIt
+    const result: ScrapeResult<{ title: string }> = await scrapeIt(
+      `https://t.me/${username}`,
+      scrapeOptions
+    );
+    return (
+      result.data.title !== null &&
+      result.data.title !== undefined &&
+      result.data.title !== ""
+    );
+  } catch (err) {
+    log.error(err);
+    return true;
+  }
+}
+
+// Get ITelegramInfo for a username, including photo
 export async function getTelegramInfo(
   target: IScrapedMedia | string
 ): Promise<ITelegramInfo | undefined> {
