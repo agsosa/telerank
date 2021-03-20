@@ -196,15 +196,10 @@ export function getModuleData(apiModule, payload = {}, ignoreCache = false) {
 			// Cache is still valid, return data from cache
 			resolve(cacheParsed.data);
 		}
-	})
-		.then((data) => {
-			moduleInfo.pendingPromise = null;
-			return data;
-		})
-		.catch((error) => {
-			moduleInfo.pendingPromise = null;
-			return error;
-		});
+	}).finally((data) => {
+		moduleInfo.pendingPromise = null;
+		return data;
+	});
 
 	return moduleInfo.pendingPromise;
 }
