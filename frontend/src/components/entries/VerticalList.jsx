@@ -39,20 +39,22 @@ function CustomSearchBar() {
 	return <Searchbar placeholder='Search' value={searchQuery} onChangeText={onChangeSearch} style={{ marginBottom: 10 }} onIconPress={onSearchClick} onEndEditing={onSearchClick} />;
 }
 
-function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters }) {
-	const [data, setData] = useState([]);
-	const [loading, setLoading] = useState(true);
+function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, useData }) {
+	const [data, setData] = useState(null);
+	const [loading, setLoading] = useState(useData === null);
 
 	const refreshData = async () => {
-		setLoading(true);
-		setData([]);
+		if (!useData) {
+			setLoading(true);
+			setData([]);
 
-		await getModuleData(apiModule).then((result) => {
-			if (setData) {
-				setData(result);
-				setLoading(false);
-			}
-		});
+			await getModuleData(apiModule).then((result) => {
+				if (setData) {
+					setData(result);
+					setLoading(false);
+				}
+			});
+		}
 	};
 
 	useEffect(() => {
@@ -78,12 +80,12 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters }) {
 			{Footer && <Footer />}
 		</View>
 	);
-	if (loading || !data || !Array.isArray(data)) return <LoadingIndicator />;
+	if (loading) return <LoadingIndicator />;
 
 	return (
 		<View style={commonStyles.flex}>
 			<FlatList
-				data={data}
+				data={data || useData}
 				keyboardDismissMode='drag'
 				keyboardShouldPersistTaps='handled'
 				ListEmptyComponent={NoEntriesFound}
@@ -104,14 +106,17 @@ VerticalList.defaultProps = {
 	Header: null,
 	useFilters: false,
 	Footer: null,
+	useData: null,
+	apiModule: '',
 };
 
 VerticalList.propTypes = {
 	useSearchBar: PropTypes.bool,
 	Header: PropTypes.func,
 	Footer: PropTypes.func,
-	apiModule: PropTypes.string.isRequired,
+	apiModule: PropTypes.string,
 	useFilters: PropTypes.bool,
+	useData: PropTypes.array,
 };
 
 export default VerticalList;
