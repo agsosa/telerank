@@ -28,6 +28,7 @@ export default class EntriesRoutes extends CommonRoutesConfig {
       Query Parameters:
         - (optional) page: number. Default: 0
         - (optional) type: string matching a EnumEntryType. Default: any
+        - (optional) search: string to search on title, description and username. Default: undefined
       Return JSON:
         Array of max. LimitPerPage IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Not sorted.
@@ -51,11 +52,27 @@ export default class EntriesRoutes extends CommonRoutesConfig {
             ? parseEntryType(queryType)
             : undefined;
 
+          // Query param: search
+          const querySearch = req.query.search?.toString();
+
           // Final params
+          // Regex search
+          /* const search = querySearch
+            ? {
+                $or: [
+                  { username: { $regex: querySearch, $options: "i" } },
+                  { title: { $regex: querySearch, $options: "i" } },
+                  { description: { $regex: querySearch, $options: "i" } },
+                ],
+              }
+            : {}; */
+          // Full text search
+          const search = querySearch ? { $text: { $search: querySearch } } : {};
           const type = parsedQueryType ? { type: parsedQueryType } : {};
+          const finalQuery = { ...type, ...search };
           const page = isQueryPageValid ? queryPage : 0;
 
-          EntryModel.GetPaginatedList(LIMIT_PER_PAGE, page, true, type) // TODO: Check EntryModel.GetList parameter includeDescription
+          EntryModel.GetPaginatedList(LIMIT_PER_PAGE, page, true, finalQuery) // TODO: Check EntryModel.GetList parameter includeDescription
             .then((result) => {
               res.status(200).send(result);
             })
