@@ -56,17 +56,6 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           const querySearch = req.query.search?.toString();
 
           // Final params
-          // Regex search
-          /* const search = querySearch
-            ? {
-                $or: [
-                  { username: { $regex: querySearch, $options: "i" } },
-                  { title: { $regex: querySearch, $options: "i" } },
-                  { description: { $regex: querySearch, $options: "i" } },
-                ],
-              }
-            : {}; */
-          // Full text search
           const search = querySearch ? { $text: { $search: querySearch } } : {};
           const type = parsedQueryType ? { type: parsedQueryType } : {};
           const finalQuery = { ...type, ...search };
