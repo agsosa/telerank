@@ -72,26 +72,26 @@ const API_MODULES = {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
-		getURL: () => `${BASE_URL}/entries?type=Channel&page=0`,
+		getURL: (payload) => `${BASE_URL}/entries?type=Channel&page=0`,
 	},
 	bots: {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
-		getURL: () => `${BASE_URL}/entries?type=Bot&page=0`,
+		getURL: (payload) => `${BASE_URL}/entries?type=Bot&page=0`,
 	},
 	stickers: {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
 		dataPostProcess: null,
-		getURL: () => `${BASE_URL}/entries?type=Sticker&page=0`,
+		getURL: (payload) => `${BASE_URL}/entries?type=Sticker&page=0`,
 	},
 	groups: {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
-		getURL: () => `${BASE_URL}/entries?type=Group&page=0`,
+		getURL: (payload) => `${BASE_URL}/entries?type=Group&page=0`,
 	},
 	random: {
 		validateData: (data) => data && Array.isArray(data) && data.length >= 1,
@@ -99,7 +99,12 @@ const API_MODULES = {
 		pendingPromise: null,
 		getURL: () => `${BASE_URL}/entries/random`,
 	},
-	// search,  groups, channels, bots, stickers
+	search: {
+		validateData: (data) => data && Array.isArray(data),
+		currentData: null,
+		pendingPromise: null,
+		getURL: (payload) => `${BASE_URL}/entries?type=${payload.type}&search=${payload.search}`,
+	},
 };
 
 function getCacheFromStorage(storageKey) {
