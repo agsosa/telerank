@@ -1,7 +1,7 @@
 import { model, Schema, Model } from "mongoose";
+import fuzzySearching from "mongoose-fuzzy-searching";
 import { IEntry, IEntryDocument } from "./IEntry";
 import EnumLanguage from "./EnumLanguage";
-import { isValidTelegramUsername } from "../../../scrapers/telegram-proto/TelegramProto";
 
 // TODO: Implement cache?
 // TODO: Implement EnumCategories/Categories from /shared/
@@ -36,19 +36,39 @@ const EntryModelSchema = new Schema({
   views: { type: Number, required: false, default: 0 },
 });
 
-EntryModelSchema.index(
-  {
-    title: "text",
-    description: "text",
-    username: "text",
-  },
-  { weights: { title: 3, username: 2, description: 1 } }
-);
+EntryModelSchema.plugin(fuzzySearching, {
+  fields: ["username", "description", "title"],
+});
 
 export const EntryModel: Model<IEntryDocument> = model(
   "EntryModel",
   EntryModelSchema
 );
+
+/* 
+// Add fuzzy nGrams to existing data
+const updateFuzzy = async () => {
+  const attrs = ["title", "username", "description"];
+  const entities = await EntryModel.find();
+
+  const updateToDatabase = async (data: any) => {
+    try {
+      const obj = attrs.reduce(
+        (acc, attr) => ({ ...acc, [attr]: data[attr] }),
+        {}
+      );
+      // eslint-disable-next-line
+      return EntryModel.findByIdAndUpdate(data._id, obj).catch(log.error);
+    } catch (e) {
+      log.error(e);
+      return null;
+    }
+  };
+
+  entities.map((q) => updateToDatabase(q));
+};
+
+updateFuzzy(); */
 
 function getCommonSelectExcludeFields(includeDescription = true): string {
   let result = `-reports -pending -removed`;
@@ -60,10 +80,16 @@ export function GetPaginatedList(
   perPage: number,
   page: number,
   includeDescription = false,
-  query: Record<string, unknown> = {},
-  sort: Record<string, unknown> = {}
+  filterQuery: Record<string, unknown> = {},
+  sort: Record<string, unknown> = {},
+  search = ""
 ): Promise<IEntry[]> {
-  return EntryModel.find({ pending: false, removed: false, ...query })
+  return EntryModel.find({ pending: false, removed: false, ...filterQuery })
+    .fuzzySearch({
+      query: search,
+      prefixOnly: true,
+      exact: true,
+    })
     .limit(perPage)
     .skip(perPage * page)
     .select(getCommonSelectExcludeFields(includeDescription))

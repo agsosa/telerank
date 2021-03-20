@@ -56,12 +56,18 @@ export default class EntriesRoutes extends CommonRoutesConfig {
           const querySearch = req.query.search?.toString();
 
           // Final params
-          const search = querySearch ? { $text: { $search: querySearch } } : {};
+          const search = querySearch || "";
           const type = parsedQueryType ? { type: parsedQueryType } : {};
-          const finalQuery = { ...type, ...search };
           const page = isQueryPageValid ? queryPage : 0;
 
-          EntryModel.GetPaginatedList(LIMIT_PER_PAGE, page, true, finalQuery) // TODO: Check EntryModel.GetList parameter includeDescription
+          EntryModel.GetPaginatedList(
+            LIMIT_PER_PAGE,
+            page,
+            true,
+            type,
+            {},
+            search
+          ) // TODO: Check EntryModel.GetList parameter includeDescription
             .then((result) => {
               res.status(200).send(result);
             })
