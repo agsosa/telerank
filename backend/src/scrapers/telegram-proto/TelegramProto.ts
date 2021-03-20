@@ -62,7 +62,7 @@ export const api = {
           `TELEGRAM FLOOD_WAIT ${seconds} seconds. Calculated flood wait rate = ${floodWaitRate}`
         );
 
-        await sleep(floodWaitRate * 1000);
+        await sleep(seconds * 1000);
 
         return this.call(method, params, options);
       }
