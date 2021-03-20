@@ -6,12 +6,11 @@ enum EnumEntryType {
   BOT = "Bot",
   GROUP = "Group",
   STICKER = "Sticker",
-  UNKNOWN = "Unknown",
 }
 
 // Will try to get a EnumEntryType from a str (accepts any string, plurar or singular, uppercase or lowercase). Returns undefiend if it couldn't parse the string.
-export function parseEntryType(str: string): EnumEntryType {
-  let result = EnumEntryType.UNKNOWN;
+export function parseEntryType(str: string): EnumEntryType | undefined {
+  let result = undefined;
 
   if (str) {
     const strEx = pluralize.singular(str).toLowerCase();

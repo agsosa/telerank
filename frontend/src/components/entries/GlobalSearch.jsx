@@ -58,15 +58,29 @@ export default function GlobalSearch() {
 					navigation.navigate('Details', data);
 				}
 			})
-			.catch((err) => {
+			.catch(() => {
 				setLoading(false);
-
 				Alert.alert('Error', 'An error occurred, please try again.', [{ text: 'OK' }]);
 			});
 	};
 
 	const onSearchClick = () => {
-		// TODO: Implement
+		setLoading(true);
+		getModuleData('search', { type: 'any', search: searchQuery }, true)
+			.then((data) => {
+				if (isMounted) {
+					setLoading(false);
+					if (!data || !Array.isArray(data) || data.length === 0) {
+						Alert.alert('Nothing found', 'No results were found for your search', [{ text: 'OK' }]);
+					}
+					// navigation.navigate('Details', data);
+					console.log(`Received usernames: ${data.map((q) => q.username)}`);
+				}
+			})
+			.catch(() => {
+				setLoading(false);
+				Alert.alert('Error', 'An error occurred, please try again.', [{ text: 'OK' }]);
+			});
 	};
 
 	return (

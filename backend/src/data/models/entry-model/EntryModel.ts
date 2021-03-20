@@ -1,12 +1,17 @@
 import { model, Schema, Model } from "mongoose";
 import { IEntry, IEntryDocument } from "./IEntry";
 import EnumLanguage from "./EnumLanguage";
+import { isValidTelegramUsername } from "../../../scrapers/telegram-proto/TelegramProto";
 
 // TODO: Implement cache?
 // TODO: Implement EnumCategories/Categories from /shared/
 
 const EntryModelSchema = new Schema({
-  username: { type: String, required: true, unique: true },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   type: { type: String, required: true, index: true },
   language: {
     type: String,
@@ -30,6 +35,15 @@ const EntryModelSchema = new Schema({
   removed: { type: Boolean, required: true, default: true, index: true },
   views: { type: Number, required: false, default: 0 },
 });
+
+EntryModelSchema.index(
+  {
+    title: "text",
+    description: "text",
+    username: "text",
+  },
+  { weights: { title: 3, username: 2, description: 1 } }
+);
 
 export const EntryModel: Model<IEntryDocument> = model(
   "EntryModel",
