@@ -5,7 +5,7 @@ import { MMKV } from 'react-native-mmkv';
 import { store } from '../state/Store';
 
 // Base URL for the API calls
-const BASE_URL = 'http://c3f3638452f7.ngrok.io';
+const BASE_URL = 'http://19add10c22c3.ngrok.io';
 
 // Retry config
 const PROMISE_RETRY_TIMEOUT = 3000; // Wait time to retry the promise after failing all retry-axios attempts
@@ -29,81 +29,96 @@ const retryConfig = {
 
 // Cache
 const STORAGE_KEY_PREFIX = 'tr_'; // Prefix added to the storage keys
-const CACHE_EXPIRATION_MINUTES = 3; // Minutes to consider the cache expired
+const CACHE_EXPIRATION_MINUTES = 15; // Minutes to consider the cache expired
+const PAGINATED_IGNORE_CACHE = true; // Ignore cache for all paginated api modules?
 
 const API_MODULES = {
 	featured: {
-		validateData: (data) => data && Array.isArray(data), // data: array [] of {} EntryModel including all the featured and recent added entries.
-		current: null, // loaded object from server or file storage { data, expirationTime}
-		pendingPromise: null, // prevent concurrent promises
-		getURL: () => `${BASE_URL}/entries/featured`, // API URL
+		validateData: (data) => data && Array.isArray(data), // boolean func to validate the data
+		current: null, // loaded object from server or file storage { data, expirationTime}, used when cache = true
+		pendingPromise: null, // to prevent concurrent promises
+		isPaginated: false, // use pages?
+		ignoreCache: false, // Set ignoreCache: true to not use the local storage/memory cache for a particular api module
+		getURL: () => `${BASE_URL}/entries/featured`, // API URL, this function can receive a payload object to add query parameters
 	},
 	recent: {
 		validateData: (data) => data && Array.isArray(data),
 		current: null,
 		pendingPromise: null,
+		isPaginated: false,
 		getURL: () => `${BASE_URL}/entries/recent`,
 	},
 	popular: {
 		validateData: (data) => data && Array.isArray(data),
 		current: null,
 		pendingPromise: null,
+		isPaginated: false,
 		getURL: () => `${BASE_URL}/entries/popular`,
 	},
 	biggest: {
 		validateData: (data) => data && Array.isArray(data),
 		current: null,
 		pendingPromise: null,
+		isPaginated: false,
 		getURL: () => `${BASE_URL}/entries/biggest`,
 	},
 	top: {
 		validateData: (data) => data && Array.isArray(data),
 		current: null,
 		pendingPromise: null,
+		isPaginated: false,
 		getURL: () => `${BASE_URL}/entries/top`,
 	},
 	stats: {
 		validateData: (data) => data,
 		currentData: null,
 		pendingPromise: null,
+		isPaginated: false,
 		getURL: () => `${BASE_URL}/stats`,
 	},
 	channels: {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
-		getURL: (payload) => `${BASE_URL}/entries?type=Channel&page=0`,
+		isPaginated: true,
+		getURL: (payload) => `${BASE_URL}/entries?type=Channel&page=${payload.page || 0}`,
 	},
 	bots: {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
-		getURL: (payload) => `${BASE_URL}/entries?type=Bot&page=0`,
+		isPaginated: true,
+		getURL: (payload) => `${BASE_URL}/entries?type=Bot&page=${payload.page || 0}`,
 	},
 	stickers: {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
 		dataPostProcess: null,
-		getURL: (payload) => `${BASE_URL}/entries?type=Sticker&page=0`,
+		isPaginated: true,
+		getURL: (payload) => `${BASE_URL}/entries?type=Sticker&page=${payload.page || 0}`,
 	},
 	groups: {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
-		getURL: (payload) => `${BASE_URL}/entries?type=Group&page=0`,
+		isPaginated: true,
+		getURL: (payload) => `${BASE_URL}/entries?type=Group&page=${payload.page || 0}`,
 	},
 	random: {
 		validateData: (data) => data && Array.isArray(data) && data.length >= 1,
 		currentData: null,
 		pendingPromise: null,
+		isPaginated: false,
+		ignoreCache: true,
 		getURL: () => `${BASE_URL}/entries/random`,
 	},
 	search: {
 		validateData: (data) => data && Array.isArray(data),
 		currentData: null,
 		pendingPromise: null,
-		getURL: (payload) => `${BASE_URL}/entries?type=${payload.type}&search=${payload.search}`,
+		isPaginated: true,
+		getURL: (payload) => `${BASE_URL}/entries?type=${payload.type}&search=${payload.search}&page=${payload.page || 0}`,
 	},
 };
 
@@ -126,82 +141,90 @@ function getCacheSecondsRemaining(cacheParsed) {
 	return 0;
 }
 
+export function getModuleInfo(str) {
+	const moduleInfo = API_MODULES[str.toLowerCase()];
+	return moduleInfo;
+}
+
 /*
 	getModuleData: Get data from cache (memory/storage) or server.
 	Params:
 		apiModule (string): String used to get an API_MODULES object matching by key (examples: 'home', 'stats')
 		payload (object): Passed to the getURL method of apiModule object to build the URL query (examples: {page: 0, limit: 10})
-		ignoreCache (bool): To use or not the data saved in local storage
+		forceIgnoreCache (bool): To use or not the data saved in local storage/memory
 	Return:
 		Promise - Always (no timeout, no retry limit) resolve with a data object validated with the validateData method of the apiModule object
 */
-export function getModuleData(apiModule, payload = {}, ignoreCache = false) {
-	const apiModuleStr = apiModule.toLowerCase();
-	const moduleInfo = API_MODULES[apiModuleStr];
+export function getModuleData(apiModule, payload = {}, forceIgnoreCache = false) {
+	const moduleInfo = getModuleInfo(apiModule);
+	const paginatedIgnoreCache = moduleInfo.isPaginated && PAGINATED_IGNORE_CACHE;
 
-	if (moduleInfo.pendingPromise) return moduleInfo.pendingPromise; // Prevent concurrent promises/race condition for the same api module
+	if (moduleInfo) {
+		if (moduleInfo.pendingPromise) return moduleInfo.pendingPromise; // Prevent concurrent promises/race condition for the same api module
 
-	moduleInfo.pendingPromise = new Promise(function cb(resolve, reject) {
-		console.log(`Running promise for ${apiModuleStr}`);
+		moduleInfo.pendingPromise = new Promise(function cb(resolve, reject) {
+			console.log(`Running promise for ${apiModule.toLowerCase()}`);
 
-		// Try to get data from local storage or memory
-		const storageKey = STORAGE_KEY_PREFIX + apiModuleStr;
-		let cacheParsed;
-		if (!ignoreCache) {
-			if (moduleInfo.current && moduleInfo.current.data && moduleInfo.current.expirationTime) {
-				// Load from memory
-				console.log('Loaded from memory');
-				cacheParsed = moduleInfo.current;
-			} else {
-				// Load from local storage
-				console.log('Loaded from Storage');
-				cacheParsed = getCacheFromStorage(storageKey, moduleInfo);
-				moduleInfo.current = cacheParsed;
+			// Try to get data from local storage or memory
+			const storageKey = STORAGE_KEY_PREFIX + apiModule.toLowerCase();
+			let cacheParsed;
+			if (!moduleInfo.ignoreCache && !forceIgnoreCache && !paginatedIgnoreCache) {
+				if (moduleInfo.current && moduleInfo.current.data && moduleInfo.current.expirationTime) {
+					// Load from memory
+					console.log('Loaded from memory');
+					cacheParsed = moduleInfo.current;
+				} else {
+					// Load from local storage
+					console.log('Loaded from Storage');
+					cacheParsed = getCacheFromStorage(storageKey, moduleInfo);
+					moduleInfo.current = cacheParsed;
+				}
 			}
-		}
-		// Check cache expiration time
-		const cacheExpired = getCacheSecondsRemaining(cacheParsed) <= 0;
+			// Check cache expiration time
+			const cacheExpired = getCacheSecondsRemaining(cacheParsed) <= 0;
 
-		// Check cache validity
-		const validCache = !ignoreCache && cacheParsed && !cacheExpired && moduleInfo.validateData(cacheParsed.data);
+			// Check cache validity
+			const validCache = !moduleInfo.ignoreCache && !forceIgnoreCache && !paginatedIgnoreCache && cacheParsed && !cacheExpired && moduleInfo.validateData(cacheParsed.data);
 
-		if (!validCache) {
-			// Invalid cache, fetch data from server
-			console.log('getModuleData: Fetching data from server');
-			const axiosOptions = { url: moduleInfo.getURL(payload), raxConfig: retryConfig };
-			axios(axiosOptions) // Cache not valid/expired, get fresh data from server
-				.then((result) => {
-					const { data } = result;
-					if (moduleInfo.validateData(data)) {
-						// Save data to storage (cache) and resolve the promise
-						const expTime = moment().add(CACHE_EXPIRATION_MINUTES, 'minutes'); // Calculate the next expiration time
-						const obj = { data, expirationTime: expTime };
-						// Save data to local storage
-						MMKV.set(storageKey, JSON.stringify(obj));
-						// Save to memory to prevent unnecessary storage reads
-						moduleInfo.current = obj;
-						resolve(data);
-					} else setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT); // Retry promise if the server returned invalid data
-				})
-				.catch((error) => {
-					// Retries done, server failed. Resolve with the data from cache if it's available.
-					store.dispatch.apiErrorActive.setAPIErrorStatus(true); // Used to display a UI component to notify the user about the error
-					console.log(`axios error : ${error}`);
-					if (cacheParsed && cacheParsed.data) resolve(cacheParsed.data);
-					else if (!ignoreCache) setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT);
-					// Retry promise if cache is invalid
-					else reject(new Error("Couldn't fetch from the server and no data was found on the storage."));
-				});
-		} else {
-			// Cache is still valid, return data from cache
-			resolve(cacheParsed.data);
-		}
-	}).finally((data) => {
-		moduleInfo.pendingPromise = null;
-		return data;
-	});
+			if (!validCache) {
+				// Invalid cache, fetch data from server
+				console.log('getModuleData: Fetching data from server');
+				const axiosOptions = { url: moduleInfo.getURL(payload), raxConfig: retryConfig };
+				axios(axiosOptions) // Cache not valid/expired, get fresh data from server
+					.then((result) => {
+						const { data } = result;
+						if (moduleInfo.validateData(data)) {
+							// Save data to storage (cache) and resolve the promise
+							const expTime = moment().add(CACHE_EXPIRATION_MINUTES, 'minutes'); // Calculate the next expiration time
+							const obj = { data, expirationTime: expTime };
+							// Save data to local storage
+							MMKV.set(storageKey, JSON.stringify(obj));
+							// Save to memory to prevent unnecessary storage reads
+							moduleInfo.current = obj;
+							resolve(data);
+						} else setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT); // Retry promise if the server returned invalid data
+					})
+					.catch((error) => {
+						// Retries done, server failed. Resolve with the data from cache if it's available.
+						store.dispatch.apiErrorActive.setAPIErrorStatus(true); // Used to display a UI component to notify the user about the error
+						console.log(`axios error : ${error}`);
+						if (cacheParsed && cacheParsed.data) resolve(cacheParsed.data);
+						else if (!moduleInfo.ignoreCache && !forceIgnoreCache && !paginatedIgnoreCache) setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT);
+						// Retry promise if cache is invalid
+						else reject(new Error("Couldn't fetch from the server and no data was found on the storage."));
+					});
+			} else {
+				// Cache is still valid, return data from cache
+				resolve(cacheParsed.data);
+			}
+		}).finally((data) => {
+			moduleInfo.pendingPromise = null;
+			return data;
+		});
 
-	return moduleInfo.pendingPromise;
+		return moduleInfo.pendingPromise;
+	}
+	return undefined;
 }
 
 export function getEntryExtraData(id) {
