@@ -51,7 +51,7 @@ export default function GlobalSearch() {
 
 	const onRandomClick = () => {
 		setLoading(true);
-		getModuleData('random', {}, true)
+		getModuleData('random', {})
 			.then(([data]) => {
 				if (isMounted) {
 					setLoading(false);
@@ -65,22 +65,24 @@ export default function GlobalSearch() {
 	};
 
 	const onSearchClick = () => {
-		setLoading(true);
-		getModuleData('search', { type: 'any', search: searchQuery }, true)
-			.then((data) => {
-				if (isMounted) {
-					setLoading(false);
-					if (!data || !Array.isArray(data) || data.length === 0) {
-						Alert.alert('Nothing found', 'No results were found for your search', [{ text: 'OK' }]);
+		if (searchQuery) {
+			setLoading(true);
+			getModuleData('search', { type: 'any', search: searchQuery })
+				.then((data) => {
+					if (isMounted) {
+						setLoading(false);
+						if (!data || !Array.isArray(data) || data.length === 0) {
+							Alert.alert('Nothing found', 'No results were found for your search', [{ text: 'OK' }]);
+						} else navigation.navigate('SearchResult', { data, searchText: searchQuery });
 					}
-					// navigation.navigate('Details', data);
-					console.log(`Received usernames: ${data.map((q) => q.username)}`);
-				}
-			})
-			.catch(() => {
-				setLoading(false);
-				Alert.alert('Error', 'An error occurred, please try again.', [{ text: 'OK' }]);
-			});
+				})
+				.catch(() => {
+					setLoading(false);
+					Alert.alert('Error', 'An error occurred, please try again.', [{ text: 'OK' }]);
+				});
+		} else {
+			Alert.alert('Error', 'Please type something to search.', [{ text: 'OK' }]);
+		}
 	};
 
 	return (
