@@ -49,6 +49,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 	const [loading, setLoading] = useState(initialData === null);
 	const [loadingExtraData, setLoadingExtraData] = useState(false);
 	const [page, setPage] = useState(0);
+	const [isLastPage, setLastPage] = useState(false);
 
 	const apiModuleInfo = getModuleInfo(apiModule);
 
@@ -73,15 +74,15 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 			setLoadingExtraData(true);
 			const res = await getModuleData(apiModule, { page: page + 1 }, true);
 			if (isMounted) {
-				if (res) setData((old) => [...old, ...res]);
+				if (res) {
+					if (res.length > 0) setData((old) => [...old, ...res]);
+					else setLastPage(true);
+				}
 				setPage(page + 1);
+				setLoadingExtraData(false);
 			}
 		}
 	};
-
-	useEffect(() => {
-		if (loadingExtraData) setLoadingExtraData(false);
-	}, [data]);
 
 	useEffect(() => {
 		refreshData();
@@ -102,12 +103,11 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 
 	const RenderFooter = () => (
 		<View>
+			{((apiModuleInfo.isPaginated && isLastPage) || !apiModuleInfo.isPaginated) && <NoMoreEntries />}
 			{loadingExtraData && <LoadingIndicator />}
 			{Footer && <Footer />}
 		</View>
 	);
-
-	const getItemLayout = useCallback((d, index) => ({ length: 200, offset: 200 * index, index }), []);
 
 	if (loading) return <LoadingIndicator />;
 
@@ -127,7 +127,6 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 				refreshing={loading}
 				onEndReachedThreshold={0.8}
 				onEndReached={OnEndReached}
-				getItemLayout={getItemLayout}
 			/>
 		</View>
 	);
