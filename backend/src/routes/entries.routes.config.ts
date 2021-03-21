@@ -9,7 +9,7 @@ import EnumLanguage from "../data/models/entry-model/EnumLanguage";
 
 // TODO: Implementar LIMIT_PER_PAGE para biggest, recent, popular, top
 
-const LIMIT_PER_PAGE = 10; // Limit of objects returned per page
+const LIMIT_PER_PAGE = 20; // Limit of objects returned per page
 const LIMIT_RECENT = 5; // Max entries returned by /entries/recent
 const LIMIT_POPULAR = 50; // Max entries returned by /entries/popular
 const LIMIT_BIGGEST = 50; // Max entries returned by /entries/biggest

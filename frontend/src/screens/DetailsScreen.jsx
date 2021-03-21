@@ -92,7 +92,7 @@ const DetailsScreen = ({ route }) => {
 							</Text>
 						</CardItem>
 
-						<Image source={imageSrc} style={styles.image} />
+						<Image source={resolveImage(data)} style={styles.image} />
 					</TouchableOpacity>
 
 					<Button compact style={stylesBtn.telegramBtn} onPress={openTelegram}>

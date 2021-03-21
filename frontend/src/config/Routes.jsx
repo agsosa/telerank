@@ -49,13 +49,13 @@ const ROUTES = [
 		name: 'SearchResult',
 		component: SearchResultScreen,
 		extendHeaderGradient: false,
-		title: 'Search Results',
+		title: 'Search results',
 	},
 	{
 		name: 'WebViewScreen',
 		component: WebViewScreen,
 		extendHeaderGradient: false,
-		title: 'External Content',
+		title: 'External content',
 	},
 ];
 
