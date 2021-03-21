@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, FlatList } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
+import { Item } from 'native-base';
 import { commonStyles } from '../../config/Styles';
 import VerticalCard from './VerticalCard';
 import LoadingIndicator from '../LoadingIndicator';
-import { getModuleData } from '../../lib/API';
+import { getModuleData, getModuleInfo } from '../../lib/API';
 import NoEntriesFound from './NoEntriesFound';
 import NoMoreEntries from './NoMoreEntries';
 import Filters from './Filters';
+import { useIsMounted } from '../../lib/Helpers';
 
 function CustomSearchBar() {
 	const [searchQuery, setSearchQuery] = useState('');
@@ -39,23 +41,47 @@ function CustomSearchBar() {
 	return <Searchbar placeholder='Search' value={searchQuery} onChangeText={onChangeSearch} style={{ marginBottom: 10 }} onIconPress={onSearchClick} onEndEditing={onSearchClick} />;
 }
 
-function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, useData }) {
+const renderItem = (q) => <VerticalCard item={q.item} />;
+
+function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, initialData }) {
+	const isMounted = useIsMounted();
 	const [data, setData] = useState(null);
-	const [loading, setLoading] = useState(useData === null);
+	const [loading, setLoading] = useState(initialData === null);
+	const [loadingExtraData, setLoadingExtraData] = useState(false);
+	const [page, setPage] = useState(0);
+
+	const apiModuleInfo = getModuleInfo(apiModule);
 
 	const refreshData = async () => {
-		if (!useData) {
+		if (!initialData) {
 			setLoading(true);
 			setData([]);
+			setPage(0);
+			setLoadingExtraData(false);
 
-			await getModuleData(apiModule).then((result) => {
-				if (setData) {
+			getModuleData(apiModule).then((result) => {
+				if (isMounted) {
 					setData(result);
 					setLoading(false);
 				}
 			});
 		}
 	};
+
+	const OnEndReached = async () => {
+		if (apiModuleInfo.isPaginated && !loadingExtraData) {
+			setLoadingExtraData(true);
+			const res = await getModuleData(apiModule, { page: page + 1 }, true);
+			if (isMounted) {
+				if (res) setData((old) => [...old, ...res]);
+				setPage(page + 1);
+			}
+		}
+	};
+
+	useEffect(() => {
+		if (loadingExtraData) setLoadingExtraData(false);
+	}, [data]);
 
 	useEffect(() => {
 		refreshData();
@@ -74,28 +100,34 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, use
 		</View>
 	);
 
-	const renderFooter = () => (
+	const RenderFooter = () => (
 		<View>
-			{data && data.length > 0 && <NoMoreEntries />}
+			{loadingExtraData && <LoadingIndicator />}
 			{Footer && <Footer />}
 		</View>
 	);
+
+	const getItemLayout = useCallback((d, index) => ({ length: 200, offset: 200 * index, index }), []);
+
 	if (loading) return <LoadingIndicator />;
 
 	return (
 		<View style={commonStyles.flex}>
 			<FlatList
-				data={data || useData}
+				data={data || initialData}
+				initialNumToRender={5}
 				keyboardDismissMode='drag'
 				keyboardShouldPersistTaps='handled'
 				ListEmptyComponent={NoEntriesFound}
-				renderItem={(q) => <VerticalCard item={q.item} />}
+				renderItem={renderItem}
 				keyExtractor={(item) => item._id}
-				ItemSeparatorComponent={null}
 				ListHeaderComponent={RenderHeader}
-				ListFooterComponent={renderFooter}
+				ListFooterComponent={RenderFooter}
 				onRefresh={refreshData}
 				refreshing={loading}
+				onEndReachedThreshold={0.8}
+				onEndReached={OnEndReached}
+				getItemLayout={getItemLayout}
 			/>
 		</View>
 	);
@@ -106,7 +138,7 @@ VerticalList.defaultProps = {
 	Header: null,
 	useFilters: false,
 	Footer: null,
-	useData: null,
+	initialData: null,
 	apiModule: '',
 };
 
@@ -116,7 +148,7 @@ VerticalList.propTypes = {
 	Footer: PropTypes.func,
 	apiModule: PropTypes.string,
 	useFilters: PropTypes.bool,
-	useData: PropTypes.array,
+	initialData: PropTypes.array,
 };
 
 export default VerticalList;

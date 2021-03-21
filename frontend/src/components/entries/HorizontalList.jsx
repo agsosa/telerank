@@ -25,6 +25,8 @@ const styles = StyleSheet.create({
 	},
 });
 
+const RenderItem = (item) => <HorizontalCard item={item.item} />;
+
 export default function HorizontalList({ apiModule }) {
 	const isMounted = useIsMounted();
 	const [currentIdx, setCurrentIdx] = useState(0);
@@ -66,7 +68,7 @@ export default function HorizontalList({ apiModule }) {
 				onViewableItemsChanged={onViewableItemsChanged.current}
 				viewabilityConfig={viewabilityConfig.current}
 				data={data}
-				renderItem={(item) => <HorizontalCard item={item.item} />}
+				renderItem={RenderItem}
 				keyExtractor={(item) => item._id}
 				style={styles.flatList}
 				horizontal
