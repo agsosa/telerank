@@ -1,5 +1,4 @@
 import express from "express";
-import bodyParser from "body-parser";
 import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
@@ -23,8 +22,8 @@ const app = express();
 app.use(helmet());
 app.use(compression());
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded());
+app.use(express.json());
 // app.enable('trust proxy'); // reverse proxy (heroku, nginx) https://expressjs.com/en/guide/behind-proxies.html
 app.use(limiterOptions);
 
