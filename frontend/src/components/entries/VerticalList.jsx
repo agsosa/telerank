@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
-import { Item } from 'native-base';
 import { commonStyles } from '../../config/Styles';
 import VerticalCard from './VerticalCard';
 import LoadingIndicator from '../LoadingIndicator';
@@ -50,6 +49,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 	const [loadingExtraData, setLoadingExtraData] = useState(false);
 	const [page, setPage] = useState(0);
 	const [isLastPage, setLastPage] = useState(false);
+	const [endReached, setEndReached] = useState(false);
 
 	const apiModuleInfo = getModuleInfo(apiModule);
 
@@ -81,7 +81,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 				setPage(page + 1);
 				setLoadingExtraData(false);
 			}
-		}
+		} else setEndReached(true);
 	};
 
 	useEffect(() => {
@@ -103,7 +103,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 
 	const RenderFooter = () => (
 		<View>
-			{((apiModuleInfo.isPaginated && isLastPage) || !apiModuleInfo.isPaginated) && <NoMoreEntries />}
+			{((apiModuleInfo.isPaginated && isLastPage) || (!apiModuleInfo.isPaginated && endReached)) && <NoMoreEntries />}
 			{loadingExtraData && <LoadingIndicator />}
 			{Footer && <Footer />}
 		</View>
@@ -122,6 +122,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 				renderItem={renderItem}
 				keyExtractor={(item) => item._id}
 				ListHeaderComponent={RenderHeader}
+				scrollEventThrottle={1000}
 				ListFooterComponent={RenderFooter}
 				onRefresh={refreshData}
 				refreshing={loading}

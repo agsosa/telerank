@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Right, Card, CardItem, Thumbnail, Text, Left, Body } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 	textDescription: { color: colors.grayAlt, fontSize: 15, marginTop: -10 },
 });
 
-export default function VerticalCard({ item }) {
+function VerticalCard({ item }) {
 	const navigation = useNavigation();
 
 	return (
@@ -78,3 +78,5 @@ VerticalCard.propTypes = {
 		username: PropTypes.string,
 	}).isRequired,
 };
+
+export default memo(VerticalCard);
