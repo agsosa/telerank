@@ -4,7 +4,6 @@ import { Searchbar, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { colors, commonStyles } from '../../config/Styles';
 import { getModuleData } from '../../lib/API';
-import { useIsMounted } from '../../lib/Helpers';
 import LoadingIndicator from '../LoadingIndicator';
 
 const styles = StyleSheet.create({
@@ -40,7 +39,6 @@ const styles = StyleSheet.create({
 });
 
 export default function GlobalSearch() {
-	const isMounted = useIsMounted();
 	const navigation = useNavigation();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -51,35 +49,30 @@ export default function GlobalSearch() {
 
 	const onRandomClick = () => {
 		setLoading(true);
-		getModuleData('random', {})
+		getModuleData('random')
 			.then(([data]) => {
-				if (isMounted) {
-					setLoading(false);
-					navigation.navigate('Details', data);
-				}
+				navigation.navigate('Details', data);
 			})
 			.catch(() => {
-				setLoading(false);
 				Alert.alert('Error', 'An error occurred, please try again.', [{ text: 'OK' }]);
-			});
+			})
+			.finally(() => setLoading(false));
 	};
 
 	const onSearchClick = () => {
 		if (searchQuery) {
 			setLoading(true);
-			getModuleData('search', { type: 'any', search: searchQuery })
+			const payload = { type: 'any', search: searchQuery };
+			getModuleData('search', payload)
 				.then((data) => {
-					if (isMounted) {
-						setLoading(false);
-						if (!data || !Array.isArray(data) || data.length === 0) {
-							Alert.alert('Nothing found', 'No results were found for your search', [{ text: 'OK' }]);
-						} else navigation.navigate('SearchResult', { data, searchText: searchQuery });
-					}
+					if (!data || !Array.isArray(data) || data.length === 0) {
+						Alert.alert('Nothing found', 'No results were found for your search', [{ text: 'OK' }]);
+					} else navigation.navigate('SearchResult', { data, payload });
 				})
 				.catch(() => {
-					setLoading(false);
 					Alert.alert('Error', 'An error occurred, please try again.', [{ text: 'OK' }]);
-				});
+				})
+				.finally(() => setLoading(false));
 		} else {
 			Alert.alert('Error', 'Please type something to search.', [{ text: 'OK' }]);
 		}

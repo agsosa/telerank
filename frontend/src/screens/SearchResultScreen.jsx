@@ -14,16 +14,12 @@ const styles = StyleSheet.create({
 });
 
 function SearchResultScreen({ route }) {
-	const { data, searchText } = route.params;
-	console.log(data.length, searchText);
+	const { data, payload } = route.params;
+
 	function HeaderRenderer() {
-		return (
-			<Text style={styles.subtitleText}>
-				{data.length} entries found for the term(s) &quot;{searchText}&quot;
-			</Text>
-		);
+		return <Text style={styles.subtitleText}>Results for the term(s) &quot;{payload.search}&quot;</Text>;
 	}
-	return <VerticalList Header={HeaderRenderer} useFilters useData={data} />;
+	return <VerticalList Header={HeaderRenderer} useFilters initialData={data} apiModule='search' payload={payload} />;
 }
 
 SearchResultScreen.propTypes = {

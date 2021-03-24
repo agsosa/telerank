@@ -42,14 +42,15 @@ function CustomSearchBar() {
 
 const renderItem = (q) => <VerticalCard item={q.item} />;
 
-function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, initialData }) {
+function VerticalList({ apiModule, payload, initialData, Header, Footer, useSearchBar, useFilters }) {
 	const isMounted = useIsMounted();
-	const [data, setData] = useState(null);
-	const [loading, setLoading] = useState(initialData === null);
-	const [loadingExtraData, setLoadingExtraData] = useState(false);
-	const [page, setPage] = useState(0);
-	const [isLastPage, setLastPage] = useState(false);
-	const [endReached, setEndReached] = useState(false);
+
+	const [data, setData] = useState([]); // Data to display with our FlatList
+	const [loading, setLoading] = useState(initialData === null); // Fetching/refreshing the initial data?
+	const [loadingExtraData, setLoadingExtraData] = useState(false); // True if we are fetching another page of data
+	const [page, setPage] = useState(0); // Used if we have a paginated apiModule
+	const [isLastPage, setLastPage] = useState(false); // Used to know if a paginated apiModule reached the last page
+	const [endReached, setEndReached] = useState(false); // Used to know if we reached the end of the list (useful for non-paginated apiModules)
 
 	const apiModuleInfo = getModuleInfo(apiModule);
 
@@ -60,7 +61,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 			setPage(0);
 			setLoadingExtraData(false);
 
-			getModuleData(apiModule).then((result) => {
+			getModuleData(apiModule, payload).then((result) => {
 				if (isMounted) {
 					setData(result);
 					setLoading(false);
@@ -70,9 +71,9 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 	};
 
 	const OnEndReached = async () => {
-		if (apiModuleInfo.isPaginated && !loadingExtraData) {
+		if (apiModuleInfo.isPaginated && !loadingExtraData && !isLastPage) {
 			setLoadingExtraData(true);
-			const res = await getModuleData(apiModule, { page: page + 1 }, true);
+			const res = await getModuleData(apiModule, { ...payload, page: page + 1 }, true);
 			if (isMounted) {
 				if (res) {
 					if (res.length > 0) setData((old) => [...old, ...res]);
@@ -85,6 +86,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 	};
 
 	useEffect(() => {
+		if (initialData) setData(initialData);
 		refreshData();
 	}, []);
 
@@ -114,7 +116,7 @@ function VerticalList({ Header, Footer, useSearchBar, apiModule, useFilters, ini
 	return (
 		<View style={commonStyles.flex}>
 			<FlatList
-				data={data || initialData}
+				data={data}
 				initialNumToRender={5}
 				keyboardDismissMode='drag'
 				keyboardShouldPersistTaps='handled'
@@ -139,16 +141,17 @@ VerticalList.defaultProps = {
 	useFilters: false,
 	Footer: null,
 	initialData: null,
-	apiModule: '',
+	payload: {},
 };
 
 VerticalList.propTypes = {
 	useSearchBar: PropTypes.bool,
 	Header: PropTypes.func,
 	Footer: PropTypes.func,
-	apiModule: PropTypes.string,
+	apiModule: PropTypes.string.isRequired,
 	useFilters: PropTypes.bool,
 	initialData: PropTypes.array,
+	payload: PropTypes.object,
 };
 
 export default VerticalList;
