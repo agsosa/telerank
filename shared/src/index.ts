@@ -1,4 +1,4 @@
-import latinize from 'latinize';
+const latinize = require('latinize');
 
 export type TCategoryLocale = Record<string, string>;
 export type TCategories = Record<string, TCategoryLocale>;
@@ -40,6 +40,7 @@ export const Categories: TCategories = Object.freeze({
 	ECONOMICS_FINANCE: { es: 'Economía y Finanzas', en: 'Economics & Finance' },
 	NEWS_MEDIA: { es: 'Noticias y Medios', en: 'News & Media' },
 	VIDEOS_MOVIES: { es: 'Videos y peliculas', en: 'Videos & Movies' },
+	NO_CATEGORY: { es: 'Sin categorizar', en: 'Uncategorized' },
 });
 
 /*
@@ -47,11 +48,9 @@ export const Categories: TCategories = Object.freeze({
  * Returns a locale object (i.e. {es: "...", en: "..."})
  * Case insensitive
  */
-export function getLocaleObjectFromCategory(category: string): TCategoryLocale | undefined {
-	if (category) {
-		return Categories[category.toUpperCase()];
-	}
-	return undefined;
+export function getLocaleObjectFromCategory(category: string): TCategoryLocale {
+	if (category) return Categories[category.toUpperCase()] || Categories['NO_CATEGORY'];
+	else return Categories['NO_CATEGORY'];
 }
 
 /*
@@ -59,12 +58,12 @@ export function getLocaleObjectFromCategory(category: string): TCategoryLocale |
  * Returns a Categories key (i.e. "NEWS_MEDIA")
  * Case insensitive, ignores accents
  */
-export function getCategoryFromLocaleString(localeStr: string): string | undefined {
+export function getCategoryFromLocaleString(localeStr: string): string {
 	if (localeStr) {
 		const keys = Object.keys(Categories);
 		const str = latinize(localeStr.toLowerCase().trim()); // Remove blank spaces at extreme, convert to lower case and remove accents
 		// TODO: Use regex or something to make the comparisons more flexible (i.e. possibility to convert "News" or "Media News" to the NEWS_MEDIA category)
-		return keys.find((q) => latinize(Categories[q].es.toLowerCase()) === str || latinize(Categories[q].en.toLowerCase()) === str);
+		return keys.find((q) => latinize(Categories[q].es.toLowerCase()) === str || latinize(Categories[q].en.toLowerCase()) === str) || 'NO_CATEGORY';
 	}
-	return undefined;
+	return 'NO_CATEGORY';
 }
