@@ -1,3 +1,5 @@
 /backup
 /node_modules
 /admin-web-panel
+/shared/node_modules
+/shared/dist

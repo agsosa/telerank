@@ -2,11 +2,13 @@ import scrapeIt, { ScrapeResult } from "scrape-it";
 import _ from "lodash";
 import IScrapedMedia from "./IScrapedMedia";
 import { capitalizeStr, log } from "../../lib/Helpers";
-import EnumEntryType, {
+import {
   parseEntryType,
+  EnumEntryType,
 } from "../../data/models/entry-model/EnumEntryType";
-import EnumLanguage, {
+import {
   parseLanguage,
+  EnumLanguage,
 } from "../../data/models/entry-model/EnumLanguage";
 
 // TODO: Extender clase Scraper

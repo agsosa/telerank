@@ -1,7 +1,7 @@
 import { model, Schema, Model } from "mongoose";
 import fuzzySearching from "mongoose-fuzzy-searching";
 import { IEntry, IEntryDocument } from "./IEntry";
-import EnumLanguage from "./EnumLanguage";
+import { EnumLanguage } from "./EnumLanguage";
 
 // TODO: Implement cache?
 // TODO: Implement EnumCategories/Categories from /shared/
@@ -19,7 +19,7 @@ const EntryModelSchema = new Schema({
     default: EnumLanguage.ENGLISH,
     index: true,
   },
-  category: { type: String, required: true, default: "Other", index: true },
+  category: { type: String, required: true, default: "OTHER", index: true },
   title: { type: String, required: false },
   description: { type: String, required: false },
   members: { type: Number, required: false, default: 0 },

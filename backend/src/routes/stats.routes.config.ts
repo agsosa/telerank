@@ -1,7 +1,6 @@
 import express from "express";
 import CommonRoutesConfig from "./common.routes.config";
 import { GetStats } from "../data/models/StatsModel";
-import { log } from "../lib/Helpers";
 
 export default class StatsRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
@@ -9,7 +8,7 @@ export default class StatsRoutes extends CommonRoutesConfig {
   }
 
   configureRoutes(): express.Application {
-    // Query: none
+    // Parameters: none
     // Return: IStats object
     this.app
       .route(`/stats`)

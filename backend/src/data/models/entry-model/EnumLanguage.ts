@@ -1,5 +1,5 @@
 /*eslint-disable */
-enum EnumLanguage {
+export enum EnumLanguage {
   SPANISH = "es",
   ENGLISH = "en",
 }
@@ -25,5 +25,3 @@ export function parseLanguage(str: string): EnumLanguage | undefined {
   }
   return undefined;
 }
-
-export default EnumLanguage;

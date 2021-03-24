@@ -4,7 +4,6 @@ import { log } from "../../lib/Helpers";
 
 const STATS_CACHE_EXPIRATION_SECONDS = 5 * 60;
 
-// TODO: Move interfaces to /shared/
 export interface IStats {
   channels: number;
   groups: number;

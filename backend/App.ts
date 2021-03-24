@@ -12,6 +12,7 @@ import { log } from "./src/lib/Helpers";
 import { InitializeTelegramProto } from "./src/scrapers/telegram-proto/TelegramProto";
 import JobsRoutes from "./src/routes/jobs.routes.config copy";
 
+// Configure app
 const port = 4001;
 const limiterOptions = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -33,13 +34,10 @@ routes.push(new EntriesRoutes(app));
 routes.push(new StatsRoutes(app));
 routes.push(new JobsRoutes(app));
 
-// Telerank
-
+// Telerank modules
 InitializeTelegramProto();
 InitializeDatabase();
 InitializeJobs();
-
-// scraper_jobs.initialize();
 
 app.get("/", (req, res) => {
   res.send("OK");

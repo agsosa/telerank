@@ -1,7 +1,7 @@
 import pluralize from "pluralize";
 
 /*eslint-disable */
-enum EnumEntryType {
+export enum EnumEntryType {
   CHANNEL = "Channel",
   BOT = "Bot",
   GROUP = "Group",
@@ -23,5 +23,3 @@ export function parseEntryType(str: string): EnumEntryType | undefined {
 
   return result;
 }
-
-export default EnumEntryType;

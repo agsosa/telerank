@@ -1,7 +1,7 @@
 const latinize = require('latinize');
 
 export type TCategoryLocale = Record<string, string>;
-export type TCategories = Record<string, TCategoryLocale>;
+type TCategories = Record<string, TCategoryLocale>;
 
 export const Categories: TCategories = Object.freeze({
 	ANIMALS: { es: 'Animales', en: 'Animals' },

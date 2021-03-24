@@ -10,6 +10,8 @@ export default class JobsRoutes extends CommonRoutesConfig {
     super(app, "JobsRoutes");
   }
 
+  // Parameters: none
+  // Return: Information related to the jobs module
   configureRoutes(): express.Application {
     this.app
       .route(`/jobs`)

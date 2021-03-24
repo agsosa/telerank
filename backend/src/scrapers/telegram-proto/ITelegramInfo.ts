@@ -1,5 +1,5 @@
 import IScrapedMedia from "../content-scrapers/IScrapedMedia";
-import EnumEntryType from "../../data/models/entry-model/EnumEntryType";
+import { EnumEntryType } from "../../data/models/entry-model/EnumEntryType";
 
 interface ITelegramInfo {
   scrapedMedia?: IScrapedMedia;

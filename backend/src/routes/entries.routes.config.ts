@@ -1,13 +1,7 @@
 import express from "express";
 import CommonRoutesConfig from "./common.routes.config";
 import * as EntryModel from "../data/models/entry-model/EntryModel";
-import { capitalizeStr, log } from "../lib/Helpers";
-import EnumEntryType, {
-  parseEntryType,
-} from "../data/models/entry-model/EnumEntryType";
-import EnumLanguage from "../data/models/entry-model/EnumLanguage";
-
-// TODO: Implementar LIMIT_PER_PAGE para biggest, recent, popular, top
+import { parseEntryType } from "../data/models/entry-model/EnumEntryType";
 
 const LIMIT_PER_PAGE = 20; // Limit of objects returned per page
 const LIMIT_RECENT = 5; // Max entries returned by /entries/recent
