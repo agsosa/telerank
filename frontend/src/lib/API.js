@@ -158,6 +158,7 @@ export function getModuleInfo(str) {
 export function getModuleData(apiModule, payload = {}, forceIgnoreCache = false) {
 	const moduleInfo = getModuleInfo(apiModule);
 	const paginatedIgnoreCache = moduleInfo.isPaginated && PAGINATED_IGNORE_CACHE;
+	const shouldIgnoreCache = moduleInfo.ignoreCache || forceIgnoreCache || paginatedIgnoreCache;
 
 	if (moduleInfo) {
 		if (moduleInfo.pendingPromise) return moduleInfo.pendingPromise; // Prevent concurrent promises/race condition for the same api module
@@ -168,7 +169,7 @@ export function getModuleData(apiModule, payload = {}, forceIgnoreCache = false)
 			// Try to get data from local storage or memory
 			const storageKey = STORAGE_KEY_PREFIX + apiModule.toLowerCase();
 			let cacheParsed;
-			if (!moduleInfo.ignoreCache && !forceIgnoreCache && !paginatedIgnoreCache) {
+			if (!shouldIgnoreCache) {
 				if (moduleInfo.current && moduleInfo.current.data && moduleInfo.current.expirationTime) {
 					// Load from memory
 					console.log('Loaded from memory');
@@ -184,7 +185,7 @@ export function getModuleData(apiModule, payload = {}, forceIgnoreCache = false)
 			const cacheExpired = getCacheSecondsRemaining(cacheParsed) <= 0;
 
 			// Check cache validity
-			const validCache = !moduleInfo.ignoreCache && !forceIgnoreCache && !paginatedIgnoreCache && cacheParsed && !cacheExpired && moduleInfo.validateData(cacheParsed.data);
+			const validCache = !shouldIgnoreCache && cacheParsed && !cacheExpired && moduleInfo.validateData(cacheParsed.data);
 
 			if (!validCache) {
 				// Invalid cache, fetch data from server
@@ -198,7 +199,7 @@ export function getModuleData(apiModule, payload = {}, forceIgnoreCache = false)
 							const expTime = moment().add(CACHE_EXPIRATION_MINUTES, 'minutes'); // Calculate the next expiration time
 							const obj = { data, expirationTime: expTime };
 							// Save data to local storage
-							MMKV.set(storageKey, JSON.stringify(obj));
+							if (!shouldIgnoreCache) MMKV.set(storageKey, JSON.stringify(obj));
 							// Save to memory to prevent unnecessary storage reads
 							moduleInfo.current = obj;
 							resolve(data);
@@ -208,9 +209,11 @@ export function getModuleData(apiModule, payload = {}, forceIgnoreCache = false)
 						// Retries done, server failed. Resolve with the data from cache if it's available.
 						store.dispatch.apiErrorActive.setAPIErrorStatus(true); // Used to display a UI component to notify the user about the error
 						console.log(`axios error : ${error}`);
+						// Try to load the last data saved on error
 						if (cacheParsed && cacheParsed.data) resolve(cacheParsed.data);
-						else if (!moduleInfo.ignoreCache && !forceIgnoreCache && !paginatedIgnoreCache) setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT);
 						// Retry promise if cache is invalid
+						else if (!moduleInfo.ignoreCache && !forceIgnoreCache && !paginatedIgnoreCache) setTimeout(() => cb(resolve, reject), PROMISE_RETRY_TIMEOUT);
+						// Reject if we don't have a valid cache and ignore cache is true
 						else reject(new Error("Couldn't fetch from the server and no data was found on the storage."));
 					});
 			} else {
