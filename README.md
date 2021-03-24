@@ -6,5 +6,6 @@ Live: -
 #### Used libs/frameworks
 - **Frontend:** React Native, Rematch (Redux), i18n, hooks, react-navigation, material ui
 - **Backend:** TypeScript, Node (Express), Mongoose (MongoDB), Auth0, ScrapeIt, Google Cloud Storage, MTProto
+- **Admin Web Panel:** TypeScript, React, material ui
 
 #### WORK IN PROGRESS
