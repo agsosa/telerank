@@ -23,6 +23,7 @@ export const colors = {
 
 export const commonStyles = StyleSheet.create({
 	flex: { flex: 1 },
+	thumbnail: { borderRadius: 60 / 2, height: 60, width: 60 },
 	transparentBg: { backgroundColor: 'transparent' },
 	whiteText: { color: 'white' },
 });

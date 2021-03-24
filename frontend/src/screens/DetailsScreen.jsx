@@ -1,12 +1,13 @@
 import React from 'react';
-import { View, ScrollView, Image, StyleSheet, Linking, TouchableOpacity, Alert } from 'react-native';
-import { Right, Card, CardItem, Thumbnail, Icon, Text, Left, Body } from 'native-base';
+import { View, ScrollView, StyleSheet, Linking, TouchableOpacity, Alert } from 'react-native';
+import { Right, Card, CardItem, Icon, Text, Left, Body } from 'native-base';
 import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
 import moment from 'moment';
+import FastImage from 'react-native-fast-image';
 import NumberTag from '../components/NumberTag';
 import { formatLanguageCode, resolveImage } from '../lib/Helpers';
-import { colors } from '../config/Styles';
+import { colors, commonStyles } from '../config/Styles';
 import FeaturedBadge from '../components/entries/FeaturedBadge';
 import { ShareTelegram } from '../lib/Share';
 
@@ -74,7 +75,7 @@ const DetailsScreen = ({ route }) => {
 					<TouchableOpacity onPress={openTelegram} activeOpacity={0.7}>
 						<CardItem style={data.featured ? styles.featuredBG : {}}>
 							<Left>
-								<Thumbnail source={resolveImage(data)} />
+								<FastImage source={resolveImage(data)} style={commonStyles.thumbnail} />
 								<Body>
 									<Text>@{data.username}</Text>
 								</Body>
@@ -92,7 +93,7 @@ const DetailsScreen = ({ route }) => {
 							</Text>
 						</CardItem>
 
-						<Image source={resolveImage(data)} style={styles.image} />
+						<FastImage source={resolveImage(data)} style={styles.image} />
 					</TouchableOpacity>
 
 					<Button compact style={stylesBtn.telegramBtn} onPress={openTelegram}>

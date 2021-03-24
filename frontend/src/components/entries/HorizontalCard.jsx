@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card, Caption } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
+import FastImage from 'react-native-fast-image';
 import { truncateWithEllipses, formatLanguageCode, resolveImage } from '../../lib/Helpers';
 import NumberTag from '../NumberTag';
 import { colors } from '../../config/Styles';
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
 	cardContent: { marginTop: 7 },
 	cardContentView: { flex: 1, flexDirection: 'row', marginTop: 5, flexWrap: 'wrap', justifyContent: 'space-between', padding: 5 },
 	cardFeatured: { backgroundColor: colors.featuredLight, borderColor: colors.featured, borderLeftWidth: 5 },
-	coverImg: { resizeMode: 'cover', width: '100%' },
+	coverImg: { height: 150, resizeMode: 'cover' },
 	featuredBadgeContainer: { position: 'absolute', right: -10, top: -5, zIndex: 1 },
 	mainView: { flex: 1, padding: 5 },
 	membersCount: { alignSelf: 'flex-start' },
@@ -28,7 +29,7 @@ export default function HorizontalCard({ item }) {
 			<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
 				<Card style={[styles.card, item.featured && styles.cardFeatured]}>
 					<Card.Title title={item.username} subtitle={`${item.type} / ${item.category} / ${formatLanguageCode(item.language)}`} />
-					<Card.Cover source={resolveImage(item)} style={styles.coverImg} />
+					<FastImage source={resolveImage(item)} style={styles.coverImg} />
 
 					{item.featured && (
 						<View style={styles.featuredBadgeContainer}>

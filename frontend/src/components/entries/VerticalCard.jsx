@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Right, Card, CardItem, Thumbnail, Text, Left, Body } from 'native-base';
+import { Right, Card, CardItem, Text, Left, Body } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
+import FastImage from 'react-native-fast-image';
 import NumberTag from '../NumberTag';
 import { formatLanguageCode, resolveImage } from '../../lib/Helpers';
-import { colors } from '../../config/Styles';
+import { colors, commonStyles } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
 const styles = StyleSheet.create({
@@ -33,7 +34,7 @@ function VerticalCard({ item }) {
 			<Card style={[styles.card, item.featured && styles.featuredCard]}>
 				<CardItem style={item.featured ? styles.featuredBG : {}}>
 					<Left>
-						<Thumbnail source={resolveImage(item)} />
+						<FastImage source={resolveImage(item)} style={commonStyles.thumbnail} />
 						<Body>
 							<Text>{item.username}</Text>
 							<Text note>
