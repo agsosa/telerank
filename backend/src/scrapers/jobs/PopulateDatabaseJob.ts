@@ -40,6 +40,8 @@ export default class PopulateDatabaseJob extends Job {
     try {
       const mediaList: IScrapedMedia[] = await scrapeTelegramChannelsMe();
 
+      log.info("Starting TelegramProto scraping");
+
       const uploadPromises: Promise<any>[] = [];
       let added = 0;
       let skipped = 0;
@@ -80,6 +82,7 @@ export default class PopulateDatabaseJob extends Job {
                 };
 
                 EntryModel.Insert(entry).then(() => {
+                  log.info(`username ${entry.username} saved`);
                   added += 1;
                 });
               })
