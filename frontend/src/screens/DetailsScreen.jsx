@@ -124,7 +124,6 @@ const DetailsScreen = ({ route }) => {
 							<NumberTag icon='chart-bar' number={data.views} />
 							<NumberTag icon='account' number={data.members} />
 						</View>
-						<Text note>Creation Date: {moment(data.createdDate).format('YYYY-MM-DD')}</Text>
 						<Text note>Added Date: {moment(data.addedDate).format('YYYY-MM-DD')}</Text>
 						<Text note>Update Date: {moment(data.updatedDate).format('YYYY-MM-DD')}</Text>
 					</CardItem>
