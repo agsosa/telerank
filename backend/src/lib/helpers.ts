@@ -1,4 +1,6 @@
 import log4js from "log4js";
+import axios from "axios";
+import fs from "fs";
 
 log4js.configure({
   appenders: {
@@ -25,4 +27,24 @@ export function capitalizeStr(str?: string): string | undefined {
 
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export function downloadImage(path: string, url: string): Promise<void> {
+  // eslint-disable-next-line
+  return new Promise(async (resolve, reject) => {
+    if (!path || !url) reject();
+
+    const writer = fs.createWriteStream(path);
+
+    const response = await axios({
+      url,
+      method: "GET",
+      responseType: "stream",
+    });
+
+    response.data.pipe(writer);
+
+    writer.on("finish", resolve);
+    writer.on("error", reject);
+  });
 }
