@@ -8,6 +8,7 @@ import { IEntry } from "../../data/models/entry-model/IEntry";
 import IScrapedMedia from "../content-scrapers/IScrapedMedia";
 import { log } from "../../lib/Helpers";
 import { getTelegramInfo } from "../telegram-proto/TelegramScraper";
+import IJobOptions from "./IJobOptions";
 
 /* 
   PopulateDatabaseJob:
@@ -27,7 +28,15 @@ import { getTelegramInfo } from "../telegram-proto/TelegramScraper";
 */
 export default class PopulateDatabaseJob extends Job {
   constructor() {
-    super(true, "PopulateDatabaseJob", 60 * 8, false);
+    const options: IJobOptions = {
+      name: "PopulateDatabaseJob",
+      runIntervalMinutes: 60 * 8,
+      isConcurrent: false,
+      useRetry: true,
+      maxRetries: 3,
+    };
+
+    super(options);
   }
 
   async run(): Promise<void> {
@@ -85,7 +94,7 @@ export default class PopulateDatabaseJob extends Job {
       await Promise.all(uploadPromises);
 
       log.info(
-        `${this.name} is done. Added Entries: ${added}/${mediaList.length} (skipped: ${skipped})`
+        `${this.options.name} is done. Added Entries: ${added}/${mediaList.length} (skipped: ${skipped})`
       );
 
       super.onSuccess();

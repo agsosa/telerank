@@ -11,7 +11,7 @@ const JOBS_INTERVAL_TIME = 15 * 1000; // Time between each jobsInterval() run
 const JOBS: Job[] = [new PopulateDatabase(), new RefreshEntriesTelegramInfos()];
 
 export function getRunningJobs(): string[] {
-  return JOBS.filter((k) => k.isRunning).map((k) => k.name);
+  return JOBS.filter((k) => k.isRunning).map((k) => k.options.name);
 }
 
 export function isAnyJobRunning(): boolean {
@@ -22,12 +22,12 @@ function jobsInterval() {
   if (isDatabaseReady() && isTelegramProtoReady()) {
     JOBS.forEach((q) => {
       if (!q.isRunning) {
-        if (!q.concurrent) {
+        if (!q.options.isConcurrent) {
           if (!isAnyJobRunning()) {
             let diff = 0;
             if (q.startDate) diff = moment().diff(q.startDate, "minutes");
 
-            if (diff <= q.runIntervalMinutes) q.run();
+            if (diff <= q.options.runIntervalMinutes) q.run();
           }
         } else q.run(); // Ignore checks for jobs with concurrent = true
       }
@@ -44,6 +44,6 @@ export function InitializeJobs(): void {
 
 export function stopJobs() {}
 
-export function restartJobs() {}
+export function startJobs() {}
 
-export function getCurrentRunningJob() {}
+export function restartJobs() {}
