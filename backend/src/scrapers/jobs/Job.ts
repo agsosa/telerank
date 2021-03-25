@@ -1,57 +1,52 @@
 import { log } from "../../lib/Helpers";
+import IJobOptions from "./IJobOptions";
+
+const defaultOptions: IJobOptions = {
+  name: "UnnamedJob",
+  maxRetries: 3,
+  useRetry: true,
+  runIntervalMinutes: 60,
+  isConcurrent: false,
+};
 
 export default abstract class Job {
-  name: string | "UnnamedJob"; // Display name
-
   startDate: Date | undefined; // Date of last run()
 
-  useRetry = true; // Should retry on error?
-
-  maxRetries = 3;
-
-  retries = 0;
+  currentRetries = 0;
 
   isRunning: boolean;
 
-  runIntervalMinutes: number; // Minutes between run()
+  options: IJobOptions;
 
-  concurrent: boolean; // Can we run this job while other jobs are running?
-
-  telegramAuth: undefined; // TODO: Implement multiple TelegramAuth to prevent rate limits
-
-  constructor(
-    useRetry: boolean,
-    name: string,
-    runIntervalMinutes: number,
-    concurrent: boolean
-  ) {
+  constructor(options: IJobOptions = defaultOptions) {
     this.startDate = undefined;
     this.isRunning = false;
-    this.name = name;
-    this.runIntervalMinutes = runIntervalMinutes;
-    this.concurrent = concurrent;
-    if (useRetry) this.useRetry = useRetry;
+
+    this.options = options;
   }
 
   async run(): Promise<void> {
     this.startDate = new Date();
     this.isRunning = true;
-    log.info(`Running job: ${this.name}`);
+    log.info(`Running job: ${this.options.name}`);
   }
 
   protected onError(err: any): void {
-    log.error(`${this.name} failed with error ${err}`);
+    log.error(`${this.options.name} failed with error ${err}`);
     this.isRunning = false;
-    if (this.useRetry && this.retries < this.maxRetries) {
+    if (
+      this.options.useRetry &&
+      this.currentRetries < this.options.maxRetries
+    ) {
       log.info(
-        `Retrying ${this.name}. Retries: ${this.retries}/${this.maxRetries}`
+        `Retrying ${this.options.name}. Retries: ${this.currentRetries}/${this.options.maxRetries}`
       );
       this.run();
-    } else this.retries = 0;
+    } else this.currentRetries = 0;
   }
 
   protected onSuccess(...args: any): void {
     this.isRunning = false;
-    this.retries = 0;
+    this.currentRetries = 0;
   }
 }
