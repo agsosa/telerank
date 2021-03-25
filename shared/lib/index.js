@@ -63,7 +63,7 @@ function getCategoryFromLocaleString(localeStr) {
         const keys = Object.keys(exports.Categories);
         const str = latinize(localeStr.toLowerCase().trim()); // Remove blank spaces at extreme, convert to lower case and remove accents
         // TODO: Use regex or something to make the comparisons more flexible (i.e. possibility to convert "News" or "Media News" to the NEWS_MEDIA category)
-        return keys.find((q) => latinize(exports.Categories[q].es.toLowerCase()) === str || latinize(exports.Categories[q].en.toLowerCase()) === str) || 'NO_CATEGORY';
+        return keys.find((q) => latinize(exports.Categories[q].es.toLowerCase()).includes(str) || latinize(exports.Categories[q].en.toLowerCase()).includes(str)) || 'NO_CATEGORY';
     }
     return 'NO_CATEGORY';
 }
