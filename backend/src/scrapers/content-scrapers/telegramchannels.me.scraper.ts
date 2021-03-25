@@ -126,7 +126,7 @@ async function scrapeMediaCards(
   const final: IScrapedMedia[] = [];
   entries.forEach((q) => {
     final.push({
-      username: q.category,
+      username: q.username,
       category: getCategoryFromLocaleString(q.category),
       type: parseEntryType(type) as EnumEntryType,
       language: parseLanguage(lang) as EnumLanguage,
