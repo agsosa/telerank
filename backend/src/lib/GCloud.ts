@@ -3,7 +3,9 @@ import sharp from "sharp";
 import imagemin from "imagemin";
 import imageminMozjpeg from "imagemin-mozjpeg";
 import fs from "fs";
-import { log } from "./Helpers";
+import { log, downloadImage } from "./Helpers";
+
+sharp.cache(false);
 
 const storage = new Storage({
   keyFilename: "./serviceAccountKey.json",
@@ -19,11 +21,13 @@ const bucket = storage.bucket("telerank-e9b37.appspot.com");
  * Returns the public url
  */
 export async function uploadPhoto(
-  photoBytes: Uint8Array,
+  photoUrl: string,
   username: string,
   overrideUploaded = false,
   optimize = true
 ): Promise<string | undefined> {
+  if (!photoUrl || !username) return undefined;
+
   try {
     const PATH = `${username}.jpg`;
 
@@ -38,14 +42,13 @@ export async function uploadPhoto(
       }
     }
 
+    await downloadImage(PATH, photoUrl);
+
     if (optimize) {
       // Resize with sharp
       const width = 400;
       const height = 400;
-      const buffer = await sharp(Buffer.from(photoBytes))
-        .resize(width, height)
-        .jpeg()
-        .toBuffer();
+      const buffer = await sharp(PATH).resize(width, height).jpeg().toBuffer();
       await sharp(buffer).toFile(PATH);
 
       // Optimize with imagemin/mozjpeg
