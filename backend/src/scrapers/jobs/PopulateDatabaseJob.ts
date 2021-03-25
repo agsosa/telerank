@@ -6,11 +6,8 @@ import { uploadPhoto } from "../../lib/GCloud";
 import * as EntryModel from "../../data/models/entry-model/EntryModel";
 import { IEntry } from "../../data/models/entry-model/IEntry";
 import IScrapedMedia from "../content-scrapers/IScrapedMedia";
-import { sleep, capitalizeStr, log } from "../../lib/Helpers";
-import {
-  getTelegramInfo,
-  isValidTelegramUsername,
-} from "../telegram-proto/TelegramProto";
+import { log } from "../../lib/Helpers";
+import { getTelegramInfo } from "../telegram-proto/TelegramScraper";
 
 /* 
   PopulateDatabaseJob:
@@ -22,14 +19,12 @@ import {
     2) Discard usernames already added to the database
     3) --- For each scraped username:
     
-      - Get all the info (title, description, photo bytes, member count, etc) from Telegram using the TelegramProto module
-      - Discard usernames with info.scam = true
+      - Get all the info (title, description, photo bytes, member count, etc) from Telegram (discarding invalid usernames)
       - Process the info (i.e. upload the photo to Google Cloud Storage or grab the public URL if it's already uploaded)
       - Add to the database (EntryModel)
 
     P.S. Add the entries to the database one by one to be safe.
 */
-
 export default class PopulateDatabaseJob extends Job {
   constructor() {
     super(true, "PopulateDatabaseJob", 60 * 8, false);
@@ -40,7 +35,7 @@ export default class PopulateDatabaseJob extends Job {
     try {
       const mediaList: IScrapedMedia[] = await scrapeTelegramChannelsMe();
 
-      log.info("Starting TelegramProto scraping");
+      log.info("Starting Telegram scraping");
 
       const uploadPromises: Promise<any>[] = [];
       let added = 0;
@@ -49,27 +44,23 @@ export default class PopulateDatabaseJob extends Job {
       for (let i = 0; i < mediaList.length; i += 1) {
         const q = mediaList[i];
 
-        const exists = await EntryModel.isUsernameSaved(q.username);
-        const valid = await isValidTelegramUsername(q.username);
+        const alreadyInDB = await EntryModel.isUsernameSaved(q.username);
 
-        if (!valid) log.info(`username ${q.username} is not valid`); // TODO: Remove
-
-        if (!exists && valid) {
+        if (!alreadyInDB) {
           const info = await getTelegramInfo(q.username);
 
-          if (info && !info.scam) {
+          if (info) {
             uploadPromises.push(
-              uploadPhoto(info.photoBytes, info.username).then((imgURL) => {
+              uploadPhoto(info.photoUrl, info.username).then((imgURL) => {
                 const entry: IEntry = {
                   username: info.username.toLowerCase(),
                   type: info.type,
                   language: q.language,
-                  category: capitalizeStr(q.category) || "Other", // TODO: Use shared category.js
+                  category: q.category,
                   title: info.title,
                   description: info.description,
                   members: info.members,
                   image: imgURL || "",
-                  createdDate: info.creationDate,
                   updatedDate: new Date(),
                   addedDate: new Date(),
                   likes: 0,
