@@ -23,7 +23,7 @@ const app = express();
 app.use(helmet());
 app.use(compression());
 app.use(cors());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // app.enable('trust proxy'); // reverse proxy (heroku, nginx) https://expressjs.com/en/guide/behind-proxies.html
 app.use(limiterOptions);

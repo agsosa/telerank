@@ -1,5 +1,6 @@
 import scrapeIt, { ScrapeResult } from "scrape-it";
 import _ from "lodash";
+import { getCategoryFromLocaleString } from "telerank-shared/lib/index";
 import IScrapedMedia from "./IScrapedMedia";
 import { capitalizeStr, log } from "../../lib/Helpers";
 import {
@@ -16,7 +17,6 @@ import {
 /*
  * TelegramChannels.me Scraper
  */
-
 const LANGUAGES_TO_SCRAPE = ["es", "en"]; // TODO: add en
 const TYPES_TO_SCRAPE = ["groups", "channels", "bots"]; // TODO: add channels, bots, stickers
 const getListURL = (lang: string, type: string, page: number) =>
@@ -126,7 +126,8 @@ async function scrapeMediaCards(
   const final: IScrapedMedia[] = [];
   entries.forEach((q) => {
     final.push({
-      ...q,
+      username: q.category,
+      category: getCategoryFromLocaleString(q.category),
       type: parseEntryType(type) as EnumEntryType,
       language: parseLanguage(lang) as EnumLanguage,
     }); // Add extra fields, final result will be { category:string, username:string, type:string, language:string}
