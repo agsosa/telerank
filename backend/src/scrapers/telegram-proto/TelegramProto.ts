@@ -118,15 +118,11 @@ export async function isValidTelegramUsername(
     };
 
     // Execute ScrapeIt
-    const result: ScrapeResult<{ title: string }> = await scrapeIt(
+    const result: ScrapeResult<Record<string, any>> = await scrapeIt(
       `https://t.me/${username}`,
       scrapeOptions
     );
-    return (
-      result.data.title !== null &&
-      result.data.title !== undefined &&
-      result.data.title !== ""
-    );
+    return result.data.title;
   } catch (err) {
     log.error(err);
     return true;
@@ -134,7 +130,7 @@ export async function isValidTelegramUsername(
 }
 
 // Get ITelegramInfo for a username, including photo
-export async function getTelegramInfo(
+/* export async function getTelegramInfo(
   target: IScrapedMedia | string
 ): Promise<ITelegramInfo | undefined> {
   try {
@@ -231,3 +227,4 @@ export async function getTelegramInfo(
     return undefined;
   }
 }
+*/
