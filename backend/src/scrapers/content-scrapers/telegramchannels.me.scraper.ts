@@ -125,9 +125,13 @@ async function scrapeMediaCards(
   const { entries } = result.data;
   const final: IScrapedMedia[] = [];
   entries.forEach((q) => {
+    const category = getCategoryFromLocaleString(q.category);
+    if (category === "NO_CATEGORY") {
+      log.info(`Found NO_CATEGORY for ${q.username} -`, q.category);
+    }
     final.push({
       username: q.username,
-      category: getCategoryFromLocaleString(q.category),
+      category,
       type: parseEntryType(type) as EnumEntryType,
       language: parseLanguage(lang) as EnumLanguage,
     }); // Add extra fields, final result will be { category:string, username:string, type:string, language:string}
