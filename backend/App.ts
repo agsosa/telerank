@@ -8,9 +8,9 @@ import CommonRoutesConfig from "./src/routes/common.routes.config";
 import EntriesRoutes from "./src/routes/entries.routes.config";
 import StatsRoutes from "./src/routes/stats.routes.config";
 import { InitializeJobs } from "./src/scrapers/jobs/ScraperJobsManager";
-import { log } from "./src/lib/Helpers";
 import { InitializeTelegramProto } from "./src/scrapers/telegram-proto/TelegramProto";
 import JobsRoutes from "./src/routes/jobs.routes.config copy";
+import { log } from "./src/lib/Helpers";
 
 // Configure app
 const port = 4001;
