@@ -4,7 +4,7 @@ Mobile App to browse and rate Telegram groups, channels, bots and stickers. Incl
 Live: (work in progress, in playstore approval process)
 
 #### Features
-- Browse more than 3000 Telegram groups, channels, bots and stickers
+- Browse more than 5000 Telegram groups, channels, bots and stickers
 - Multi-language support
 - Submit your own community, bot or sticker set to the directory (Auth0)
 - Rate your favorite communities
