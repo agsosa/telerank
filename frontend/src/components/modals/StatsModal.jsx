@@ -11,6 +11,8 @@ const StatsModal = React.forwardRef((props, ref) => {
 	};
 
 	const hide = () => setVisible(false);
+
+	// Functions to show/hide from parent component using ref
 	React.useImperativeHandle(ref, () => ({
 		show() {
 			show();

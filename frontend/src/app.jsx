@@ -12,7 +12,7 @@ import { colors } from './config/Styles';
 import { Navigator } from './config/Routes';
 import StoreProvider from './state/Store';
 import Drawer from './components/navigation/Drawer';
-import Locale from './config/Locale';
+import './config/Locale';
 
 const persistor = getPersistor();
 const ROBOTO = require('native-base/Fonts/Roboto.ttf');
@@ -27,7 +27,7 @@ const theme = {
 	},
 };
 
-export default function App() {
+function App() {
 	const [isReady, setIsReady] = useState(false);
 
 	useEffect(() => {
@@ -39,7 +39,6 @@ export default function App() {
 			});
 			setIsReady(true);
 		}
-
 		loadFonts();
 	}, []);
 
@@ -47,7 +46,6 @@ export default function App() {
 	return (
 		<StoreProvider>
 			<PersistGate persistor={persistor}>
-				<Locale />
 				<SafeAreaProvider>
 					<PaperProvider theme={theme}>
 						<Drawer>
@@ -61,3 +59,5 @@ export default function App() {
 		</StoreProvider>
 	);
 }
+
+export default App;
