@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 import { Dimensions, StyleSheet, ScrollView, View, Image, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { List, Button } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { colors, userPlaceholderImage } from '../../config/Styles';
 import { ShareApp, RateApp } from '../../lib/Share';
 import LanguageModal from '../modals/LanguageModal';
 import StatsModal from '../modals/StatsModal';
-import { Languages, getLocalizedLegalURLS } from '../../config/Locale';
+import { getLocalizedLegalURLS, getCurrentLanguageDisplay } from '../../config/Locale';
 
 const window = Dimensions.get('window');
 
@@ -40,12 +41,10 @@ const styles = StyleSheet.create({
 	},
 });
 
-const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
+const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
+	const { t } = useTranslation();
 	const languageModalRef = useRef();
 	const statsModalRef = useRef();
-
-	const langObj = Languages.find((q) => q.code === language);
-	const langDisplay = langObj ? langObj.displayStr : 'Undefined';
 
 	const onMenuItemSelected = (item) => {
 		setIsOpen(false);
@@ -114,10 +113,9 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation, language }) => {
 					<List.Subheader>
 						<Text>Telerank</Text>
 					</List.Subheader>
-					<List.Item title='Language' description={langDisplay} left={(props) => <List.Icon {...props} icon='cog' />} onPress={() => onMenuItemSelected('Language')} />
-					<List.Item title='Statistics' left={(props) => <List.Icon {...props} icon='chart-bar' />} onPress={() => onMenuItemSelected('Stats')} />
-					{/* TODO: Transformar el componente stats a independiente para poder usarlo aca en un modal */}
-					<List.Item title='Contact' left={(props) => <List.Icon {...props} icon='email' />} onPress={() => onMenuItemSelected('Contact')} />
+					<List.Item title={t('drawer.language')} description={getCurrentLanguageDisplay()} left={(props) => <List.Icon {...props} icon='cog' />} onPress={() => onMenuItemSelected('Language')} />
+					<List.Item title={t('drawer.statistics')} left={(props) => <List.Icon {...props} icon='chart-bar' />} onPress={() => onMenuItemSelected('Stats')} />
+					<List.Item title={t('drawer.contact')} left={(props) => <List.Icon {...props} icon='email' />} onPress={() => onMenuItemSelected('Contact')} />
 					<List.Item title='Rate our app' left={(props) => <List.Icon {...props} icon='heart' />} onPress={() => onMenuItemSelected('RateApp')} />
 					<List.Item title='Share our app' left={(props) => <List.Icon {...props} icon='share-variant' />} onPress={() => onMenuItemSelected('ShareApp')} />
 				</List.Section>
@@ -152,13 +150,11 @@ Drawer.propTypes = {
 	setIsOpen: PropTypes.func.isRequired,
 	isOpen: PropTypes.bool.isRequired,
 	navigation: PropTypes.object,
-	language: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = ({ drawerState, settings }) => ({
+const mapStateToProps = ({ drawerState }) => ({
 	isOpen: drawerState.isOpen,
 	navigation: drawerState.navigation,
-	language: settings.language,
 });
 
 const mapDispatchToProps = (dispatch) => ({
