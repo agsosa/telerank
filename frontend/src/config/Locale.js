@@ -14,7 +14,7 @@ export const Languages = [
 	{ code: 'es', displayStr: 'Español' },
 ];
 
-const translate = memoize(
+export const translate = memoize(
 	(key, config) => i18n.t(key, config),
 	(key, config) => (config ? key + JSON.stringify(config) : key)
 );
