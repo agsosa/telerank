@@ -41,6 +41,11 @@ exports.Categories = Object.freeze({
     VIDEOS_MOVIES: { es: 'Videos y peliculas', en: 'Videos & Movies' },
     NO_CATEGORY: { es: 'Sin categorizar', en: 'Uncategorized' },
 });
+// Utility function that returns true when searchText is contained within searchOnString (full word), ignoring case:
+function isMatch(searchOnString, searchText) {
+    searchText = searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    return searchOnString.match(new RegExp('\\b' + searchText + '\\b', 'i')) != null;
+}
 /*
  * Accepts a Categories object key (i.e. "NEWS_MEDIA")
  * Returns a locale object (i.e. {es: "...", en: "..."})
@@ -63,7 +68,7 @@ function getCategoryFromLocaleString(localeStr) {
         const keys = Object.keys(exports.Categories);
         const str = latinize(localeStr.toLowerCase().trim()); // Remove blank spaces at extreme, convert to lower case and remove accents
         // TODO: Use regex or something to make the comparisons more flexible (i.e. possibility to convert "News" or "Media News" to the NEWS_MEDIA category)
-        return keys.find((q) => latinize(exports.Categories[q].es.toLowerCase()).includes(str) || latinize(exports.Categories[q].en.toLowerCase()).includes(str)) || 'NO_CATEGORY';
+        return keys.find((q) => isMatch(latinize(exports.Categories[q].es.toLowerCase()), str) || isMatch(latinize(exports.Categories[q].en.toLowerCase()), str)) || 'NO_CATEGORY';
     }
     return 'NO_CATEGORY';
 }

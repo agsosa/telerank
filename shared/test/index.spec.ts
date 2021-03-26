@@ -13,6 +13,7 @@ test('getCategoryFromLocaleString', () => {
 	expect(getCategoryFromLocaleString('health')).toEqual('HEALTH');
 	expect(getCategoryFromLocaleString('SALUD')).toEqual('HEALTH');
 	expect(getCategoryFromLocaleString('Salúd')).toEqual('HEALTH');
+	expect(getCategoryFromLocaleString('pelícuLas')).toEqual('VIDEOS_MOVIES');
 	expect(getCategoryFromLocaleString('foo')).toEqual('NO_CATEGORY');
 	expect(getCategoryFromLocaleString('')).toEqual('NO_CATEGORY');
 });
