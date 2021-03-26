@@ -1,24 +1,19 @@
-import { Languages, getBestAvailableLanguage } from '../config/Locale';
+import { Languages } from '../config/Locale';
 
 export const settings = {
 	name: 'settings',
-	state: { hiddenComponentKeys: [], language: getBestAvailableLanguage().languageTag },
+	state: { hiddenComponentKeys: [] },
 	reducers: {
 		addHiddenComponentKey(state, payload) {
 			// Payload: string
 			return !state.hiddenComponentKeys.includes(payload) ? { ...state, hiddenComponentKeys: [...state.hiddenComponentKeys, payload] } : state;
-		},
-		setLanguage(state, payload) {
-			// Payload: string, language code
-			const isPayloadValid = payload && typeof payload === 'string' && Languages.some((q) => q.code === payload);
-			return isPayloadValid ? { ...state, language: payload } : state;
 		},
 	},
 };
 
 export const currentFilters = {
 	name: 'currentFilters',
-	state: { collapsed: true, languages: [getBestAvailableLanguage().languageTag], types: ['channel', 'bot', 'sticker', 'group'], category: ['all'] },
+	state: { collapsed: true, languages: [Languages.map((q) => q.displayStr)], types: ['channel', 'bot', 'sticker', 'group'], category: ['all'] },
 	reducers: {
 		setFilters(state, payload) {
 			// Payload: Object
