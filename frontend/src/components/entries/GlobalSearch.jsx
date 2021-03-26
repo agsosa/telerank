@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Searchbar, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { colors, commonStyles } from '../../config/Styles';
 import { getModuleData } from '../../lib/API';
 import LoadingIndicator from '../LoadingIndicator';
-import { translate } from '../../config/Locale';
 
 const styles = StyleSheet.create({
 	buttonBase: { marginHorizontal: 10, width: '35%' },
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
 });
 
 export default function GlobalSearch() {
+	const { t } = useTranslation();
 	const navigation = useNavigation();
 	const [searchQuery, setSearchQuery] = useState('');
 	const [loading, setLoading] = useState(false);
@@ -55,7 +56,7 @@ export default function GlobalSearch() {
 				navigation.navigate('Details', data);
 			})
 			.catch(() => {
-				Alert.alert('Error', translate('errorOccurred'), [{ text: 'OK' }]);
+				Alert.alert('Error', t('errorOccurred'), [{ text: 'OK' }]);
 			})
 			.finally(() => setLoading(false));
 	};
@@ -67,33 +68,33 @@ export default function GlobalSearch() {
 			getModuleData('search', payload)
 				.then((data) => {
 					if (!data || !Array.isArray(data) || data.length === 0) {
-						Alert.alert(translate('searchNothingFound'), translate('searchNoResults'), [{ text: 'OK' }]);
+						Alert.alert(t('searchNothingFound'), t('searchNoResults'), [{ text: 'OK' }]);
 					} else navigation.navigate('SearchResult', { data, payload });
 				})
 				.catch(() => {
-					Alert.alert('Error', translate('errorOccurred'), [{ text: 'OK' }]);
+					Alert.alert('Error', t('errorOccurred'), [{ text: 'OK' }]);
 				})
 				.finally(() => setLoading(false));
 		} else {
-			Alert.alert('Error', translate('searchTypeSomething'), [{ text: 'OK' }]);
+			Alert.alert('Error', t('searchTypeSomething'), [{ text: 'OK' }]);
 		}
 	};
 
 	return (
 		<View style={styles.mainView}>
-			<Text style={styles.titleText}>{translate('globalsearch.title')}</Text>
-			<Text style={styles.descriptionText}>{translate('globalsearch.subtitle')}</Text>
+			<Text style={styles.titleText}>{t('globalsearch.title')}</Text>
+			<Text style={styles.descriptionText}>{t('globalsearch.subtitle')}</Text>
 			{loading ? (
 				<LoadingIndicator />
 			) : (
 				<>
-					<Searchbar style={styles.searchBar} placeholder={`${translate('search')}...`} onChangeText={onChangeSearch} value={searchQuery} onSubmitEditing={onSearchClick} />
+					<Searchbar style={styles.searchBar} placeholder={`${t('search')}...`} onChangeText={onChangeSearch} value={searchQuery} onSubmitEditing={onSearchClick} />
 					<View style={styles.buttonsView}>
 						<Button style={styles.buttonBase} color='white' icon='cached' mode='contained' onPress={onRandomClick}>
-							<Text style={styles.buttonRandomText}>{translate('globalsearch.random')}</Text>
+							<Text style={styles.buttonRandomText}>{t('globalsearch.random')}</Text>
 						</Button>
 						<Button style={[styles.buttonBase, styles.buttonSearch]} color='black' icon='comment-search' mode='contained' onPress={onSearchClick}>
-							<Text style={commonStyles.whiteText}>{translate('search')}</Text>
+							<Text style={commonStyles.whiteText}>{t('search')}</Text>
 						</Button>
 					</View>
 				</>
