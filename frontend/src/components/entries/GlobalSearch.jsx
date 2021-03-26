@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { colors, commonStyles } from '../../config/Styles';
 import { getModuleData } from '../../lib/API';
 import LoadingIndicator from '../LoadingIndicator';
+import { translate } from '../../config/Locale';
 
 const styles = StyleSheet.create({
 	buttonBase: { marginHorizontal: 10, width: '35%' },
@@ -54,7 +55,7 @@ export default function GlobalSearch() {
 				navigation.navigate('Details', data);
 			})
 			.catch(() => {
-				Alert.alert('Error', 'An error occurred, please try again.', [{ text: 'OK' }]);
+				Alert.alert('Error', translate('errorOccurred'), [{ text: 'OK' }]);
 			})
 			.finally(() => setLoading(false));
 	};
@@ -66,33 +67,33 @@ export default function GlobalSearch() {
 			getModuleData('search', payload)
 				.then((data) => {
 					if (!data || !Array.isArray(data) || data.length === 0) {
-						Alert.alert('Nothing found', 'No results were found for your search', [{ text: 'OK' }]);
+						Alert.alert(translate('searchNothingFound'), translate('searchNoResults'), [{ text: 'OK' }]);
 					} else navigation.navigate('SearchResult', { data, payload });
 				})
 				.catch(() => {
-					Alert.alert('Error', 'An error occurred, please try again.', [{ text: 'OK' }]);
+					Alert.alert('Error', translate('errorOccurred'), [{ text: 'OK' }]);
 				})
 				.finally(() => setLoading(false));
 		} else {
-			Alert.alert('Error', 'Please type something to search.', [{ text: 'OK' }]);
+			Alert.alert('Error', translate('searchTypeSomething'), [{ text: 'OK' }]);
 		}
 	};
 
 	return (
 		<View style={styles.mainView}>
-			<Text style={styles.titleText}>Discover your next community</Text>
-			<Text style={styles.descriptionText}>Search more than 3000 Telegram Channels, Groups, Bots and Stickers.</Text>
+			<Text style={styles.titleText}>{translate('globalsearch.title')}</Text>
+			<Text style={styles.descriptionText}>{translate('globalsearch.subtitle')}</Text>
 			{loading ? (
 				<LoadingIndicator />
 			) : (
 				<>
-					<Searchbar style={styles.searchBar} placeholder='Search' onChangeText={onChangeSearch} value={searchQuery} onSubmitEditing={onSearchClick} />
+					<Searchbar style={styles.searchBar} placeholder={`${translate('search')}...`} onChangeText={onChangeSearch} value={searchQuery} onSubmitEditing={onSearchClick} />
 					<View style={styles.buttonsView}>
 						<Button style={styles.buttonBase} color='white' icon='cached' mode='contained' onPress={onRandomClick}>
-							<Text style={styles.buttonRandomText}>Aleatorio</Text>
+							<Text style={styles.buttonRandomText}>{translate('globalsearch.random')}</Text>
 						</Button>
 						<Button style={[styles.buttonBase, styles.buttonSearch]} color='black' icon='comment-search' mode='contained' onPress={onSearchClick}>
-							<Text style={commonStyles.whiteText}>Buscar</Text>
+							<Text style={commonStyles.whiteText}>{translate('search')}</Text>
 						</Button>
 					</View>
 				</>
