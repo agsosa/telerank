@@ -77,7 +77,10 @@ async function getMaxPages(type: string, lang: string): Promise<number> {
     log.info(`Found max_pages = ${maxPages}`);
 
     // Return result
-    if (Number.isNaN(maxPages)) throw new Error("Can't get max pages");
+    if (Number.isNaN(maxPages))
+      throw new Error(
+        `Can't get max pages (it's possible that there is only one page), url: ${url}`
+      );
     return maxPages;
   } catch (err) {
     log.error(err);
