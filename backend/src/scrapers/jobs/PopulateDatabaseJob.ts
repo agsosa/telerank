@@ -91,7 +91,7 @@ export default class PopulateDatabaseJob extends Job {
         } else skipped += 1;
       }
 
-      await Promise.all(uploadPromises);
+      await Promise.allSettled(uploadPromises);
 
       log.info(
         `${this.options.name} is done. Added Entries: ${added}/${mediaList.length} (skipped: ${skipped})`
