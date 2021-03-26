@@ -7,7 +7,7 @@ import { isDatabaseReady } from "../../data/Database";
 import { isTelegramProtoReady } from "../telegram-proto/TelegramProto";
 
 let interval: NodeJS.Timeout;
-const JOBS_INTERVAL_TIME = 15 * 1000; // Time between each jobsInterval() run
+const JOBS_INTERVAL_TIME = 15 * 1000; // Time between each jobsInterval() run (ms)
 const JOBS: Job[] = [new PopulateDatabase(), new RefreshEntriesTelegramInfos()];
 
 export function getRunningJobs(): string[] {
@@ -23,11 +23,13 @@ function jobsInterval() {
     JOBS.forEach((q) => {
       if (!q.isRunning) {
         if (!q.options.isConcurrent) {
+          // If this job is not concurrent, check if there is any job running
           if (!isAnyJobRunning()) {
-            let diff = 0;
-            if (q.startDate) diff = moment().diff(q.startDate, "minutes");
-
-            if (diff <= q.options.runIntervalMinutes) q.run();
+            // Calculate the minutes elapsed since the last run()
+            const diffMinutes = moment().diff(q.startDate, "minutes");
+            // Run the job if the minutes elapsed is greater than the interval minutes
+            if (!q.startDate || diffMinutes >= q.options.runIntervalMinutes)
+              q.run();
           }
         } else q.run(); // Ignore checks for jobs with concurrent = true
       }
