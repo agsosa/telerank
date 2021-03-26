@@ -16,6 +16,6 @@ Live: (work in progress, in playstore approval process)
 - Web panel for administrators to moderate, modify, update, delete existing entries and manage the app.
 
 #### Used libs/frameworks
-- **Frontend:** React Native, Rematch (Redux), i18n, hooks, react-navigation, Material (react-native-paper)
+- **Frontend:** React Native, Rematch (Redux), i18next, hooks, react-navigation, Material (react-native-paper)
 - **Backend:** TypeScript, Node (Express), Mongoose (MongoDB), Auth0, ScrapeIt, Google Cloud Storage, MTProto
 - **Admin Web Panel:** TypeScript, React, Material UI
