@@ -18,5 +18,8 @@ export default class RefreshEntriesTelegramInfosJob extends Job {
 
   async run(): Promise<void> {
     super.run();
+
+    // TODO: Implement
+    this.onSuccess();
   }
 }
