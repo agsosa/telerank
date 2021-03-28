@@ -17,9 +17,9 @@ export const getCurrentLanguageDisplay = () => {
 };
 
 export const getLocalizedLegalURLS = () => ({
-	dmca: `https://telerank.netlify.app/dmca_${i18n.locale}`,
-	tos: `https://telerank.netlify.app/tos_${i18n.locale}`,
-	privacy: `https://telerank.netlify.app/privacy_${i18n.locale}`,
+	dmca: `https://telerank.netlify.app/dmca_${i18n.language}`,
+	tos: `https://telerank.netlify.app/tos_${i18n.language}`,
+	privacy: `https://telerank.netlify.app/privacy_${i18n.language}`,
 });
 
 const resources = {
