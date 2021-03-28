@@ -64,5 +64,6 @@ export default {
 		noEntriesFound: 'No entries found. Swipe down to refresh.',
 		noMoreEntries: 'No more entries in the list.',
 		searchResults: 'Results for the term(s) {{terms}}',
+		recentlyAdded: 'Recently Added',
 	},
 };
