@@ -1,10 +1,20 @@
 import * as React from 'react';
+import { StyleSheet } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Button } from 'react-native-paper';
 import { colors } from '../../config/Styles';
 
 const Tab = createMaterialTopTabNavigator();
+
+const styles = StyleSheet.create({
+	icon: { right: 10, top: -10 },
+	indicator: { backgroundColor: colors.main },
+	label: { fontFamily: 'Roboto', fontSize: 15 },
+	tab: { flexDirection: 'row', width: 'auto' },
+	tabBar: { backgroundColor: 'white', elevation: 5, height: 60, justifyContent: 'center' },
+	tabScreenLabel: { fontSize: 20 },
+});
 
 const NavTabs = ({ tabs }) => (
 	<Tab.Navigator
@@ -15,11 +25,11 @@ const NavTabs = ({ tabs }) => (
 			scrollEnabled: true,
 			inactiveTintColor: colors.grayAlt2,
 			activeTintColor: colors.main,
-			labelStyle: { fontSize: 15, fontFamily: 'Roboto' },
-			indicatorStyle: { backgroundColor: colors.main },
-			style: { backgroundColor: 'white', elevation: 5, height: 60, justifyContent: 'center' },
-			tabStyle: { width: 'auto', flexDirection: 'row' },
-			iconStyle: { top: -10, right: 10 },
+			labelStyle: styles.label,
+			indicatorStyle: styles.indicator,
+			style: styles.tabBar,
+			tabStyle: styles.tab,
+			iconStyle: styles.icon,
 			showIcon: true,
 		}}>
 		{tabs.map((q) => (
@@ -27,7 +37,8 @@ const NavTabs = ({ tabs }) => (
 				key={q.name}
 				name={q.name}
 				component={q.component}
-				options={{ tabBarLabel: q.name, tabBarIcon: ({ focused }) => <Button icon={q.icon} labelStyle={{ fontSize: 20 }} color={focused ? colors.main : colors.grayAlt2} /> }}
+				// eslint-disable-next-line react/prop-types
+				options={{ tabBarLabel: q.name, tabBarIcon: ({ focused }) => <Button icon={q.icon} labelStyle={styles.tabScreenLabel} color={focused ? colors.main : colors.grayAlt2} /> }}
 			/>
 		))}
 	</Tab.Navigator>
