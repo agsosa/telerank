@@ -33,6 +33,7 @@ export default {
 			stickers: 'Stickers',
 		},
 		done: 'Hecho',
+		chooseLanguage: 'Idioma de la Aplicación',
 		search: 'Buscar',
 		searchNoResults: 'No se han encontrado resultados para tu búsqueda.',
 		searchNothingFound: 'Nada encontrado',

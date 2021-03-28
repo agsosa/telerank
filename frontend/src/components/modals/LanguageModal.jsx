@@ -41,7 +41,7 @@ const LanguageModal = React.forwardRef((props, ref) => {
 		<Portal>
 			<Dialog visible={visible} onDismiss={hide}>
 				<Dialog.Title>
-					<Text>Choose app language</Text>
+					<Text>{t('chooseLanguage')}</Text>
 				</Dialog.Title>
 				<Dialog.Content>
 					<RadioButton.Group onValueChange={handleLanguageChange} value={lang}>
@@ -55,7 +55,7 @@ const LanguageModal = React.forwardRef((props, ref) => {
 				</Dialog.Content>
 				<Dialog.Actions>
 					<Button onPress={hide}>
-						<Text>Done</Text>
+						<Text>{t('done')}</Text>
 					</Button>
 				</Dialog.Actions>
 			</Dialog>
