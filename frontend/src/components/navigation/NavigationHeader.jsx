@@ -4,6 +4,7 @@ import { Appbar } from 'react-native-paper';
 import { useRoute } from '@react-navigation/native';
 import { func, PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import NavGradient from './NavGradient';
 
 const styles = StyleSheet.create({
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
 
 const NavigationHeader = ({ navigation, previous, routeInfo, setDrawerOpenStatus }) => {
 	const route = useRoute();
+	const { t } = useTranslation();
 
 	return (
 		<NavGradient style={[previous && routeInfo(route).extendHeaderGradient ? styles.navExtended : styles.navNormal, styles.padding]}>
@@ -23,7 +25,7 @@ const NavigationHeader = ({ navigation, previous, routeInfo, setDrawerOpenStatus
 
 				{!previous && <Appbar.Action icon='dots-vertical' color='white' onPress={() => setDrawerOpenStatus(true)} />}
 
-				<Appbar.Content color='white' title='Telerank' subtitle={routeInfo(route).title} />
+				<Appbar.Content color='white' title='Telerank' subtitle={t(routeInfo(route).localeKey)} />
 			</Appbar.Header>
 		</NavGradient>
 	);
