@@ -3,6 +3,7 @@ import { Text, StyleSheet } from 'react-native';
 import { Snackbar } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { colors } from '../config/Styles';
 
 const styles = StyleSheet.create({
@@ -11,6 +12,7 @@ const styles = StyleSheet.create({
 
 const APIErrorSnackbar = ({ apiErrorActive, setAPIErrorStatus }) => {
 	const onDismissSnackBar = () => setAPIErrorStatus(false);
+	const { t } = useTranslation();
 
 	return (
 		<Snackbar
@@ -24,7 +26,7 @@ const APIErrorSnackbar = ({ apiErrorActive, setAPIErrorStatus }) => {
 					setAPIErrorStatus(false);
 				},
 			}}>
-			<Text>An error occurred while requesting the information.</Text>
+			<Text>{t('errorInfoRequest')}</Text>
 		</Snackbar>
 	);
 };
