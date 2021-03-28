@@ -5,6 +5,7 @@ import { Button } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
+import { useTranslation } from 'react-i18next';
 import NumberTag from '../components/NumberTag';
 import { formatLanguageCode, resolveImage } from '../lib/Helpers';
 import { colors, commonStyles } from '../config/Styles';
@@ -58,13 +59,14 @@ const styles = StyleSheet.create({
 
 const DetailsScreen = ({ route }) => {
 	const data = route.params;
+	const { t } = useTranslation();
 
 	const openTelegram = () => {
 		try {
 			Linking.openURL(`https://t.me/${data.username}`);
 		} catch (e) {
 			console.log(`openTelegram link error: ${e.message}`);
-			Alert.alert('Error', 'An error occurred while trying to open Telegram', [{ text: 'OK' }]);
+			Alert.alert('Error', t('errorOccurred'), [{ text: 'OK' }]);
 		}
 	};
 
@@ -98,11 +100,11 @@ const DetailsScreen = ({ route }) => {
 
 					<Button compact style={stylesBtn.telegramBtn} onPress={openTelegram}>
 						<Icon name='paper-plane' style={stylesBtn.telegramContent} />
-						<Text style={stylesBtn.telegramContent}> Open Telegram</Text>
+						<Text style={stylesBtn.telegramContent}> {t('detailsScreen.openTG')}</Text>
 					</Button>
 
 					<CardItem style={styles.flexCardItem}>
-						<Text style={styles.descriptionText}>{data.description ? data.description : 'No description'}</Text>
+						<Text style={styles.descriptionText}>{data.description ? data.description : t('detailsScreen.noDescription')}</Text>
 					</CardItem>
 
 					<CardItem style={styles.flexCardItem}>
@@ -113,24 +115,24 @@ const DetailsScreen = ({ route }) => {
 						<View style={stylesBtn.viewButtons}>
 							<Button style={stylesBtn.reportBtn}>
 								<Icon name='flag' style={stylesBtn.reportContent} />
-								<Text style={stylesBtn.reportContent}>Reportar</Text>
+								<Text style={stylesBtn.reportContent}>{t('detailsScreen.report')}</Text>
 							</Button>
 							<Button style={stylesBtn.shareBtn} onPress={() => ShareTelegram(data.username)}>
 								<Icon name='share' style={stylesBtn.shareContent} />
-								<Text style={stylesBtn.shareContent}>Share</Text>
+								<Text style={stylesBtn.shareContent}>{t('detailsScreen.share')}</Text>
 							</Button>
 						</View>
 						<View style={styles.statsView}>
 							<NumberTag icon='chart-bar' number={data.views} />
 							<NumberTag icon='account' number={data.members} />
 						</View>
-						<Text note>Added Date: {moment(data.addedDate).format('YYYY-MM-DD')}</Text>
-						<Text note>Update Date: {moment(data.updatedDate).format('YYYY-MM-DD')}</Text>
+						<Text note>{t("detailsScreen.addedDate")}: {moment(data.addedDate).format('YYYY-MM-DD')}</Text>
+						<Text note>{t("detailsScreen.updateDate")}: {moment(data.updatedDate).format('YYYY-MM-DD')}</Text>
 					</CardItem>
 				</Card>
 
 				<Text note style={styles.disclaimerText}>
-					Please conduct your own research before trusting the content. Especially if they ask you for money.
+					{t('detailsScreen.disclaimer')}
 				</Text>
 			</ScrollView>
 		</View>
