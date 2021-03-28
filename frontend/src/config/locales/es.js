@@ -45,5 +45,6 @@ export default {
 		searchNothingFound: 'Nada encontrado',
 		searchTypeSomething: 'Por favor escribe un término para buscar.',
 		noEntriesFound: 'No hay entradas. Desliza hacia abajo para refrescar.',
+		noMoreEntries: 'No hay más entradas en la lista.',
 	},
 };

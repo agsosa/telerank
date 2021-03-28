@@ -45,5 +45,6 @@ export default {
 		searchNothingFound: 'Nothing found',
 		searchTypeSomething: 'Please type something to search.',
 		noEntriesFound: 'No entries found. Swipe down to refresh.',
+		noMoreEntries: 'No more entries in the list.',
 	},
 };
