@@ -1,13 +1,17 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { PropTypes } from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import InfoBanner from './InfoBanner';
 
-const AddMediaInfoBanner = ({ hideKey, navigation }) => (
-	<InfoBanner hideKey={hideKey} callToAction={() => navigation.navigate('AddMedia')}>
-		<Text>Agrega tu canal, grupo, bot o sticker de Telegram al directorio gratis!</Text>
-	</InfoBanner>
-);
+const AddMediaInfoBanner = ({ hideKey, navigation }) => {
+	const { t } = useTranslation();
+	return (
+		<InfoBanner hideKey={hideKey} callToAction={() => navigation.navigate('AddMedia')}>
+			<Text>{t('infoBanner.addMediaBanner')}</Text>
+		</InfoBanner>
+	);
+};
 
 AddMediaInfoBanner.defaultProps = {
 	hideKey: 'add_hint',

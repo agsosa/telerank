@@ -3,6 +3,7 @@ import { Image, StyleSheet } from 'react-native';
 import { Banner } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const img = require('../../../img/tg.png');
 
@@ -12,37 +13,41 @@ const styles = StyleSheet.create({
 	content: { marginBottom: '1%', marginTop: '-1%' },
 });
 
-const InfoBanner = ({ children, hiddenComponentKeys, hideKey, addHiddenComponentKey, callToAction }) => (
-	<Banner
-		visible={!(hideKey && hiddenComponentKeys.includes(hideKey))}
-		contentStyle={styles.content}
-		style={styles.banner}
-		actions={[
-			{
-				label: 'Hide',
-				onPress: () => hideKey && addHiddenComponentKey(hideKey),
-				style: styles.action,
-			},
-			{
-				label: 'Learn more',
-				onPress: () => {
-					if (callToAction) callToAction();
+const InfoBanner = ({ children, hiddenComponentKeys, hideKey, addHiddenComponentKey, callToAction }) => {
+	const { t } = useTranslation();
+
+	return (
+		<Banner
+			visible={!(hideKey && hiddenComponentKeys.includes(hideKey))}
+			contentStyle={styles.content}
+			style={styles.banner}
+			actions={[
+				{
+					label: t('infoBanner.hide'),
+					onPress: () => hideKey && addHiddenComponentKey(hideKey),
+					style: styles.action,
 				},
-				style: styles.action,
-			},
-		]}
-		icon={({ size }) => (
-			<Image
-				source={img}
-				style={{
-					width: size,
-					height: size,
-				}}
-			/>
-		)}>
-		{children}
-	</Banner>
-);
+				{
+					label: t('infoBanner.learnMore'),
+					onPress: () => {
+						if (callToAction) callToAction();
+					},
+					style: styles.action,
+				},
+			]}
+			icon={({ size }) => (
+				<Image
+					source={img}
+					style={{
+						width: size,
+						height: size,
+					}}
+				/>
+			)}>
+			{children}
+		</Banner>
+	);
+};
 
 InfoBanner.defaultProps = {
 	children: null,

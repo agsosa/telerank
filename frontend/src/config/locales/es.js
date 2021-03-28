@@ -32,6 +32,12 @@ export default {
 			bots: 'Bots',
 			stickers: 'Stickers',
 		},
+		infoBanner: {
+			featureBanner: '¿Quieres promocionar tu Canal, Grupo o Bot de Telegram aquí?',
+			hide: 'Ocultar',
+			learnMore: 'Más info',
+			addMediaBanner: '¡Agrega tu canal, grupo, bot o sticker de Telegram al directorio gratis!',
+		},
 		done: 'Hecho',
 		chooseLanguage: 'Idioma de la Aplicación',
 		search: 'Buscar',

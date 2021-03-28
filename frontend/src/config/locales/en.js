@@ -32,6 +32,12 @@ export default {
 			bots: 'Bots',
 			stickers: 'Stickers',
 		},
+		infoBanner: {
+			featureBanner: 'Do you want to feature your Telegram Channel, Group or Bot here?',
+			hide: 'Hide',
+			learnMore: 'Learn More',
+			addMediaBanner: 'Add your Telegram Channel, Group, Bot or Sticker to our directory for free!',
+		},
 		done: 'Done',
 		chooseLanguage: 'Choose app language',
 		search: 'Search',
