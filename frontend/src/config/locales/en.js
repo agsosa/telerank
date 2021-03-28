@@ -74,5 +74,7 @@ export default {
 		noMoreEntries: 'No more entries in the list.',
 		searchResults: 'Results for the term(s) {{terms}}',
 		recentlyAdded: 'Recently Added',
+		shareMessage: `Telerank - Find new Telegram Channels, Groups, Bots and Stickers. Available on the Playstore! {{url}}`,
+		shareTelegramUser: '@{{username}} ({{tgUrl}}) is listed on Telerank! Download the app: {{storeUrl}}',
 	},
 };
