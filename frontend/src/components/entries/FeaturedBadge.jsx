@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, ViewPropTypes } from 'react-native';
 import { Badge, Icon } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import { colors } from '../../config/Styles';
 
 const styles = StyleSheet.create({
@@ -10,10 +11,12 @@ const styles = StyleSheet.create({
 });
 
 export default function FeaturedBadge({ style }) {
+	const { t } = useTranslation();
+
 	return (
 		<Badge style={[styles.badge, style]} small>
 			<Icon name='star' style={styles.icon} />
-			<Text style={styles.text}>Featured</Text>
+			<Text style={styles.text}>{t('navTabs.featured')}</Text>
 		</Badge>
 	);
 }
