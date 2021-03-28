@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import i18next from 'i18next';
 import NavigationHeader from '../components/navigation/NavigationHeader';
 import MainScreen from '../screens/MainScreen';
 import DetailsScreen from '../screens/DetailsScreen';
@@ -18,44 +19,44 @@ const ROUTES = [
 	{
 		name: 'Home',
 		component: MainScreen,
-		title: 'Home',
+		title: i18next.t('routes.home'),
 		extendHeaderGradient: false,
 	},
 	{
 		name: 'Details',
 		component: DetailsScreen,
-		title: 'Details',
+		title: i18next.t('routes.details'),
 		extendHeaderGradient: true,
 	},
 	{
 		name: 'Contact',
 		component: ContactScreen,
 		extendHeaderGradient: false,
-		title: 'Contact',
+		title: i18next.t('routes.contact'),
 	},
 	{
 		name: 'AddMedia',
 		component: AddMediaScreen,
 		extendHeaderGradient: false,
-		title: 'Add to Directory',
+		title: i18next.t('routes.addMedia'),
 	},
 	{
 		name: 'Promote',
 		component: PromoteScreen,
 		extendHeaderGradient: false,
-		title: 'Promote/Feature',
+		title: i18next.t('routes.promote'),
 	},
 	{
 		name: 'SearchResult',
 		component: SearchResultScreen,
 		extendHeaderGradient: false,
-		title: 'Search results',
+		title: i18next.t('routes.searchResult'),
 	},
 	{
 		name: 'WebViewScreen',
 		component: WebViewScreen,
 		extendHeaderGradient: false,
-		title: 'External content',
+		title: i18next.t('routes.webView'),
 	},
 ];
 
