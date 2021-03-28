@@ -85,7 +85,7 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
 					<View style={styles.headerView}>
 						<Image style={styles.avatar} source={userPlaceholderImage} />
 						<Button mode='text' style={styles.authBtn}>
-							<Text style={styles.authBtnText}>Conectarse</Text>
+							<Text style={styles.authBtnText}>{t('drawer.login')}</Text>
 						</Button>
 					</View>
 				</TouchableOpacity>
@@ -95,16 +95,16 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
 			<View style={styles.listView}>
 				<List.Section>
 					<List.Subheader>
-						<Text>Directory</Text>
+						<Text>{t('drawer.directory')}</Text>
 					</List.Subheader>
-					<List.Item title='Add channels' left={(props) => <List.Icon {...props} icon='bullhorn' />} onPress={() => onMenuItemSelected('AddMedia')} />
-					<List.Item title='Add groups' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('AddMedia')} />
-					<List.Item title='Add bots' left={(props) => <List.Icon {...props} icon='robot' />} onPress={() => onMenuItemSelected('AddMedia')} />
-					<List.Item title='Add stickers' left={(props) => <List.Icon {...props} icon='sticker' />} onPress={() => onMenuItemSelected('AddMedia')} />
+					<List.Item title={t('drawer.addChannels')} left={(props) => <List.Icon {...props} icon='bullhorn' />} onPress={() => onMenuItemSelected('AddMedia')} />
+					<List.Item title={t('drawer.addGroups')} left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('AddMedia')} />
+					<List.Item title={t('drawer.addBots')} left={(props) => <List.Icon {...props} icon='robot' />} onPress={() => onMenuItemSelected('AddMedia')} />
+					<List.Item title={t('drawer.addStickers')} left={(props) => <List.Icon {...props} icon='sticker' />} onPress={() => onMenuItemSelected('AddMedia')} />
 					<List.Item
 						style={{ backgroundColor: colors.featuredLight }}
 						titleStyle={styles.featuredItemTitle}
-						title='Promote/Feature'
+						title={t('drawer.promote')}
 						onPress={() => onMenuItemSelected('Promote')}
 						left={(props) => <List.Icon {...props} icon='star' color={colors.featured} />}
 					/>
@@ -116,16 +116,16 @@ const Drawer = ({ children, isOpen, setIsOpen, navigation }) => {
 					<List.Item title={t('drawer.language')} description={getCurrentLanguageDisplay()} left={(props) => <List.Icon {...props} icon='cog' />} onPress={() => onMenuItemSelected('Language')} />
 					<List.Item title={t('drawer.statistics')} left={(props) => <List.Icon {...props} icon='chart-bar' />} onPress={() => onMenuItemSelected('Stats')} />
 					<List.Item title={t('drawer.contact')} left={(props) => <List.Icon {...props} icon='email' />} onPress={() => onMenuItemSelected('Contact')} />
-					<List.Item title='Rate our app' left={(props) => <List.Icon {...props} icon='heart' />} onPress={() => onMenuItemSelected('RateApp')} />
-					<List.Item title='Share our app' left={(props) => <List.Icon {...props} icon='share-variant' />} onPress={() => onMenuItemSelected('ShareApp')} />
+					<List.Item title={t('drawer.rateApp')} left={(props) => <List.Icon {...props} icon='heart' />} onPress={() => onMenuItemSelected('RateApp')} />
+					<List.Item title={t('drawer.shareApp')} left={(props) => <List.Icon {...props} icon='share-variant' />} onPress={() => onMenuItemSelected('ShareApp')} />
 				</List.Section>
 				<List.Section>
 					<List.Subheader>
 						<Text>Legal</Text>
 					</List.Subheader>
-					<List.Item title='DMCA/Report Abuse' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('dmca')} />
-					<List.Item title='Privacy Policy' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('privacy')} />
-					<List.Item title='Terms of Service' left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('tos')} />
+					<List.Item title={t('drawer.dmca')} left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('dmca')} />
+					<List.Item title={t('drawer.privacy')} left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('privacy')} />
+					<List.Item title={t('drawer.terms')} left={(props) => <List.Icon {...props} icon='forum' />} onPress={() => onMenuItemSelected('tos')} />
 				</List.Section>
 			</View>
 		</ScrollView>
