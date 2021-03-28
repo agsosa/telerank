@@ -36,7 +36,6 @@ function CustomSearchBar() {
 		console.log(searchQuery);
 	};
 
-	// eslint-disable-next-line
 	return <Searchbar placeholder='Search' value={searchQuery} onChangeText={onChangeSearch} style={{ marginBottom: 10 }} onIconPress={onSearchClick} onEndEditing={onSearchClick} />;
 }
 

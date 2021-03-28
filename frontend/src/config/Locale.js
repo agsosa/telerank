@@ -5,6 +5,12 @@ import { MMKV } from 'react-native-mmkv';
 import en from './locales/en';
 import es from './locales/es';
 
+export const getLocalizedLegalURLS = () => ({
+	dmca: `https://telerank.netlify.app/dmca_${i18n.language}`,
+	tos: `https://telerank.netlify.app/tos_${i18n.language}`,
+	privacy: `https://telerank.netlify.app/privacy_${i18n.language}`,
+});
+
 export const Languages = [
 	{ code: 'en', displayStr: 'English' },
 	{ code: 'es', displayStr: 'Español' },
@@ -15,12 +21,6 @@ export const getCurrentLanguageDisplay = () => {
 	const langDisplay = langObj ? langObj.displayStr : 'Undefined';
 	return langDisplay;
 };
-
-export const getLocalizedLegalURLS = () => ({
-	dmca: `https://telerank.netlify.app/dmca_${i18n.language}`,
-	tos: `https://telerank.netlify.app/tos_${i18n.language}`,
-	privacy: `https://telerank.netlify.app/privacy_${i18n.language}`,
-});
 
 const resources = {
 	en,

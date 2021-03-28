@@ -44,7 +44,7 @@ export default class PopulateDatabaseJob extends Job {
     try {
       const mediaList: IScrapedMedia[] = await scrapeTelegramChannelsMe();
 
-      log.info("Starting Telegram scraping");
+      log.info("Start Telegram scraping");
 
       const uploadPromises: Promise<any>[] = [];
       let added = 0;
@@ -59,6 +59,7 @@ export default class PopulateDatabaseJob extends Job {
           const info = await getTelegramInfo(q.username);
 
           if (info) {
+            log.info("uploadPhoto ", q.username);
             uploadPromises.push(
               uploadPhoto(info.photoUrl, info.username).then((imgURL) => {
                 const entry: IEntry = {
@@ -81,6 +82,8 @@ export default class PopulateDatabaseJob extends Job {
                   views: 0,
                 };
 
+                log.info("Inserting to DB", q.username);
+
                 EntryModel.Insert(entry).then(() => {
                   log.info(`username ${entry.username} saved`);
                   added += 1;
@@ -90,6 +93,8 @@ export default class PopulateDatabaseJob extends Job {
           }
         } else skipped += 1;
       }
+
+      log.info("Waiting for all promises to settle");
 
       await Promise.allSettled(uploadPromises);
 

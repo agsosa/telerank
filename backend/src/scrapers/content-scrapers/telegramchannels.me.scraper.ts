@@ -15,8 +15,9 @@ import {
 // TODO: Extender clase Scraper
 
 /*
- * TelegramChannels.me Scraper
+ * TelegramChannels.me Scraper: Extract usernames with media type and category
  */
+
 const LANGUAGES_TO_SCRAPE = ["es", "en"]; // TODO: add en
 const TYPES_TO_SCRAPE = ["groups", "channels", "bots"]; // TODO: add channels, bots, stickers
 const getListURL = (lang: string, type: string, page: number) =>

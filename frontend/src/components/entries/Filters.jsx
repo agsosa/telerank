@@ -6,6 +6,8 @@ import Collapsible from 'react-native-collapsible';
 import SectionTitle from '../SectionTitle';
 import { colors } from '../../config/Styles';
 
+// TODO: Finish
+
 const styles = StyleSheet.create({
 	checkboxLabel: {
 		color: colors.tgDarkGray,

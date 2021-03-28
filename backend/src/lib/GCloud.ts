@@ -7,6 +7,7 @@ import { log, downloadImage } from "./Helpers";
 
 sharp.cache(false);
 
+// TODO: Move project id, bucket url, etc. to environment variables
 const storage = new Storage({
   keyFilename: "./serviceAccountKey.json",
   projectId: "telerank-e9b37",

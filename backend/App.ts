@@ -34,7 +34,7 @@ routes.push(new EntriesRoutes(app));
 routes.push(new StatsRoutes(app));
 routes.push(new JobsRoutes(app));
 
-// Telerank modules
+// Modules
 InitializeTelegramProto();
 InitializeDatabase();
 InitializeJobs();

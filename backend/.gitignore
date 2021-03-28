@@ -6,3 +6,4 @@ tg.session-journal
 /dist
 /src/lib/secret.ts
 /src/scrapers/telegram-proto/TelegramSecrets.ts
+*.jpg
