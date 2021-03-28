@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import VerticalList from '../../components/entries/VerticalList';
 import { colors } from '../../config/Styles';
 import NavTabs from '../../components/navigation/NavTabs';
@@ -27,6 +28,8 @@ const styles = StyleSheet.create({
 });
 
 export default function Featured() {
+	const { t } = useTranslation();
+
 	function HeaderRenderer(title, subtitle) {
 		return (
 			<View>
@@ -40,50 +43,50 @@ export default function Featured() {
 
 	function FeaturedComponent() {
 		const apiModule = 'featured';
-		const name = 'Featured';
-		const subtitle = 'Premium channels, groups and bots';
+		const name = t('navTabs.featured');
+		const subtitle = t('featuredTab.featuredDesc');
 		return <VerticalList useFilters Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
 	}
 
 	function TopComponent() {
 		const apiModule = 'top';
-		const name = 'Top 50';
-		const subtitle = 'Tell your community to rate you in our app to get better rankings!';
+		const name = t('featuredTab.topRated');
+		const subtitle = t('featuredTab.topDesc');
 		return <VerticalList useFilters Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
 	}
 
 	function BiggestComponent() {
 		const apiModule = 'biggest';
-		const name = 'Biggest';
-		const subtitle = 'Top 50 biggest channels and groups by members';
+		const name = t('featuredTab.biggest');
+		const subtitle = t('featuredTab.biggestDesc');
 		return <VerticalList useFilters Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
 	}
 
 	function PopularComponent() {
 		const apiModule = 'popular';
-		const name = 'Popular';
-		const subtitle = 'Top 50 most viewed channels, bots, groups and stickers';
+		const name = t('featuredTab.popular');
+		const subtitle = t('featuredTab.popularDesc');
 		return <VerticalList useFilters Header={() => HeaderRenderer(name, subtitle)} apiModule={apiModule} />;
 	}
 
 	const tabs = [
 		{
-			name: 'Featured',
+			name: t('navTabs.featured'),
 			icon: 'star',
 			component: FeaturedComponent,
 		},
 		{
-			name: 'Top Rated',
+			name: t('featuredTab.topRated'),
 			icon: 'crown',
 			component: TopComponent,
 		},
 		{
-			name: 'Biggest',
+			name: t('featuredTab.biggest'),
 			icon: 'account-group',
 			component: BiggestComponent,
 		},
 		{
-			name: 'Popular',
+			name: t('featuredTab.popular'),
 			icon: 'fire',
 			component: PopularComponent,
 		},
