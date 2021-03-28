@@ -24,7 +24,7 @@ export default {
 			rateApp: 'Rate our app',
 			shareApp: 'Share our app',
 		},
-		navtabs: {
+		navTabs: {
 			home: 'Home',
 			featured: 'Featured',
 			channels: 'Channels',

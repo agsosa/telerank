@@ -24,7 +24,7 @@ export default {
 			rateApp: 'Déjanos tu calificación',
 			shareApp: 'Comparte la aplicación',
 		},
-		navtabs: {
+		navTabs: {
 			home: 'Inicio',
 			featured: 'Destacado',
 			channels: 'Canales',

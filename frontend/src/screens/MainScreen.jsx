@@ -17,12 +17,12 @@ const MainScreen = ({ setDrawerNavigation }) => {
 	const navigation = useNavigation();
 
 	const tabs = [
-		{ name: t('navtabs.home'), icon: 'home', component: HomeTab },
-		{ name: t('navtabs.featured'), icon: 'star', component: FeaturedTab },
-		{ name: t('navtabs.channels'), icon: 'bullhorn', component: ChannelsTab },
-		{ name: t('navtabs.groups'), icon: 'forum', component: GroupsTab },
-		{ name: t('navtabs.bots'), icon: 'robot', component: BotsTab },
-		{ name: t('navtabs.stickers'), icon: 'sticker', component: StickersTab },
+		{ name: t('navTabs.home'), icon: 'home', component: HomeTab },
+		{ name: t('navTabs.featured'), icon: 'star', component: FeaturedTab },
+		{ name: t('navTabs.channels'), icon: 'bullhorn', component: ChannelsTab },
+		{ name: t('navTabs.groups'), icon: 'forum', component: GroupsTab },
+		{ name: t('navTabs.bots'), icon: 'robot', component: BotsTab },
+		{ name: t('navTabs.stickers'), icon: 'sticker', component: StickersTab },
 	];
 
 	React.useEffect(() => {
