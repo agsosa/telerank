@@ -9,7 +9,7 @@ const FeatureInfoBanner = ({ hideKey, navigation }) => {
 
 	return (
 		<InfoBanner hideKey={hideKey} callToAction={() => navigation.navigate('Promote')}>
-			<Text>{t('featureBanner')}</Text>
+			<Text>{t('infoBanner.featureBanner')}</Text>
 		</InfoBanner>
 	);
 };
