@@ -82,8 +82,8 @@ export default function GlobalSearch() {
 
 	return (
 		<View style={styles.mainView}>
-			<Text style={styles.titleText}>{t('globalsearch.title')}</Text>
-			<Text style={styles.descriptionText}>{t('globalsearch.subtitle')}</Text>
+			<Text style={styles.titleText}>{t('globalSearch.title')}</Text>
+			<Text style={styles.descriptionText}>{t('globalSearch.subTitle')}</Text>
 			{loading ? (
 				<LoadingIndicator />
 			) : (
@@ -91,7 +91,7 @@ export default function GlobalSearch() {
 					<Searchbar style={styles.searchBar} placeholder={`${t('search')}...`} onChangeText={onChangeSearch} value={searchQuery} onSubmitEditing={onSearchClick} />
 					<View style={styles.buttonsView}>
 						<Button style={styles.buttonBase} color='white' icon='cached' mode='contained' onPress={onRandomClick}>
-							<Text style={styles.buttonRandomText}>{t('globalsearch.random')}</Text>
+							<Text style={styles.buttonRandomText}>{t('globalSearch.random')}</Text>
 						</Button>
 						<Button style={[styles.buttonBase, styles.buttonSearch]} color='black' icon='comment-search' mode='contained' onPress={onSearchClick}>
 							<Text style={commonStyles.whiteText}>{t('search')}</Text>

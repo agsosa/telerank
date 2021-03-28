@@ -2,9 +2,9 @@ export default {
 	translation: {
 		errorInfoRequest: 'Ha ocurrido un error al solicitar la información.',
 		errorOccurred: 'Ha ocurrido un error, por favor intenta nuevamente.',
-		globalsearch: {
+		globalSearch: {
 			title: 'Descubre nuevas comunidades',
-			subtitle: 'Explora más de 5000 canales, grupos, bots y stickers de Telegram.',
+			subTitle: 'Explora más de 5000 canales, grupos, bots y stickers de Telegram.',
 			random: 'Aleatorio',
 		},
 		drawer: {
@@ -32,6 +32,7 @@ export default {
 			bots: 'Bots',
 			stickers: 'Stickers',
 		},
+		done: 'Hecho',
 		search: 'Buscar',
 		searchNoResults: 'No se han encontrado resultados para tu búsqueda.',
 		searchNothingFound: 'Nada encontrado',
