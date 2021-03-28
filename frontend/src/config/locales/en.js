@@ -1,5 +1,6 @@
 export default {
 	translation: {
+		errorInfoRequest: 'An error occurred while requesting the information.',
 		errorOccurred: 'An error occurred, please try again.',
 		globalsearch: {
 			title: 'Discover your next community',
@@ -7,9 +8,21 @@ export default {
 			random: 'Random',
 		},
 		drawer: {
+			login: 'Log in',
+			addChannels: 'Add Channels',
+			addGroups: 'Add Groups',
+			addBots: 'Add Bots',
+			addStickers: 'Add Stickers',
+			promote: 'Promote/Feature',
+			directory: 'Directory',
 			language: 'Language',
 			statistics: 'Statistics',
 			contact: 'Contact',
+			privacy: 'Privacy Policy',
+			terms: 'Terms of Service',
+			dmca: 'DMCA/Report Abuse',
+			rateApp: 'Rate our app',
+			shareApp: 'Share our app',
 		},
 		navtabs: {
 			home: 'Home',

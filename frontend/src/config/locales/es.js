@@ -1,5 +1,6 @@
 export default {
 	translation: {
+		errorInfoRequest: 'Ha ocurrido un error al solicitar la información.',
 		errorOccurred: 'Ha ocurrido un error, por favor intenta nuevamente.',
 		globalsearch: {
 			title: 'Descubre nuevas comunidades',
@@ -7,9 +8,21 @@ export default {
 			random: 'Aleatorio',
 		},
 		drawer: {
+			login: 'Conectarse',
+			addChannels: 'Agregar Canales',
+			addGroups: 'Agregar Grupos',
+			addBots: 'Agregar Bots',
+			addStickers: 'Agregar Stickers',
+			promote: 'Promocionar/Destacar',
+			directory: 'Directorio',
 			language: 'Idioma',
 			statistics: 'Estadísticas',
 			contact: 'Contacto',
+			privacy: 'Política de Privacidad',
+			terms: 'Términos de Servicio',
+			dmca: 'DMCA/Reportar Abuso',
+			rateApp: 'Déjanos tu calificación',
+			shareApp: 'Comparte la aplicación',
 		},
 		navtabs: {
 			home: 'Inicio',
