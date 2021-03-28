@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { PropTypes } from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import VerticalList from '../components/entries/VerticalList';
 import { colors } from '../config/Styles';
 
@@ -14,10 +15,11 @@ const styles = StyleSheet.create({
 });
 
 function SearchResultScreen({ route }) {
+	const { t } = useTranslation();
 	const { data, payload } = route.params;
 
 	function HeaderRenderer() {
-		return <Text style={styles.subtitleText}>Results for the term(s) &quot;{payload.search}&quot;</Text>;
+		return <Text style={styles.subtitleText}>{t('searchResults', { terms: `"${payload.search}"` })}</Text>;
 	}
 	return <VerticalList Header={HeaderRenderer} useFilters initialData={data} apiModule='search' payload={payload} />;
 }
