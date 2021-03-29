@@ -35,9 +35,10 @@ routes.push(new StatsRoutes(app));
 routes.push(new JobsRoutes(app));
 
 // Modules
-InitializeTelegramProto();
-InitializeDatabase();
-InitializeJobs();
+InitializeDatabase().then(() => {
+  // InitializeTelegramProto();
+  InitializeJobs();
+});
 
 app.get("/", (req, res) => {
   res.send("OK");
