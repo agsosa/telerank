@@ -36,7 +36,7 @@ routes.push(new JobsRoutes(app));
 
 // Modules
 InitializeDatabase().then(() => {
-  // InitializeTelegramProto();
+  InitializeTelegramProto();
   InitializeJobs();
 });
 
