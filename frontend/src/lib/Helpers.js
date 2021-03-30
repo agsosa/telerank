@@ -1,4 +1,5 @@
 import React from 'react';
+import { getTranslatedCategory, getTranslatedType } from '../config/Locale';
 import { placeholderImage } from '../config/Styles';
 
 export function useIsMounted() {
@@ -21,6 +22,10 @@ export function formatLanguageCode(langCode) {
 		default:
 			return langCode;
 	}
+}
+
+export function getEntrySubtitle(data) {
+	return `${getTranslatedType(data.type)} / ${getTranslatedCategory(data.category)} / ${formatLanguageCode(data.language)}`;
 }
 
 // Slice long strings and add ... at the end
