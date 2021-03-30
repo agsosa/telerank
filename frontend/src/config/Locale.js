@@ -2,6 +2,7 @@ import { getLocales } from 'react-native-localize';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { MMKV } from 'react-native-mmkv';
+import { getLocaleObjectFromCategory } from 'telerank-shared/lib';
 import en from './locales/en';
 import es from './locales/es';
 
@@ -21,6 +22,14 @@ export const getCurrentLanguageDisplay = () => {
 	const langDisplay = langObj ? langObj.displayStr : 'Undefined';
 	return langDisplay;
 };
+
+export const getTranslatedCategory = (categoryKey) => {
+	const locale = getLocaleObjectFromCategory(categoryKey);
+	const result = locale[i18n.language];
+	return result || locale.en;
+};
+
+export const getTranslatedType = (typeKey) => i18n.t(typeKey.toLowerCase());
 
 const resources = {
 	en,
