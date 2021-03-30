@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import FastImage from 'react-native-fast-image';
 import NumberTag from '../NumberTag';
-import { formatLanguageCode, resolveImage } from '../../lib/Helpers';
+import { resolveImage, getEntrySubtitle } from '../../lib/Helpers';
 import { colors, commonStyles } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
 
@@ -37,9 +37,7 @@ function VerticalCard({ item }) {
 						<FastImage source={resolveImage(item)} style={commonStyles.thumbnail} />
 						<Body>
 							<Text>{item.username}</Text>
-							<Text note>
-								{item.type} / {item.category} / {formatLanguageCode(item.language)}
-							</Text>
+							<Text note>{getEntrySubtitle(item)}</Text>
 						</Body>
 					</Left>
 

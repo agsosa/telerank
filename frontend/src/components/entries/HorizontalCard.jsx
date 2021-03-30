@@ -4,7 +4,7 @@ import { Card, Caption } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import FastImage from 'react-native-fast-image';
-import { truncateWithEllipses, formatLanguageCode, resolveImage } from '../../lib/Helpers';
+import { truncateWithEllipses, resolveImage, getEntrySubtitle } from '../../lib/Helpers';
 import NumberTag from '../NumberTag';
 import { colors } from '../../config/Styles';
 import FeaturedBadge from './FeaturedBadge';
@@ -28,7 +28,7 @@ export default function HorizontalCard({ item }) {
 		<View style={styles.mainView}>
 			<TouchableOpacity activeOpacity={0.5} onPress={() => navigation.navigate('Details', item)}>
 				<Card style={[styles.card, item.featured && styles.cardFeatured]}>
-					<Card.Title title={item.username} subtitle={`${item.type} / ${item.category} / ${formatLanguageCode(item.language)}`} />
+					<Card.Title title={item.username} subtitle={getEntrySubtitle(item)} />
 					<FastImage source={resolveImage(item)} style={styles.coverImg} />
 
 					{item.featured && (

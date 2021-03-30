@@ -7,7 +7,7 @@ import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 import { useTranslation } from 'react-i18next';
 import NumberTag from '../components/NumberTag';
-import { formatLanguageCode, resolveImage } from '../lib/Helpers';
+import { resolveImage, getEntrySubtitle } from '../lib/Helpers';
 import { colors, commonStyles } from '../config/Styles';
 import FeaturedBadge from '../components/entries/FeaturedBadge';
 import { ShareTelegram } from '../lib/Share';
@@ -90,9 +90,7 @@ const DetailsScreen = ({ route }) => {
 						</CardItem>
 						<CardItem style={styles.titleCard}>
 							<Text style={styles.centeredText}>{data.title}</Text>
-							<Text note>
-								{data.type} / {data.category} / {formatLanguageCode(data.language)}
-							</Text>
+							<Text note>{getEntrySubtitle(data)}</Text>
 						</CardItem>
 
 						<FastImage source={resolveImage(data)} style={styles.image} />
@@ -126,8 +124,12 @@ const DetailsScreen = ({ route }) => {
 							<NumberTag icon='chart-bar' number={data.views} />
 							<NumberTag icon='account' number={data.members} />
 						</View>
-						<Text note>{t("detailsScreen.addedDate")}: {moment(data.addedDate).format('YYYY-MM-DD')}</Text>
-						<Text note>{t("detailsScreen.updateDate")}: {moment(data.updatedDate).format('YYYY-MM-DD')}</Text>
+						<Text note>
+							{t('detailsScreen.addedDate')}: {moment(data.addedDate).format('YYYY-MM-DD')}
+						</Text>
+						<Text note>
+							{t('detailsScreen.updateDate')}: {moment(data.updatedDate).format('YYYY-MM-DD')}
+						</Text>
 					</CardItem>
 				</Card>
 
