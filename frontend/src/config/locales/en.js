@@ -85,5 +85,9 @@ export default {
 		recentlyAdded: 'Recently Added',
 		shareMessage: `Telerank - Find new Telegram Channels, Groups, Bots and Stickers. Available on the Playstore! {{url}}`,
 		shareTelegramUser: '@{{username}} ({{tgUrl}}) is listed on Telerank! Download the app: {{storeUrl}}',
+		group: 'Group',
+		channel: 'Channel',
+		bot: 'Bot',
+		sticker: 'Sticker',
 	},
 };
