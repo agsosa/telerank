@@ -36,3 +36,7 @@ Live: (work in progress, in playstore approval process)
   - TypeScript
   - React
   - Material UI
+
+#### Pending
+- Admin web panel
+- Auth0 implementation
