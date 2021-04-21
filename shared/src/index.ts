@@ -1,4 +1,34 @@
 const latinize = require('latinize');
+const pluralize = require('pluralize');
+
+/* Start entry type */
+
+export enum EnumEntryType {
+	CHANNEL = 'Channel',
+	BOT = 'Bot',
+	GROUP = 'Group',
+	STICKER = 'Sticker',
+}
+
+// Will try to get a EnumEntryType from a str (accepts any string, plurar or singular, uppercase or lowercase). Returns undefiend if it couldn't parse the string.
+export function parseEntryType(str: string): EnumEntryType | undefined {
+	let result = undefined;
+
+	if (str) {
+		const strEx = pluralize.singular(str).toLowerCase();
+		Object.values(EnumEntryType).forEach((v) => {
+			if (strEx === v.toLowerCase()) {
+				result = v;
+			}
+		});
+	}
+
+	return result;
+}
+
+/* End entry type */
+
+/* Start categories */
 
 export type TCategoryLocale = Record<string, string>;
 type TCategories = Record<string, TCategoryLocale>;
@@ -73,3 +103,5 @@ export function getCategoryFromLocaleString(localeStr: string): string {
 	}
 	return 'NO_CATEGORY';
 }
+
+/* End categories */

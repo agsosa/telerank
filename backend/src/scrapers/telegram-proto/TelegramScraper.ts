@@ -3,7 +3,7 @@ import scrapeIt, { ScrapeResult } from "scrape-it";
 import { log } from "../../lib/Helpers";
 import ITelegramInfo from "./ITelegramInfo";
 import IScrapedMedia from "../content-scrapers/IScrapedMedia";
-import { EnumEntryType } from "../../data/models/entry-model/EnumEntryType";
+import { EnumEntryType } from "telerank-shared/lib";
 
 // TODO: Add support for stickers
 export async function getTelegramInfo(

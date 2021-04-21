@@ -1,7 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCategoryFromLocaleString = exports.getLocaleObjectFromCategory = exports.Categories = void 0;
+exports.getCategoryFromLocaleString = exports.getLocaleObjectFromCategory = exports.Categories = exports.parseEntryType = exports.EnumEntryType = void 0;
 const latinize = require('latinize');
+const pluralize = require('pluralize');
+/* Start entry type */
+var EnumEntryType;
+(function (EnumEntryType) {
+    EnumEntryType["CHANNEL"] = "Channel";
+    EnumEntryType["BOT"] = "Bot";
+    EnumEntryType["GROUP"] = "Group";
+    EnumEntryType["STICKER"] = "Sticker";
+})(EnumEntryType = exports.EnumEntryType || (exports.EnumEntryType = {}));
+// Will try to get a EnumEntryType from a str (accepts any string, plurar or singular, uppercase or lowercase). Returns undefiend if it couldn't parse the string.
+function parseEntryType(str) {
+    let result = undefined;
+    if (str) {
+        const strEx = pluralize.singular(str).toLowerCase();
+        Object.values(EnumEntryType).forEach((v) => {
+            if (strEx === v.toLowerCase()) {
+                result = v;
+            }
+        });
+    }
+    return result;
+}
+exports.parseEntryType = parseEntryType;
 exports.Categories = Object.freeze({
     ANIMALS: { es: 'Animales', en: 'Animals' },
     EDUCATION: { es: 'Educación', en: 'Education' },
@@ -73,4 +96,5 @@ function getCategoryFromLocaleString(localeStr) {
     return 'NO_CATEGORY';
 }
 exports.getCategoryFromLocaleString = getCategoryFromLocaleString;
+/* End categories */
 //# sourceMappingURL=index.js.map
