@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { View, FlatList } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
-import { commonStyles } from '../../config/Styles';
-import VerticalCard from './VerticalCard';
-import LoadingIndicator from '../LoadingIndicator';
-import { getModuleData, getModuleInfo } from '../../lib/API';
-import NoEntriesFound from './NoEntriesFound';
-import NoMoreEntries from './NoMoreEntries';
-import Filters from './Filters';
-import { useIsMounted } from '../../lib/Helpers';
+import { commonStyles } from 'lib/Styles';
+import VerticalCard from 'components/entries/VerticalCard';
+import LoadingIndicator from 'components/LoadingIndicator';
+import { getModuleData, getModuleInfo } from 'lib/API';
+import NoEntriesFound from 'components/entries/NoEntriesFound';
+import NoMoreEntries from 'components/entries/NoMoreEntries';
+import Filters from 'components/entries/Filters';
+import { useIsMounted } from 'lib/Helpers';
 
 function CustomSearchBar() {
 	const [searchQuery, setSearchQuery] = useState('');

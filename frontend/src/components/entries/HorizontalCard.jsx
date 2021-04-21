@@ -4,10 +4,10 @@ import { Card, Caption } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import FastImage from 'react-native-fast-image';
-import { truncateWithEllipses, resolveImage, getEntrySubtitle } from '../../lib/Helpers';
-import NumberTag from '../NumberTag';
-import { colors } from '../../config/Styles';
-import FeaturedBadge from './FeaturedBadge';
+import { truncateWithEllipses, resolveImage, getEntrySubtitle } from 'lib/Helpers';
+import NumberTag from 'components/NumberTag';
+import { colors } from 'lib/Styles';
+import FeaturedBadge from 'components/entries/FeaturedBadge';
 
 const styles = StyleSheet.create({
 	caption: { alignSelf: 'center' },

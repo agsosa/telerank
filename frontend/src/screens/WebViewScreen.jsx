@@ -1,7 +1,7 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
 import { PropTypes } from 'prop-types';
-import LoadingIndicator from '../components/LoadingIndicator';
+import LoadingIndicator from 'components/LoadingIndicator';
 
 const RenderLoading = () => <LoadingIndicator />;
 

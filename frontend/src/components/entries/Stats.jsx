@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, ScrollView } from 'react-native';
 import { Grid, Col, Row } from 'native-base';
 import { useTranslation } from 'react-i18next';
-import { formattedNumber, useIsMounted } from '../../lib/Helpers';
-import { colors } from '../../config/Styles';
-import LoadingIndicator from '../LoadingIndicator';
-import { getModuleData } from '../../lib/API';
+import { formattedNumber, useIsMounted } from 'lib/Helpers';
+import { colors } from 'lib/Styles';
+import LoadingIndicator from 'components/LoadingIndicator';
+import { getModuleData } from 'lib/API';
 
 const styles = StyleSheet.create({
 	col: {

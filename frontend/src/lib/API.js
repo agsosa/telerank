@@ -2,10 +2,10 @@ import * as rax from 'retry-axios';
 import axios from 'axios';
 import moment from 'moment';
 import { MMKV } from 'react-native-mmkv';
-import { store } from '../state/Store';
+import { store } from 'lib/state/Store';
 
 // Base URL for the API calls
-const BASE_URL = 'http://19add10c22c3.ngrok.io';
+const BASE_URL = 'http://7264863152e9.ngrok.io';
 
 // Retry config
 const PROMISE_RETRY_TIMEOUT = 3000; // Wait time to retry the promise after failing all retry-axios attempts

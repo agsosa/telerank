@@ -8,11 +8,11 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { getPersistor } from '@rematch/persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-import { colors } from './config/Styles';
-import { Navigator } from './config/Routes';
-import StoreProvider from './state/Store';
-import Drawer from './components/navigation/Drawer';
-import './config/Locale';
+import { colors } from 'lib/Styles';
+import { Routes } from 'lib/Routes';
+import StoreProvider from 'lib/state/Store';
+import Drawer from 'components/navigation/Drawer';
+import 'lib/locale/Locale';
 
 const persistor = getPersistor();
 const ROBOTO = require('native-base/Fonts/Roboto.ttf');
@@ -50,7 +50,7 @@ function App() {
 					<PaperProvider theme={theme}>
 						<Drawer>
 							<StatusBar barStyle='light-content' translucent backgroundColor='transparent' />
-							<Navigator />
+							<Routes />
 							{/* <Button title="AD BANNER" /> */}
 						</Drawer>
 					</PaperProvider>

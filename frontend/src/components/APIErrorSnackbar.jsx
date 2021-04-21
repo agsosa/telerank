@@ -4,7 +4,7 @@ import { Snackbar } from 'react-native-paper';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { colors } from '../config/Styles';
+import { colors } from 'lib/Styles';
 
 const styles = StyleSheet.create({
 	snackbar: { backgroundColor: colors.tgDarkGray },

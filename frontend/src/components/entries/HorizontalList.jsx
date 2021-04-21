@@ -2,12 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { View, FlatList, StyleSheet } from 'react-native';
 import { Pagination } from 'react-native-snap-carousel';
 import { PropTypes } from 'prop-types';
-import { colors } from '../../config/Styles';
-import HorizontalCard from './HorizontalCard';
-import { getModuleData } from '../../lib/API';
-import LoadingIndicator from '../LoadingIndicator';
-import { useIsMounted } from '../../lib/Helpers';
-import NoEntriesFound from './NoEntriesFound';
+import { colors } from 'lib/Styles';
+import HorizontalCard from 'components/entries/HorizontalCard';
+import { getModuleData } from 'lib/API';
+import LoadingIndicator from 'components/LoadingIndicator';
+import { useIsMounted } from 'lib/Helpers';
+import NoEntriesFound from 'components/entries/NoEntriesFound';
 
 const styles = StyleSheet.create({
 	dot: {

@@ -5,11 +5,11 @@ import { Dimensions, StyleSheet, ScrollView, View, Image, Text, TouchableOpacity
 import { connect } from 'react-redux';
 import { List, Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import { colors, userPlaceholderImage } from '../../config/Styles';
-import { ShareApp, RateApp } from '../../lib/Share';
-import LanguageModal from '../modals/LanguageModal';
-import StatsModal from '../modals/StatsModal';
-import { getLocalizedLegalURLS, getCurrentLanguageDisplay } from '../../config/Locale';
+import { colors, userPlaceholderImage } from 'lib/Styles';
+import { ShareApp, RateApp } from 'lib/Share';
+import LanguageModal from 'components/modals/LanguageModal';
+import StatsModal from 'components/modals/StatsModal';
+import { getLocalizedLegalURLS, getCurrentLanguageDisplay } from 'lib/locale/Locale';
 
 const window = Dimensions.get('window');
 

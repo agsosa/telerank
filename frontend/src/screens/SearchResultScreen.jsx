@@ -2,8 +2,8 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import VerticalList from '../components/entries/VerticalList';
-import { colors } from '../config/Styles';
+import VerticalList from 'components/entries/VerticalList';
+import { colors } from 'lib/Styles';
 
 const styles = StyleSheet.create({
 	subtitleText: {

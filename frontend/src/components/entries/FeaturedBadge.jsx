@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, ViewPropTypes } from 'react-native';
 import { Badge, Icon } from 'native-base';
 import { useTranslation } from 'react-i18next';
-import { colors } from '../../config/Styles';
+import { colors } from 'lib/Styles';
 
 const styles = StyleSheet.create({
 	badge: { backgroundColor: colors.featured, flexDirection: 'row', transform: [{ scaleX: 0.85 }, { scaleY: 0.85 }] },

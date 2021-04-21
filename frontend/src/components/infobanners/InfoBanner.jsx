@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
-const img = require('../../../img/tg.png');
+const img = require('img/tg.png');
 
 const styles = StyleSheet.create({
 	action: { marginRight: 10, marginVertical: '-5%', paddingBottom: 15 },

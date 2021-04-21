@@ -5,7 +5,7 @@ import { useRoute } from '@react-navigation/native';
 import { func, PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import NavGradient from './NavGradient';
+import NavGradient from 'components/navigation/NavGradient';
 
 const styles = StyleSheet.create({
 	header: { backgroundColor: 'transparent', elevation: 0 },

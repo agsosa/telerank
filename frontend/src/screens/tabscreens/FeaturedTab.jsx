@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import VerticalList from '../../components/entries/VerticalList';
-import { colors } from '../../config/Styles';
-import NavTabs from '../../components/navigation/NavTabs';
+import VerticalList from 'components/entries/VerticalList';
+import { colors } from 'lib/Styles';
+import NavTabs from 'components/navigation/NavTabs';
 
 const styles = StyleSheet.create({
 	labelsContainer: {

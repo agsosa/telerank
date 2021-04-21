@@ -3,8 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Checkbox, Button } from 'react-native-paper';
 import { connect } from 'react-redux';
 import Collapsible from 'react-native-collapsible';
-import SectionTitle from '../SectionTitle';
-import { colors } from '../../config/Styles';
+import SectionTitle from 'components/SectionTitle';
+import { colors } from 'lib/Styles';
 
 // TODO: Finish
 

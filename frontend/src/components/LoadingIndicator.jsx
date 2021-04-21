@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { colors } from '../config/Styles';
+import { colors } from 'lib/Styles';
 
 const styles = StyleSheet.create({
 	loadingView: { alignItems: 'center', flex: 1, justifyContent: 'center', marginVertical: 50 },

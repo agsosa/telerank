@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import NavigationHeader from '../components/navigation/NavigationHeader';
-import MainScreen from '../screens/MainScreen';
-import DetailsScreen from '../screens/DetailsScreen';
-import ContactScreen from '../screens/ContactScreen';
-import AddMediaScreen from '../screens/AddMediaScreen';
-import PromoteScreen from '../screens/PromoteScreen';
-import SearchResultScreen from '../screens/SearchResultScreen';
-import WebViewScreen from '../screens/WebViewScreen';
+import NavigationHeader from 'components/navigation/NavigationHeader';
+import MainScreen from 'screens/MainScreen';
+import DetailsScreen from 'screens/DetailsScreen';
+import ContactScreen from 'screens/ContactScreen';
+import AddMediaScreen from 'screens/AddMediaScreen';
+import PromoteScreen from 'screens/PromoteScreen';
+import SearchResultScreen from 'screens/SearchResultScreen';
+import WebViewScreen from 'screens/WebViewScreen';
 
 const Stack = createStackNavigator();
 
@@ -63,7 +63,7 @@ export function getRouteInfo(route) {
 	return ROUTES.find((q) => q.name === route.name);
 }
 
-export function Navigator() {
+export function Routes() {
 	return (
 		<NavigationContainer>
 			<Stack.Navigator initialRouteName={DEFAULT_ROUTE} screenOptions={{ header: (props) => <NavigationHeader {...props} routeInfo={getRouteInfo} /> }}>

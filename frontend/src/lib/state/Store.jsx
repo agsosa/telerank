@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { PropTypes } from 'prop-types';
 import persistPlugin from '@rematch/persist';
 import { MMKV } from 'react-native-mmkv';
-import * as models from './Models';
+import * as models from 'lib/state/Models';
 
 export const storage = {
 	setItem: (key, value) => {

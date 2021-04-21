@@ -3,14 +3,14 @@ import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import { connect } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import HomeTab from './tabscreens/HomeTab';
-import APIErrorSnackbar from '../components/APIErrorSnackbar';
-import FeaturedTab from './tabscreens/FeaturedTab';
-import StickersTab from './tabscreens/StickersTab';
-import GroupsTab from './tabscreens/GroupsTab';
-import BotsTab from './tabscreens/BotsTab';
-import ChannelsTab from './tabscreens/ChannelsTab';
-import NavTabs from '../components/navigation/NavTabs';
+import HomeTab from 'screens/tabscreens/HomeTab';
+import APIErrorSnackbar from 'components/APIErrorSnackbar';
+import FeaturedTab from 'screens/tabscreens/FeaturedTab';
+import StickersTab from 'screens/tabscreens/StickersTab';
+import GroupsTab from 'screens/tabscreens/GroupsTab';
+import BotsTab from 'screens/tabscreens/BotsTab';
+import ChannelsTab from 'screens/tabscreens/ChannelsTab';
+import NavTabs from 'components/navigation/NavTabs';
 
 const MainScreen = ({ setDrawerNavigation }) => {
 	const { t } = useTranslation();

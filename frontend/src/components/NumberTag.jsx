@@ -2,8 +2,8 @@ import * as React from 'react';
 import { ViewPropTypes, Text } from 'react-native';
 import { Chip } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
-import { commonStyles } from '../config/Styles';
-import { formattedNumber } from '../lib/Helpers';
+import { commonStyles } from 'lib/Styles';
+import { formattedNumber } from 'lib/Helpers';
 
 export default function NumberTag({ icon, outlined, number, style, ...props }) {
 	return (

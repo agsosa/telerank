@@ -4,10 +4,10 @@ import { Right, Card, CardItem, Text, Left, Body } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { PropTypes } from 'prop-types';
 import FastImage from 'react-native-fast-image';
-import NumberTag from '../NumberTag';
-import { resolveImage, getEntrySubtitle } from '../../lib/Helpers';
-import { colors, commonStyles } from '../../config/Styles';
-import FeaturedBadge from './FeaturedBadge';
+import NumberTag from 'components/NumberTag';
+import { resolveImage, getEntrySubtitle } from 'lib/Helpers';
+import { colors, commonStyles } from 'lib/Styles';
+import FeaturedBadge from 'components/entries/FeaturedBadge';
 
 const styles = StyleSheet.create({
 	card: { elevation: 1, flex: 1 },

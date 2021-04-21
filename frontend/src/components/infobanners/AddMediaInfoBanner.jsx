@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import InfoBanner from './InfoBanner';
+import InfoBanner from 'components/infobanners/InfoBanner';
 
 const AddMediaInfoBanner = ({ hideKey, navigation }) => {
 	const { t } = useTranslation();

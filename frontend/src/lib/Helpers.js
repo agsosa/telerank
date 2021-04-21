@@ -1,6 +1,6 @@
 import React from 'react';
-import { getTranslatedCategory, getTranslatedType } from '../config/Locale';
-import { placeholderImage } from '../config/Styles';
+import { getTranslatedCategory, getTranslatedType } from 'lib/locale/Locale';
+import { placeholderImage } from 'lib/Styles';
 
 export function useIsMounted() {
 	const ref = React.useRef(true);

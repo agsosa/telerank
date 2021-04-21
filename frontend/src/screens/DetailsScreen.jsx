@@ -6,11 +6,11 @@ import { PropTypes } from 'prop-types';
 import moment from 'moment';
 import FastImage from 'react-native-fast-image';
 import { useTranslation } from 'react-i18next';
-import NumberTag from '../components/NumberTag';
-import { resolveImage, getEntrySubtitle } from '../lib/Helpers';
-import { colors, commonStyles } from '../config/Styles';
-import FeaturedBadge from '../components/entries/FeaturedBadge';
-import { ShareTelegram } from '../lib/Share';
+import NumberTag from 'components/NumberTag';
+import { resolveImage, getEntrySubtitle } from 'lib/Helpers';
+import { colors, commonStyles } from 'lib/Styles';
+import FeaturedBadge from 'components/entries/FeaturedBadge';
+import { ShareTelegram } from 'lib/Share';
 
 const stylesBtn = StyleSheet.create({
 	dislikeTag: { color: colors.red, fontSize: 22 },

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text } from 'react-native';
 import { Button, Dialog, Portal } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import Stats from '../entries/Stats';
+import Stats from 'components/entries/Stats';
 
 const StatsModal = React.forwardRef((props, ref) => {
 	const [visible, setVisible] = React.useState(false);

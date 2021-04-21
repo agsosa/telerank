@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Searchbar, Button } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { colors, commonStyles } from '../../config/Styles';
-import { getModuleData } from '../../lib/API';
-import LoadingIndicator from '../LoadingIndicator';
+import { colors, commonStyles } from 'lib/Styles';
+import { getModuleData } from 'lib/API';
+import LoadingIndicator from 'components/LoadingIndicator';
 
 const styles = StyleSheet.create({
 	buttonBase: { marginHorizontal: 10, width: '35%' },

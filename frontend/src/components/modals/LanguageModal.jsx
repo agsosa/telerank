@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Button, Dialog, Portal, RadioButton } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import { Languages } from '../../config/Locale';
+import { Languages } from 'lib/locale/Locale';
 
 const styles = StyleSheet.create({
 	text: { fontSize: 18, top: 5 },

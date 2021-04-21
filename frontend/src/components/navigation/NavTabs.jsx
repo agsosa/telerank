@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { PropTypes } from 'prop-types';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Button } from 'react-native-paper';
-import { colors } from '../../config/Styles';
+import { colors } from 'lib/Styles';
 
 const Tab = createMaterialTopTabNavigator();
 

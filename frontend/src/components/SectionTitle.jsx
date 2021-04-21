@@ -4,7 +4,7 @@ import React from 'react';
 import { View, StyleSheet, Text, ViewPropTypes } from 'react-native';
 import { Headline } from 'react-native-paper';
 import { PropTypes } from 'prop-types';
-import { colors } from '../config/Styles';
+import { colors } from 'lib/Styles';
 
 const styles = (size, color) =>
 	StyleSheet.create({

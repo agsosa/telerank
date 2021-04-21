@@ -1,4 +1,4 @@
-import { Languages } from '../config/Locale';
+import { Languages } from 'lib/locale/Locale';
 
 export const settings = {
 	name: 'settings',
