@@ -3,7 +3,7 @@ import sharp from "sharp";
 import imagemin from "imagemin";
 import imageminMozjpeg from "imagemin-mozjpeg";
 import fs from "fs";
-import { log, downloadImage } from "./Helpers";
+import { log, downloadImage } from "lib/Helpers";
 
 sharp.cache(false);
 

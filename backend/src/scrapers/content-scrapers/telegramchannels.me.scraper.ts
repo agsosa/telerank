@@ -5,12 +5,12 @@ import {
   parseEntryType,
   EnumEntryType,
 } from "telerank-shared/lib";
-import IScrapedMedia from "./IScrapedMedia";
-import { capitalizeStr, log } from "../../lib/Helpers";
+import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
+import { capitalizeStr, log } from "lib/Helpers";
 import {
   parseLanguage,
   EnumLanguage,
-} from "../../data/models/entry-model/EnumLanguage";
+} from "data/models/entry-model/EnumLanguage";
 
 // TODO: Extender clase Scraper
 

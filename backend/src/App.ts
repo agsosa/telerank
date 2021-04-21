@@ -1,16 +1,18 @@
+import "module-alias/register";
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
-import InitializeDatabase from "./data/Database";
-import CommonRoutesConfig from "./routes/common.routes.config";
-import EntriesRoutes from "./routes/entries.routes.config";
-import StatsRoutes from "./routes/stats.routes.config";
-import { InitializeJobs } from "./scrapers/jobs/ScraperJobsManager";
-import { InitializeTelegramProto } from "./scrapers/telegram-proto/TelegramProto";
-import JobsRoutes from "./routes/jobs.routes.config";
-import { log } from "./lib/Helpers";
+
+import InitializeDatabase from "data/Database";
+import CommonRoutesConfig from "routes/common.routes.config";
+import EntriesRoutes from "routes/entries.routes.config";
+import StatsRoutes from "routes/stats.routes.config";
+import { InitializeJobs } from "scrapers/jobs/ScraperJobsManager";
+import { InitializeTelegramProto } from "scrapers/telegram-proto/TelegramProto";
+import JobsRoutes from "routes/jobs.routes.config";
+import { log } from "lib/Helpers";
 
 // Configure app
 const port = 4001;

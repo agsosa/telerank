@@ -2,12 +2,12 @@
 import { MTProto } from "@mtproto/core";
 import moment from "moment";
 import scrapeIt, { ScrapeResult } from "scrape-it";
-import { sleep, log } from "../../lib/Helpers";
-import ITelegramInfo from "./ITelegramInfo";
-import TelegramSecrets from "./TelegramSecrets";
-import IScrapedMedia from "../content-scrapers/IScrapedMedia";
+import { sleep, log } from "lib/Helpers";
+import ITelegramInfo from "scrapers/telegram-proto/ITelegramInfo";
+import TelegramSecrets from "scrapers/telegram-proto/TelegramSecrets";
+import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
 import { EnumEntryType } from "telerank-shared/lib";
-import TelegramAuth from "./TelegramAuth";
+import TelegramAuth from "scrapers/telegram-proto/TelegramAuth";
 
 // Flood wait rate https://github.com/danog/MadelineProto/issues/284
 let callTime: moment.Moment | null; // Time it took to make the api calls before a FLOOD_WAIT error

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { log } from "../lib/Helpers";
+import { log } from "lib/Helpers";
 
 const mongoURL = "mongodb://localhost/telerank";
 

@@ -1,6 +1,6 @@
 import moment from "moment";
-import * as EntryModel from "./entry-model/EntryModel";
-import { log } from "../../lib/Helpers";
+import * as EntryModel from "data/models/entry-model/EntryModel";
+import { log } from "lib/Helpers";
 
 const STATS_CACHE_EXPIRATION_SECONDS = 5 * 60;
 

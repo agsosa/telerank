@@ -1,8 +1,8 @@
 /* eslint-disable camelcase */
 import scrapeIt, { ScrapeResult } from "scrape-it";
-import { log } from "../../lib/Helpers";
-import ITelegramInfo from "./ITelegramInfo";
-import IScrapedMedia from "../content-scrapers/IScrapedMedia";
+import { log } from "lib/Helpers";
+import ITelegramInfo from "scrapers/telegram-proto/ITelegramInfo";
+import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
 import { EnumEntryType } from "telerank-shared/lib";
 
 // TODO: Add support for stickers

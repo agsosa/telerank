@@ -1,10 +1,10 @@
 import moment from "moment";
-import { log } from "../../lib/Helpers";
-import Job from "./Job";
-import PopulateDatabase from "./PopulateDatabaseJob";
-import RefreshEntriesTelegramInfos from "./RefreshEntriesTelegramInfos";
-import { isDatabaseReady } from "../../data/Database";
-import { isTelegramProtoReady } from "../telegram-proto/TelegramProto";
+import { log } from "lib/Helpers";
+import Job from "scrapers/jobs/Job";
+import PopulateDatabase from "scrapers/jobs/PopulateDatabaseJob";
+import RefreshEntriesTelegramInfos from "scrapers/jobs/RefreshEntriesTelegramInfos";
+import { isDatabaseReady } from "data/Database";
+import { isTelegramProtoReady } from "scrapers/telegram-proto/TelegramProto";
 
 let interval: NodeJS.Timeout;
 const JOBS_INTERVAL_TIME = 15 * 1000; // Time between each jobsInterval() run (ms)

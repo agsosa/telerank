@@ -1,7 +1,7 @@
 import express from "express";
-import CommonRoutesConfig from "./common.routes.config";
-import { getCurrentFloodWait } from "../scrapers/telegram-proto/TelegramProto";
-import { getRunningJobs } from "../scrapers/jobs/ScraperJobsManager";
+import CommonRoutesConfig from "routes/common.routes.config";
+import { getCurrentFloodWait } from "scrapers/telegram-proto/TelegramProto";
+import { getRunningJobs } from "scrapers/jobs/ScraperJobsManager";
 
 // TODO: Add admin permission auth
 

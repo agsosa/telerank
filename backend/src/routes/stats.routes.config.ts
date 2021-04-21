@@ -1,6 +1,6 @@
 import express from "express";
-import CommonRoutesConfig from "./common.routes.config";
-import { GetStats } from "../data/models/StatsModel";
+import CommonRoutesConfig from "routes/common.routes.config";
+import { GetStats } from "data/models/StatsModel";
 
 export default class StatsRoutes extends CommonRoutesConfig {
   constructor(app: express.Application) {
