@@ -1,3 +1,4 @@
+require("dotenv").config();
 import "module-alias/register";
 import express from "express";
 import helmet from "helmet";
@@ -15,7 +16,7 @@ import JobsRoutes from "routes/jobs.routes.config";
 import { log } from "lib/Helpers";
 
 // Configure app
-const port = 4001;
+const port = process.env.PORT || 4001;
 const limiterOptions = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 150,
@@ -25,7 +26,6 @@ const app = express();
 app.use(helmet());
 app.use(compression());
 app.use(cors());
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // app.enable('trust proxy'); // reverse proxy (heroku, nginx) https://expressjs.com/en/guide/behind-proxies.html
 app.use(limiterOptions);
@@ -48,7 +48,4 @@ app.get("/", (req, res) => {
 
 app.listen(port, () => {
   log.info(`Server listening on port ${port}`);
-  routes.forEach((route: CommonRoutesConfig) => {
-    log.info(`Routes configured for ${route.getName()}`);
-  });
 });

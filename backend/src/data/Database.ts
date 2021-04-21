@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { log } from "lib/Helpers";
 
-const mongoURL = "mongodb://localhost/telerank";
+const mongoURL = process.env.MONGODB_URL || "";
 
 export default function InitializeDatabase(): Promise<void> {
   return new Promise((resolve) => {

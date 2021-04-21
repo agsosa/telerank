@@ -10,10 +10,10 @@ sharp.cache(false);
 // TODO: Move project id, bucket url, etc. to environment variables
 const storage = new Storage({
   keyFilename: "./serviceAccountKey.json",
-  projectId: "telerank-e9b37",
+  projectId: process.env.GCLOUD_PROJECT_ID,
 });
 
-const bucket = storage.bucket("telerank-e9b37.appspot.com");
+const bucket = storage.bucket(process.env.GCLOUD_BUCKET_URL || "");
 
 /*
  * Upload an image to a Google Cloud Storage bucket.
