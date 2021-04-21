@@ -1,23 +1,9 @@
 import moment from "moment";
 import * as EntryModel from "data/models/entry-model/EntryModel";
 import { log } from "lib/Helpers";
+import IStats from "data/models/IStats";
 
 const STATS_CACHE_EXPIRATION_SECONDS = 5 * 60;
-
-export interface IStats {
-  channels: number;
-  groups: number;
-  bots: number;
-  stickers: number;
-  spanish: number;
-  english: number;
-  members: number;
-  ratings: number;
-  featured: number;
-  removed: number;
-  pending: number;
-  views: number;
-}
 
 interface IStatsObj {
   expirationTime: moment.Moment | null;

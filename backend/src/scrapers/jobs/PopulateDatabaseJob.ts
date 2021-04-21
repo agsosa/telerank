@@ -4,7 +4,7 @@ import Job from "scrapers/jobs/Job";
 import scrapeTelegramChannelsMe from "scrapers/content-scrapers/telegramchannels.me.scraper";
 import { uploadPhoto } from "lib/GCloud";
 import * as EntryModel from "data/models/entry-model/EntryModel";
-import { IEntry } from "data/models/entry-model/IEntry";
+import { IEntry } from "data/models/IEntry";
 import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
 import { log } from "lib/Helpers";
 import { getTelegramInfo } from "scrapers/telegram-proto/TelegramScraper";

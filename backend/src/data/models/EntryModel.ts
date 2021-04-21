@@ -1,6 +1,6 @@
 import { model, Schema, Model } from "mongoose";
 import fuzzySearching from "mongoose-fuzzy-searching";
-import { IEntry, IEntryDocument } from "data/models/entry-model/IEntry";
+import { IEntry, IEntryDocument } from "data/models/IEntry";
 import { EnumLanguage } from "data/models/entry-model/EnumLanguage";
 
 // TODO: Implement cache?
