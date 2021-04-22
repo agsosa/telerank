@@ -15,7 +15,7 @@ import { ShareTelegram } from 'lib/Share';
 const stylesBtn = StyleSheet.create({
 	dislikeTag: { color: colors.red, fontSize: 22 },
 	likeTag: { color: colors.green, fontSize: 22 },
-	likesPadding: { borderWidth: 1, marginHorizontal: 5, padding: 15 },
+	likesPadding: { borderWidth: 1, marginHorizontal: 5, padding: 5 },
 	reportBtn: { borderColor: colors.red, borderWidth: 0.3, marginRight: 15, marginTop: 10 },
 	reportContent: { color: colors.red, fontSize: 12 },
 	shareBtn: { borderColor: colors.mainLight, borderWidth: 0.3, marginTop: 10 },
