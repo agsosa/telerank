@@ -3,7 +3,7 @@
 import Job from "scrapers/jobs/Job";
 import scrapeTelegramChannelsMe from "scrapers/content-scrapers/telegramchannels.me.scraper";
 import { uploadPhoto } from "lib/GCloud";
-import * as EntryModel from "data/models/entry-model/EntryModel";
+import * as EntryModel from "data/models/EntryModel";
 import { IEntry } from "data/models/IEntry";
 import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
 import { log } from "lib/Helpers";
@@ -39,8 +39,7 @@ export default class PopulateDatabaseJob extends Job {
     super(options);
   }
 
-  async run(): Promise<void> {
-    super.run();
+  async runJob(): Promise<void> {
     try {
       const mediaList: IScrapedMedia[] = await scrapeTelegramChannelsMe();
 

@@ -18,6 +18,8 @@ export default abstract class Job {
 
   options: IJobOptions;
 
+  protected abstract runJob(): void;
+
   constructor(options: IJobOptions = defaultOptions) {
     this.startDate = undefined;
     this.isRunning = false;
@@ -29,6 +31,7 @@ export default abstract class Job {
     this.startDate = new Date();
     this.isRunning = true;
     log.info(`Running job: ${this.options.name}`);
+    this.runJob();
   }
 
   protected onError(err: any): void {
