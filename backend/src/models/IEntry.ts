@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
 import { EnumLanguage } from "telerank-shared/lib/Language";
-import { EnumEntryType } from "telerank-shared/lib/index";
+import { EnumEntryType } from "telerank-shared/lib/EntryType";
 
 export interface IEntry {
   username: string;

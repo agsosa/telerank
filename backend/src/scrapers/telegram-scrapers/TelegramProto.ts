@@ -6,7 +6,7 @@ import { sleep, log } from "lib/Helpers";
 import ITelegramInfo from "scrapers/telegram-scrapers/ITelegramInfo";
 import TelegramSecrets from "scrapers/telegram-scrapers/TelegramSecrets";
 import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
-import { EnumEntryType } from "telerank-shared/lib";
+import { EnumEntryType } from "telerank-shared/lib/EntryType";
 import TelegramAuth from "scrapers/telegram-scrapers/TelegramAuth";
 
 // Flood wait rate https://github.com/danog/MadelineProto/issues/284

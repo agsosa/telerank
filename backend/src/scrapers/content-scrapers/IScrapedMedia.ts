@@ -1,4 +1,4 @@
-import { EnumEntryType } from "telerank-shared/lib";
+import { EnumEntryType } from "telerank-shared/lib/EntryType";
 import { EnumLanguage } from "telerank-shared/lib/Language";
 
 export default interface IScrapedMedia {

@@ -1,10 +1,7 @@
 import scrapeIt, { ScrapeResult } from "scrape-it";
 import _ from "lodash";
-import {
-  getCategoryFromLocaleString,
-  parseEntryType,
-  EnumEntryType,
-} from "telerank-shared/lib";
+import { parseEntryType, EnumEntryType } from "telerank-shared/lib/EntryType";
+import { getCategoryFromLocaleString } from "telerank-shared/lib/Category";
 import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
 import { capitalizeStr, log } from "lib/Helpers";
 import { parseLanguage, EnumLanguage } from "telerank-shared/lib/Language";

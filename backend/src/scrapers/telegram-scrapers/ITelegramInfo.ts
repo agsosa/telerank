@@ -1,4 +1,4 @@
-import { EnumEntryType } from "telerank-shared/lib";
+import { EnumEntryType } from "telerank-shared/lib/EntryType";
 
 interface ITelegramInfo {
   username: string;
