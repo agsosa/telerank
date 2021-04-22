@@ -42,6 +42,7 @@ Live: (work in progress, in playstore approval process)
 - Auth0 implementation
 
 #### Screenshots
-![screen1](https://user-images.githubusercontent.com/23263273/115783980-ea382480-a393-11eb-856a-918305a48315.png)
+
 ![screen2](https://user-images.githubusercontent.com/23263273/115783986-eb695180-a393-11eb-9dd0-dd9a3a951972.png)
+![screen1](https://user-images.githubusercontent.com/23263273/115783980-ea382480-a393-11eb-856a-918305a48315.png)
 
