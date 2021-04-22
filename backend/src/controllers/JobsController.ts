@@ -1,6 +1,6 @@
 import express from "express";
 import { getCurrentFloodWait } from "scrapers/telegram-proto/TelegramProto";
-import { getRunningJobs } from "scrapers/jobs/ScraperJobsManager";
+import { getRunningJobs } from "jobs/JobsManager";
 
 export function getStatus(
   req: express.Request,

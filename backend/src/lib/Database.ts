@@ -16,6 +16,7 @@ export default function initializeDatabase(): Promise<void> {
         },
         (err) => {
           if (err) {
+            // Retry on connect fail
             log.error(`mongoose.connect failed on startup - retrying\n${err}`);
             setTimeout(connect, 3000);
           } else {

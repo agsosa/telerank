@@ -1,5 +1,5 @@
 import { log } from "lib/Helpers";
-import IJobOptions from "scrapers/jobs/IJobOptions";
+import IJobOptions from "jobs/IJobOptions";
 
 const defaultOptions: IJobOptions = {
   name: "UnnamedJob",

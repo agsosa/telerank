@@ -8,6 +8,7 @@
     "lib": "dist/lib",
     "models": "dist/models",
     "routes": "dist/routes",
+    "jobs": "dist/jobs",
     "scrapers": "dist/scrapers",
     "controllers": "dist/controllers"
   },

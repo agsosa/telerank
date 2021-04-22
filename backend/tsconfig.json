@@ -10,6 +10,7 @@
     "baseUrl": "src",
     "paths": {
       "data/*": ["data/*"],
+      "jobs/*": ["jobs/*"],
       "lib/*": ["lib/*"],
       "routes/*": ["routes/*"],
       "models/*": ["models/*"],

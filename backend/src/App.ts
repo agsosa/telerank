@@ -8,7 +8,7 @@ import compression from "compression";
 
 import initializeDatabase from "lib/Database";
 import { initializeRoutes } from "routes";
-import { initializeJobs } from "scrapers/jobs/ScraperJobsManager";
+import { initializeJobs } from "jobs/JobsManager";
 import { initializeTelegramProto } from "scrapers/telegram-proto/TelegramProto";
 import { log } from "lib/Helpers";
 
