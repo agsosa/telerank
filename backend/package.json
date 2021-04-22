@@ -8,7 +8,8 @@
     "lib": "dist/lib",
     "models": "dist/models",
     "routes": "dist/routes",
-    "scrapers": "dist/scrapers"
+    "scrapers": "dist/scrapers",
+    "controllers": "dist/controllers"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.1",

@@ -10,8 +10,10 @@
     "baseUrl": "src",
     "paths": {
       "data/*": ["data/*"],
-      "@lib/*": ["lib/*"],
+      "lib/*": ["lib/*"],
       "routes/*": ["routes/*"],
+      "models/*": ["models/*"],
+      "controllers/*": ["controllers/*"],
       "scrapers/*": ["scrapers/*"]
     }
   }

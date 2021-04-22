@@ -1,12 +1,5 @@
 import express from "express";
-import * as EntryModel from "models/EntryModel";
-import { parseEntryType } from "telerank-shared/lib";
-
-const LIMIT_PER_PAGE = 20; // Limit of objects returned per page
-const LIMIT_RECENT = 5; // Max entries returned by /entries/recent
-const LIMIT_POPULAR = 50; // Max entries returned by /entries/popular
-const LIMIT_BIGGEST = 50; // Max entries returned by /entries/biggest
-const LIMIT_TOP = 50; // Max entries returned by /entries/top
+import * as controller from "controllers/entries.controller";
 
 export function initialize(router: express.Router) {
   /*
@@ -21,51 +14,7 @@ export function initialize(router: express.Router) {
         Array of max. LimitPerPage IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Not sorted.
     */
-  router
-    .route(`/entries`)
-    .get(
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        // Query param: page
-        const queryPage = Number(req.query.page);
-        const isQueryPageValid =
-          !Number.isNaN(queryPage) && queryPage % 1 === 0;
-
-        // Query param: type
-        const queryType = req.query.type?.toString();
-        const parsedQueryType = queryType
-          ? parseEntryType(queryType)
-          : undefined;
-
-        // Query param: search
-        const querySearch = req.query.search?.toString();
-
-        // Final params
-        const search = querySearch || "";
-        const type = parsedQueryType ? { type: parsedQueryType } : {};
-        const page = isQueryPageValid ? queryPage : 0;
-
-        EntryModel.GetPaginatedList(
-          LIMIT_PER_PAGE,
-          page,
-          true,
-          type,
-          {},
-          search
-        ) // TODO: Check EntryModel.GetList parameter includeDescription
-          .then((result) => {
-            res.status(200).send(result);
-          })
-          .catch((e) => {
-            const error = new Error(e.codeName);
-            res.status(400);
-            next(error);
-          });
-      }
-    );
+  router.route(`/entries`).get(controller.getList);
 
   /*
       API Endpoint: /entries/featured
@@ -76,25 +25,7 @@ export function initialize(router: express.Router) {
         Array of IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Not sorted
     */
-  router
-    .route(`/entries/featured`)
-    .get(
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        EntryModel.GetList({ featured: true }, {}, true)
-          .then((result) => {
-            res.status(200).send(result);
-          })
-          .catch((e) => {
-            const error = new Error(e.codeName);
-            res.status(400);
-            next(error);
-          });
-      }
-    );
+  router.route(`/entries/featured`).get(controller.getFeaturedList);
 
   /*
       API Endpoint: /entries/biggest
@@ -105,25 +36,7 @@ export function initialize(router: express.Router) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by members count (descending)
     */
-  router
-    .route(`/entries/biggest`)
-    .get(
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        EntryModel.GetList({}, { members: "desc" }, true, LIMIT_BIGGEST)
-          .then((result) => {
-            res.status(200).send(result);
-          })
-          .catch((e) => {
-            const error = new Error(e.codeName);
-            res.status(400);
-            next(error);
-          });
-      }
-    );
+  router.route(`/entries/biggest`).get(controller.getBiggestList);
 
   /*
       API Endpoint: /entries/popular
@@ -134,25 +47,7 @@ export function initialize(router: express.Router) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by views count (descending)
     */
-  router
-    .route(`/entries/popular`)
-    .get(
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        EntryModel.GetList({}, { views: "desc" }, true, LIMIT_POPULAR)
-          .then((result) => {
-            res.status(200).send(result);
-          })
-          .catch((e) => {
-            const error = new Error(e.codeName);
-            res.status(400);
-            next(error);
-          });
-      }
-    );
+  router.route(`/entries/popular`).get(controller.getPopularList);
 
   /*
       API Endpoint: /entries/top
@@ -163,30 +58,7 @@ export function initialize(router: express.Router) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by likes (descending) and dislikes(ascending)
     */
-  router
-    .route(`/entries/top`)
-    .get(
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        EntryModel.GetList(
-          {},
-          { likes: "desc", dislikes: "asc" },
-          true,
-          LIMIT_TOP
-        )
-          .then((result) => {
-            res.status(200).send(result);
-          })
-          .catch((e) => {
-            const error = new Error(e.codeName);
-            res.status(400);
-            next(error);
-          });
-      }
-    );
+  router.route(`/entries/top`).get(controller.getTopList);
 
   /*
       API Endpoint: /entries/recent
@@ -197,25 +69,7 @@ export function initialize(router: express.Router) {
         Array of max 10 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by added date
     */
-  router
-    .route(`/entries/recent`)
-    .get(
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        EntryModel.GetList({}, { addedDate: "desc" }, true, LIMIT_RECENT)
-          .then((result) => {
-            res.status(200).send(result);
-          })
-          .catch((e) => {
-            const error = new Error(e.codeName);
-            res.status(400);
-            next(error);
-          });
-      }
-    );
+  router.route(`/entries/recent`).get(controller.getRecentList);
 
   /*
       API Endpoint: /entries/random
@@ -225,23 +79,5 @@ export function initialize(router: express.Router) {
       Return JSON:
         A random IEntry
     */
-  router
-    .route(`/entries/random`)
-    .get(
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction
-      ) => {
-        EntryModel.getRandomEntry()
-          .then((result) => {
-            res.status(200).send(result);
-          })
-          .catch((e) => {
-            const error = new Error(e.codeName);
-            res.status(400);
-            next(error);
-          });
-      }
-    );
+  router.route(`/entries/random`).get(controller.getRandom);
 }
