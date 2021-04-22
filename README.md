@@ -3,7 +3,7 @@ Mobile App to browse and rate Telegram groups, channels, bots and stickers. Incl
 
 Live: (work in progress, in playstore approval process)
 
-#### Features
+### Features
 - Browse more than 5000 Telegram groups, channels, bots and stickers
 - Multi-language support
 - Submit your own community, bot or sticker set to the directory (Auth0)
@@ -15,7 +15,7 @@ Live: (work in progress, in playstore approval process)
 - Web scrapers are executed periodically by the "scraper-jobs" module to scrape new Telegram usernames, scrape Telegram info, update existing entries and more
 - Web panel for administrators to moderate, modify, update, delete existing entries and manage the app.
 
-#### Used libs/frameworks
+### Used libs/frameworks
 - **Frontend:**
   - React Native 
   - Rematch (Redux) 
@@ -37,11 +37,11 @@ Live: (work in progress, in playstore approval process)
   - React
   - Material UI
 
-#### Pending
+### Pending
 - Admin web panel
 - Auth0 implementation
 
-#### Screenshots
+### Screenshots
 
 ![screen2](https://user-images.githubusercontent.com/23263273/115783986-eb695180-a393-11eb-9dd0-dd9a3a951972.png)
 ![screen1](https://user-images.githubusercontent.com/23263273/115783980-ea382480-a393-11eb-856a-918305a48315.png)
