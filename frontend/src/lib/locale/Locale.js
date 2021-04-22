@@ -7,7 +7,7 @@ import { getLocales } from 'react-native-localize';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { MMKV } from 'react-native-mmkv';
-import { getLocaleObjectFromCategory } from 'telerank-shared/lib';
+import { getLocaleObjectFromCategory } from 'telerank-shared/lib/Category';
 import en from 'lib/locale/en';
 import es from 'lib/locale/es';
 
@@ -36,7 +36,8 @@ export const getTranslatedCategory = (categoryKey) => {
 
 export const getTranslatedType = (typeKey) => i18n.t(typeKey.toLowerCase());
 
-export function initializeLocale() {
+// initializeLocale: Called automatically on file import. Import this file on app startup to initialize i18next as soon as possible
+(function initializeLocale() {
 	// Custom i18next LanguageDetector plugin using MMKV for persistence
 	const LanguageDetector = {
 		type: 'languageDetector',
@@ -66,4 +67,4 @@ export function initializeLocale() {
 				escapeValue: false,
 			},
 		});
-}
+})();

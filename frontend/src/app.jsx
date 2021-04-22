@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-require('lib/locale/Locale').initializeLocale();
+import 'lib/locale/Locale';
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
