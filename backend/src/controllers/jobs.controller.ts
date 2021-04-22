@@ -1,0 +1,13 @@
+import express from "express";
+import { getCurrentFloodWait } from "scrapers/telegram-proto/TelegramProto";
+import { getRunningJobs } from "scrapers/jobs/ScraperJobsManager";
+
+export function getStatus(
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) {
+  getCurrentFloodWait().then((result: number) => {
+    res.status(200).send({ FLOOD_WAIT: result, runningJobs: getRunningJobs() });
+  });
+}

@@ -1,13 +1,6 @@
 import express from "express";
-import { getCurrentFloodWait } from "scrapers/telegram-proto/TelegramProto";
-import { getRunningJobs } from "scrapers/jobs/ScraperJobsManager";
+import * as controller from "controllers/jobs.controller";
 
 export function initialize(router: express.Router): void {
-  router.route(`/jobs`).get((req: express.Request, res: express.Response) => {
-    getCurrentFloodWait().then((result: number) => {
-      res
-        .status(200)
-        .send({ FLOOD_WAIT: result, runningJobs: getRunningJobs() });
-    });
-  });
+  router.get(`/jobs`, controller.getStatus);
 }

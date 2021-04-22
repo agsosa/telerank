@@ -14,7 +14,7 @@ export function initialize(router: express.Router) {
         Array of max. LimitPerPage IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Not sorted.
     */
-  router.route(`/entries`).get(controller.getList);
+  router.get(`/entries`, controller.getList);
 
   /*
       API Endpoint: /entries/featured
@@ -25,7 +25,7 @@ export function initialize(router: express.Router) {
         Array of IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Not sorted
     */
-  router.route(`/entries/featured`).get(controller.getFeaturedList);
+  router.get(`/entries/featured`, controller.getFeaturedList);
 
   /*
       API Endpoint: /entries/biggest
@@ -36,7 +36,7 @@ export function initialize(router: express.Router) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by members count (descending)
     */
-  router.route(`/entries/biggest`).get(controller.getBiggestList);
+  router.get(`/entries/biggest`, controller.getBiggestList);
 
   /*
       API Endpoint: /entries/popular
@@ -47,7 +47,7 @@ export function initialize(router: express.Router) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by views count (descending)
     */
-  router.route(`/entries/popular`).get(controller.getPopularList);
+  router.get(`/entries/popular`, controller.getPopularList);
 
   /*
       API Endpoint: /entries/top
@@ -58,7 +58,7 @@ export function initialize(router: express.Router) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by likes (descending) and dislikes(ascending)
     */
-  router.route(`/entries/top`).get(controller.getTopList);
+  router.get(`/entries/top`, controller.getTopList);
 
   /*
       API Endpoint: /entries/recent
@@ -69,7 +69,7 @@ export function initialize(router: express.Router) {
         Array of max 10 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by added date
     */
-  router.route(`/entries/recent`).get(controller.getRecentList);
+  router.get(`/entries/recent`, controller.getRecentList);
 
   /*
       API Endpoint: /entries/random
@@ -79,5 +79,5 @@ export function initialize(router: express.Router) {
       Return JSON:
         A random IEntry
     */
-  router.route(`/entries/random`).get(controller.getRandom);
+  router.get(`/entries/random`, controller.getRandom);
 }
