@@ -3,7 +3,7 @@ import { log } from "lib/Helpers";
 
 const mongoURL = process.env.MONGODB_URL || "";
 
-export default function InitializeDatabase(): Promise<void> {
+export default function initializeDatabase(): Promise<void> {
   return new Promise((resolve) => {
     function connect() {
       mongoose.connect(

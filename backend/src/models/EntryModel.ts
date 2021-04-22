@@ -1,7 +1,7 @@
 import { model, Schema, Model } from "mongoose";
 import fuzzySearching from "mongoose-fuzzy-searching";
-import { IEntry, IEntryDocument } from "data/models/IEntry";
-import { EnumLanguage } from "data/models/EnumLanguage";
+import { IEntry, IEntryDocument } from "models/IEntry";
+import { EnumLanguage } from "models/EnumLanguage";
 
 // TODO: Implement cache?
 // TODO: Implement EnumCategories/Categories from /shared/

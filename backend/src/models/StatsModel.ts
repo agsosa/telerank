@@ -1,7 +1,7 @@
 import moment from "moment";
-import * as EntryModel from "data/models/EntryModel";
+import * as EntryModel from "models/EntryModel";
 import { log } from "lib/Helpers";
-import IStats from "data/models/IStats";
+import IStats from "models/IStats";
 
 const STATS_CACHE_EXPIRATION_SECONDS = 5 * 60;
 

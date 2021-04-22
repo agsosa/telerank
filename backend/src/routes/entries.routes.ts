@@ -1,5 +1,5 @@
 import express from "express";
-import * as EntryModel from "data/models/EntryModel";
+import * as EntryModel from "models/EntryModel";
 import { parseEntryType } from "telerank-shared/lib";
 
 const LIMIT_PER_PAGE = 20; // Limit of objects returned per page

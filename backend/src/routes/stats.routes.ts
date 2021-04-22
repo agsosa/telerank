@@ -1,5 +1,5 @@
 import express from "express";
-import { GetStats } from "data/models/StatsModel";
+import { GetStats } from "models/StatsModel";
 
 export function initialize(app: express.Application): void {
   // Parameters: none
