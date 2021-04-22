@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Checkbox, Button } from 'react-native-paper';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Collapsible from 'react-native-collapsible';
 import SectionTitle from 'components/SectionTitle';
 import { colors } from 'lib/Styles';
+import { EnumEntryType } from 'telerank-shared/lib/EntryType';
+import { getTranslatedEntryType, getTranslatedLanguage } from 'lib/locale/Locale';
+import { EnumLanguage } from 'telerank-shared/lib/Language';
 
 // TODO: Finish
 
@@ -26,50 +29,42 @@ const styles = StyleSheet.create({
 
 const checkedColor = colors.pink;
 
-const Filters = ({ enabledFilters }) => {
-	const [collapsed, setCollapsed] = useState(true); // TODO: Pasar a redux
+const Filters = () => {
+	const { collapsed } = useSelector((state) => state.currentFilters);
+	const dispatch = useDispatch();
+
+	function handleCollapseBtnPress() {
+		dispatch({ type: 'currentFilters/toggleCollapsed' });
+	}
 
 	return (
 		<View>
-			<Button icon={collapsed ? 'filter-menu' : 'filter-minus'} onPress={() => setCollapsed(!collapsed)}>
+			<Button icon={collapsed ? 'filter-menu' : 'filter-minus'} onPress={handleCollapseBtnPress}>
 				<Text>{collapsed ? 'Show' : 'Hide'} filters</Text>
 			</Button>
 			<Collapsible collapsed={collapsed}>
 				<View style={styles.mainView}>
 					<SectionTitle style={styles.filterText} size={15} text='Types' />
-
 					<View style={styles.listView}>
-						<View style={styles.itemView}>
-							<Checkbox status='checked' color={checkedColor} />
-							<Text style={styles.checkboxLabel}>Channels</Text>
-						</View>
-						<View style={styles.itemView}>
-							<Checkbox status='checked' color={checkedColor} />
-							<Text style={styles.checkboxLabel}>Groups</Text>
-						</View>
-						<View style={styles.itemView}>
-							<Checkbox status='checked' color={checkedColor} />
-							<Text style={styles.checkboxLabel}>Bots</Text>
-						</View>
-						<View style={styles.itemView}>
-							<Checkbox status='checked' color={checkedColor} />
-							<Text style={styles.checkboxLabel}>Stickers</Text>
-						</View>
+						{Object.values(EnumEntryType).map((q) => {
+							return (
+								<View key={q} style={styles.itemView}>
+									<Checkbox status='checked' color={checkedColor} />
+									<Text style={styles.checkboxLabel}>{getTranslatedEntryType(q)}</Text>
+								</View>
+							);
+						})}
 					</View>
 					<SectionTitle style={styles.filterText} size={15} text='Languages' />
 					<View style={styles.listView}>
-						<View style={styles.itemView}>
-							<Checkbox />
-							<Text style={styles.checkboxLabel} color={checkedColor}>
-								English
-							</Text>
-						</View>
-						<View style={styles.itemView}>
-							<Checkbox />
-							<Text style={styles.checkboxLabel} color={checkedColor}>
-								Español
-							</Text>
-						</View>
+						{Object.values(EnumLanguage).map((q) => {
+							return (
+								<View key={q} style={styles.itemView}>
+									<Checkbox status='checked' color={checkedColor} />
+									<Text style={styles.checkboxLabel}>{getTranslatedLanguage(q)}</Text>
+								</View>
+							);
+						})}
 					</View>
 				</View>
 			</Collapsible>
