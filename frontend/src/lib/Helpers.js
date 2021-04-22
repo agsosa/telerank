@@ -14,7 +14,7 @@ export function useIsMounted() {
 }
 
 export function getEntrySubtitle(data) {
-	return `${getTranslatedEntryType(data.type)} / ${getTranslatedCategory(data.category)}`;
+	return `${getTranslatedEntryType(data.type)} / ${getTranslatedCategory(data.category)} / ${data.language.toUpperCase()}`;
 }
 
 // Slice long strings and add ... at the end
