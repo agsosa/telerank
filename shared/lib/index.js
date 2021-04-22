@@ -11,7 +11,7 @@ var EnumEntryType;
     EnumEntryType["GROUP"] = "Group";
     EnumEntryType["STICKER"] = "Sticker";
 })(EnumEntryType = exports.EnumEntryType || (exports.EnumEntryType = {}));
-// Will try to get a EnumEntryType from a str (accepts any string, plurar or singular, uppercase or lowercase). Returns undefiend if it couldn't parse the string.
+// Will try to get a EnumEntryType from a str (accepts any string, plurar or singular, uppercase or lowercase). Returns undefined if it couldn't parse the string.
 function parseEntryType(str) {
     let result = undefined;
     if (str) {

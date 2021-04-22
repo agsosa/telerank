@@ -7,7 +7,7 @@ import {
 } from "telerank-shared/lib";
 import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
 import { capitalizeStr, log } from "lib/Helpers";
-import { parseLanguage, EnumLanguage } from "models/EnumLanguage";
+import { parseLanguage, EnumLanguage } from "telerank-shared/lib/Language";
 
 // TODO: Extender clase Scraper
 
