@@ -2,7 +2,7 @@ import moment from "moment";
 import { log } from "lib/Helpers";
 import Job from "scrapers/jobs/Job";
 import PopulateDatabase from "scrapers/jobs/PopulateDatabaseJob";
-import RefreshEntriesTelegramInfos from "scrapers/jobs/RefreshEntriesTelegramInfos";
+import RefreshEntriesTelegramInfos from "scrapers/jobs/RefreshEntriesJob";
 import { isDatabaseReady } from "lib/Database";
 import { isTelegramProtoReady } from "scrapers/telegram-proto/TelegramProto";
 

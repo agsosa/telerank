@@ -37,15 +37,17 @@ export default abstract class Job {
   protected onError(err: any): void {
     log.error(`${this.options.name} failed with error ${err}`);
     this.isRunning = false;
+
     if (
       this.options.useRetry &&
       this.currentRetries < this.options.maxRetries
     ) {
+      // useRetry
       log.info(
         `Retrying ${this.options.name}. Retries: ${this.currentRetries}/${this.options.maxRetries}`
       );
       this.run();
-    } else this.currentRetries = 0;
+    } else this.currentRetries = 0; // useRetry=false or current retries reached max retries
   }
 
   protected onSuccess(...args: any): void {
