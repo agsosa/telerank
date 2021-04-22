@@ -22,7 +22,7 @@ export const mtproto = new MTProto({
   api_hash: TelegramSecrets.apiHash,
 });
 
-export const InitializeTelegramProto = async (): Promise<void> => {
+export const initializeTelegramProto = async (): Promise<void> => {
   const auth = await TelegramAuth();
   log.info(`Auth result = ${auth}`);
   initialized = true;

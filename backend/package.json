@@ -6,6 +6,7 @@
   "_moduleAliases": {
     "data": "dist/data",
     "lib": "dist/lib",
+    "models": "dist/models",
     "routes": "dist/routes",
     "scrapers": "dist/scrapers"
   },

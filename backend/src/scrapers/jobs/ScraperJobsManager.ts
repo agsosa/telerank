@@ -3,7 +3,7 @@ import { log } from "lib/Helpers";
 import Job from "scrapers/jobs/Job";
 import PopulateDatabase from "scrapers/jobs/PopulateDatabaseJob";
 import RefreshEntriesTelegramInfos from "scrapers/jobs/RefreshEntriesTelegramInfos";
-import { isDatabaseReady } from "data/Database";
+import { isDatabaseReady } from "lib/Database";
 import { isTelegramProtoReady } from "scrapers/telegram-proto/TelegramProto";
 
 let interval: NodeJS.Timeout;
@@ -37,7 +37,7 @@ function jobsInterval() {
   }
 }
 
-export function InitializeJobs(): void {
+export function initializeJobs(): void {
   if (!interval) {
     log.info("Initializing Jobs");
     interval = setInterval(jobsInterval, JOBS_INTERVAL_TIME);

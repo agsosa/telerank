@@ -6,10 +6,10 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 
-import InitializeDatabase from "data/Database";
+import initializeDatabase from "lib/Database";
 import { initializeRoutes } from "routes";
-import { InitializeJobs } from "scrapers/jobs/ScraperJobsManager";
-import { InitializeTelegramProto } from "scrapers/telegram-proto/TelegramProto";
+import { initializeJobs } from "scrapers/jobs/ScraperJobsManager";
+import { initializeTelegramProto } from "scrapers/telegram-proto/TelegramProto";
 import { log } from "lib/Helpers";
 
 // Configure app
@@ -30,9 +30,9 @@ app.use(express.json());
 app.use(limiterOptions);
 
 // Modules
-InitializeDatabase().then(() => {
-  InitializeTelegramProto();
-  InitializeJobs();
+initializeDatabase().then(() => {
+  initializeTelegramProto();
+  initializeJobs();
 });
 
 // Routes
