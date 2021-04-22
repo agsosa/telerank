@@ -1,6 +1,6 @@
 /* 
 
-Note: Import this file on App.jsx to initialize on app start
+	Note: call initializeLocale() as soon as possible on app startup to configure i18next
 */
 
 import { getLocales } from 'react-native-localize';
@@ -36,34 +36,34 @@ export const getTranslatedCategory = (categoryKey) => {
 
 export const getTranslatedType = (typeKey) => i18n.t(typeKey.toLowerCase());
 
-const resources = {
-	en,
-	es,
-};
-
-const LanguageDetector = {
-	type: 'languageDetector',
-	async: false,
-	init() {},
-	detect() {
-		const locale = Languages.find((q) => q.code === getLocales()[0].languageCode).code || 'en';
-		return MMKV.getString('TR_Lng') || locale;
-	},
-	cacheUserLanguage(lng) {
-		MMKV.set('TR_Lng', lng);
-	},
-};
-
-// Initialize i18n
-i18n
-	.use(initReactI18next)
-	.use(LanguageDetector)
-	.init({
-		resources,
-		fallbackLng: 'en',
-		interpolation: {
-			escapeValue: false,
+export function initializeLocale() {
+	// Custom i18next LanguageDetector plugin using MMKV for persistence
+	const LanguageDetector = {
+		type: 'languageDetector',
+		async: false,
+		init() {},
+		detect() {
+			const locale = Languages.find((q) => q.code === getLocales()[0].languageCode).code || 'en';
+			return MMKV.getString('TR_Lng') || locale;
 		},
-	});
+		cacheUserLanguage(lng) {
+			MMKV.set('TR_Lng', lng);
+		},
+	};
 
-export default i18n;
+	const resources = {
+		en,
+		es,
+	};
+
+	i18n
+		.use(initReactI18next)
+		.use(LanguageDetector)
+		.init({
+			resources,
+			fallbackLng: 'en',
+			interpolation: {
+				escapeValue: false,
+			},
+		});
+}

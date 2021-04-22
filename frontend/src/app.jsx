@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+require('lib/locale/Locale').initializeLocale();
 import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
@@ -12,7 +13,6 @@ import { colors } from 'lib/Styles';
 import { Routes } from 'lib/Routes';
 import StoreProvider from 'lib/state/Store';
 import Drawer from 'components/navigation/Drawer';
-import 'lib/locale/Locale';
 
 const persistor = getPersistor();
 const ROBOTO = require('native-base/Fonts/Roboto.ttf');
@@ -30,6 +30,7 @@ const theme = {
 function App() {
 	const [isReady, setIsReady] = useState(false);
 
+	// Load fonts
 	useEffect(() => {
 		async function loadFonts() {
 			await Font.loadAsync({
