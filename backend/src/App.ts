@@ -7,20 +7,19 @@ import rateLimit from "express-rate-limit";
 import compression from "compression";
 
 import InitializeDatabase from "data/Database";
-import CommonRoutesConfig from "routes/common.routes.config";
-import EntriesRoutes from "routes/entries.routes.config";
-import StatsRoutes from "routes/stats.routes.config";
+import { initializeRoutes } from "routes";
 import { InitializeJobs } from "scrapers/jobs/ScraperJobsManager";
 import { InitializeTelegramProto } from "scrapers/telegram-proto/TelegramProto";
-import JobsRoutes from "routes/jobs.routes.config";
 import { log } from "lib/Helpers";
 
 // Configure app
 const port = process.env.PORT || 4001;
+
 const limiterOptions = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 150,
 });
+
 const app = express();
 
 app.use(helmet());
@@ -30,21 +29,18 @@ app.use(express.json());
 // app.enable('trust proxy'); // reverse proxy (heroku, nginx) https://expressjs.com/en/guide/behind-proxies.html
 app.use(limiterOptions);
 
-// Routes
-const routes: CommonRoutesConfig[] = [];
-routes.push(new EntriesRoutes(app));
-routes.push(new StatsRoutes(app));
-routes.push(new JobsRoutes(app));
-
 // Modules
 InitializeDatabase().then(() => {
   InitializeTelegramProto();
   InitializeJobs();
 });
 
+// Routes
 app.get("/", (req, res) => {
   res.send("OK");
 });
+
+initializeRoutes(app);
 
 app.listen(port, () => {
   log.info(`Server listening on port ${port}`);

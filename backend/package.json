@@ -4,10 +4,10 @@
   "description": "",
   "main": "./src/App.ts",
   "_moduleAliases": {
-    "data": "dist/src/data",
-    "lib": "dist/src/lib",
-    "routes": "dist/src/routes",
-    "scrapers": "dist/src/scrapers"
+    "data": "dist/data",
+    "lib": "dist/lib",
+    "routes": "dist/routes",
+    "scrapers": "dist/scrapers"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.1",
