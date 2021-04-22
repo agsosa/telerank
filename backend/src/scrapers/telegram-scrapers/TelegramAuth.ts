@@ -5,7 +5,7 @@
 
 import { getSRPParams } from "@mtproto/core";
 import TelegramSecrets from "scrapers/telegram-scrapers/TelegramSecrets";
-import * as TelegramProto from "scrapers/telegram-scrapers/TelegramProto";
+import * as TelegramProto from "scrapers/telegram-scrapers/TelegramProtoManager";
 
 const { phone, password, code } = TelegramSecrets;
 

@@ -6,10 +6,10 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
 
-import { initializeDatabase } from "lib/Database";
-import { initializeRoutes } from "routes";
+import { initializeDatabase } from "lib/DatabaseManager";
+import { initializeRoutes } from "routes/RoutesManager";
 import { initializeJobs } from "jobs/JobsManager";
-import { initializeTelegramProto } from "scrapers/telegram-scrapers/TelegramProto";
+import { initializeTelegramProto } from "scrapers/telegram-scrapers/TelegramProtoManager";
 import { log } from "lib/Helpers";
 
 // Configure app

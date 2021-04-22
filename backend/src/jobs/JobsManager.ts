@@ -3,8 +3,8 @@ import { log } from "lib/Helpers";
 import Job from "jobs/Job";
 import PopulateDatabase from "jobs/PopulateDatabaseJob";
 import RefreshEntriesTelegramInfos from "jobs/RefreshEntriesJob";
-import { isDatabaseReady } from "lib/Database";
-import { isTelegramProtoReady } from "scrapers/telegram-scrapers/TelegramProto";
+import { isDatabaseReady } from "lib/DatabaseManager";
+import { isTelegramProtoReady } from "scrapers/telegram-scrapers/TelegramProtoManager";
 
 let interval: NodeJS.Timeout;
 const JOBS_INTERVAL_TIME = 15 * 1000; // Time between each jobsInterval() run (ms)
