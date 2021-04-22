@@ -1,5 +1,5 @@
 import express from "express";
-import { getCurrentFloodWait } from "scrapers/telegram-proto/TelegramProto";
+import { getCurrentFloodWait } from "scrapers/telegram-scrapers/TelegramProto";
 import { getRunningJobs } from "jobs/JobsManager";
 
 export function getStatus(

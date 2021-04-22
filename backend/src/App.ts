@@ -9,7 +9,7 @@ import compression from "compression";
 import initializeDatabase from "lib/Database";
 import { initializeRoutes } from "routes";
 import { initializeJobs } from "jobs/JobsManager";
-import { initializeTelegramProto } from "scrapers/telegram-proto/TelegramProto";
+import { initializeTelegramProto } from "scrapers/telegram-scrapers/TelegramProto";
 import { log } from "lib/Helpers";
 
 // Configure app

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import scrapeIt, { ScrapeResult } from "scrape-it";
 import { log } from "lib/Helpers";
-import ITelegramInfo from "scrapers/telegram-proto/ITelegramInfo";
+import ITelegramInfo from "scrapers/telegram-scrapers/ITelegramInfo";
 import IScrapedMedia from "scrapers/content-scrapers/IScrapedMedia";
 import { EnumEntryType } from "telerank-shared/lib";
 

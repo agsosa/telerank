@@ -4,8 +4,8 @@
 // Original source https://github.com/alik0211/mtproto-core/blob/master/docs/authentication.md
 
 import { getSRPParams } from "@mtproto/core";
-import TelegramSecrets from "scrapers/telegram-proto/TelegramSecrets";
-import * as TelegramProto from "scrapers/telegram-proto/TelegramProto";
+import TelegramSecrets from "scrapers/telegram-scrapers/TelegramSecrets";
+import * as TelegramProto from "scrapers/telegram-scrapers/TelegramProto";
 
 const { phone, password, code } = TelegramSecrets;
 
