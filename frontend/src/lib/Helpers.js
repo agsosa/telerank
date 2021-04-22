@@ -1,5 +1,5 @@
 import React from 'react';
-import { getTranslatedCategory, getTranslatedType } from 'lib/locale/Locale';
+import { getTranslatedCategory, getTranslatedEntryType, getTranslatedLanguage } from 'lib/locale/Locale';
 import { placeholderImage } from 'lib/Styles';
 
 export function useIsMounted() {
@@ -13,19 +13,8 @@ export function useIsMounted() {
 	return React.useCallback(() => ref.current, []);
 }
 
-export function formatLanguageCode(langCode) {
-	switch (langCode) {
-		case 'es':
-			return 'Español';
-		case 'en':
-			return 'English';
-		default:
-			return langCode;
-	}
-}
-
 export function getEntrySubtitle(data) {
-	return `${getTranslatedType(data.type)} / ${getTranslatedCategory(data.category)} / ${formatLanguageCode(data.language)}`;
+	return `${getTranslatedEntryType(data.type)} / ${getTranslatedCategory(data.category)}`;
 }
 
 // Slice long strings and add ... at the end

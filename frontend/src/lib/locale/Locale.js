@@ -10,6 +10,7 @@ import { MMKV } from 'react-native-mmkv';
 import { getLocaleObjectFromCategory } from 'telerank-shared/lib/Category';
 import en from 'lib/locale/en';
 import es from 'lib/locale/es';
+import { EnumLanguage } from 'telerank-shared/lib/Language';
 
 export const getLocalizedLegalURLS = () => ({
 	dmca: `https://telerank.netlify.app/dmca_${i18n.language}`,
@@ -17,24 +18,28 @@ export const getLocalizedLegalURLS = () => ({
 	privacy: `https://telerank.netlify.app/privacy_${i18n.language}`,
 });
 
-export const Languages = [
-	{ code: 'en', displayStr: 'English' },
-	{ code: 'es', displayStr: 'Español' },
-];
-
-export const getCurrentLanguageDisplay = () => {
-	const langObj = Languages.find((q) => q.code === i18n.language);
-	const langDisplay = langObj ? langObj.displayStr : 'Undefined';
-	return langDisplay;
+export const getTranslatedLanguage = (languageEnum) => {
+	switch (languageEnum) {
+		case EnumLanguage.ENGLISH:
+			return 'English';
+		case EnumLanguage.SPANISH:
+			return 'Español';
+		default:
+			return languageEnum;
+	}
 };
 
-export const getTranslatedCategory = (categoryKey) => {
-	const locale = getLocaleObjectFromCategory(categoryKey);
+export const getCurrentLanguageDisplay = () => {
+	return getTranslatedLanguage(i18n.language);
+};
+
+export const getTranslatedCategory = (categoryEnum) => {
+	const locale = getLocaleObjectFromCategory(categoryEnum);
 	const result = locale[i18n.language];
 	return result || locale.en;
 };
 
-export const getTranslatedType = (typeKey) => i18n.t(typeKey.toLowerCase());
+export const getTranslatedEntryType = (entryTypeEnum) => i18n.t(entryTypeEnum.toLowerCase());
 
 // initializeLocale: Called automatically on file import. Import this file on app startup to initialize i18next as soon as possible
 (function initializeLocale() {
@@ -44,7 +49,7 @@ export const getTranslatedType = (typeKey) => i18n.t(typeKey.toLowerCase());
 		async: false,
 		init() {},
 		detect() {
-			const locale = Languages.find((q) => q.code === getLocales()[0].languageCode).code || 'en';
+			const locale = Object.values(EnumLanguage).find((q) => q === getLocales()[0].languageCode) || EnumLanguage.ENGLISH;
 			return MMKV.getString('TR_Lng') || locale;
 		},
 		cacheUserLanguage(lng) {
@@ -62,7 +67,7 @@ export const getTranslatedType = (typeKey) => i18n.t(typeKey.toLowerCase());
 		.use(LanguageDetector)
 		.init({
 			resources,
-			fallbackLng: 'en',
+			fallbackLng: EnumLanguage.ENGLISH,
 			interpolation: {
 				escapeValue: false,
 			},

@@ -1,4 +1,5 @@
-import { Languages } from 'lib/locale/Locale';
+import { EnumEntryType } from 'telerank-shared/lib/EntryType';
+import { EnumLanguage } from 'telerank-shared/lib/Language';
 
 export const settings = {
 	name: 'settings',
@@ -13,11 +14,10 @@ export const settings = {
 
 export const currentFilters = {
 	name: 'currentFilters',
-	state: { collapsed: true, languages: [Languages.map((q) => q.displayStr)], types: ['channel', 'bot', 'sticker', 'group'], category: ['all'] },
+	state: { collapsed: true, languages: [Object.values(EnumLanguage)], types: Object.values(EnumEntryType), category: ['all'] },
 	reducers: {
-		setFilters(state, payload) {
-			// Payload: Object
-			return payload && payload instanceof Object ? { ...state, payload } : state;
+		toggleCollapsed(state) {
+			return { ...state, collapsed: !state.collapsed };
 		},
 	},
 };
@@ -35,7 +35,7 @@ export const apiErrorActive = {
 };
 
 export const drawerState = {
-	// Manage the drawer state
+	// Used to manage the drawer state from different components/screens
 	name: 'drawerState',
 	state: { navigation: null, isOpen: false },
 	reducers: {
@@ -49,24 +49,3 @@ export const drawerState = {
 		},
 	},
 };
-
-/* export const media = {
-	name: 'media',
-	state: [],
-	reducers: {
-		clear: () => {
-			console.log('clear');
-			return [];
-		}, // Clear the current media list array
-		set: (_, payload) => Array.isArray(payload) && payload, // Replace the current media list array
-	},
-	effects: (dispatch) => ({
-		async getFromServerAsync(apiFunc, state) {
-			dispatch.media.clear();
-			apiFunc().then((data) => {
-				console.log(`received model ${Date.now()}`);
-				dispatch.media.set(data);
-			});
-		},
-	}),
-}; */

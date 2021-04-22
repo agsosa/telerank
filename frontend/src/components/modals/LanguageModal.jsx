@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Button, Dialog, Portal, RadioButton } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import { Languages } from 'lib/locale/Locale';
+import { EnumLanguage } from 'telerank-shared/lib/Language';
+import { getTranslatedLanguage } from 'lib/locale/Locale';
 
 const styles = StyleSheet.create({
 	text: { fontSize: 18, top: 5 },
@@ -45,10 +46,10 @@ const LanguageModal = React.forwardRef((props, ref) => {
 				</Dialog.Title>
 				<Dialog.Content>
 					<RadioButton.Group onValueChange={handleLanguageChange} value={lang}>
-						{Languages.map((q) => (
-							<View key={q.code} style={styles.view}>
-								<RadioButton value={q.code} />
-								<Text style={styles.text}>{q.displayStr}</Text>
+						{Object.values(EnumLanguage).map((q) => (
+							<View key={q} style={styles.view}>
+								<RadioButton value={q} />
+								<Text style={styles.text}>{getTranslatedLanguage(q)}</Text>
 							</View>
 						))}
 					</RadioButton.Group>
