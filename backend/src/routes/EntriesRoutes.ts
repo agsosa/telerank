@@ -1,5 +1,5 @@
 import express from "express";
-import * as controller from "controllers/entries.controller";
+import * as controller from "controllers/EntriesController";
 
 export function initialize(router: express.Router) {
   /*

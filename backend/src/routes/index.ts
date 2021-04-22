@@ -1,7 +1,7 @@
 import express from "express";
-import * as JobsRoutes from "routes/jobs.routes";
-import * as StatsRoutes from "routes/stats.routes";
-import * as EntriesRoutes from "routes/entries.routes";
+import * as JobsRoutes from "routes/JobsRoutes";
+import * as StatsRoutes from "routes/StatsRoutes";
+import * as EntriesRoutes from "routes/EntriesRoutes";
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop  */
 /* eslint-disable no-loop-func  */
 import Job from "scrapers/jobs/Job";
-import scrapeTelegramChannelsMe from "scrapers/content-scrapers/telegramchannels.me.scraper";
+import scrapeTelegramChannelsMe from "scrapers/content-scrapers/TelegramChannelsMeScraper";
 import { uploadPhoto } from "lib/GCloud";
 import * as EntryModel from "models/EntryModel";
 import { IEntry } from "models/IEntry";
