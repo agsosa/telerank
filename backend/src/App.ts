@@ -29,19 +29,20 @@ app.use(express.json());
 // app.enable('trust proxy'); // reverse proxy (heroku, nginx) https://expressjs.com/en/guide/behind-proxies.html
 app.use(limiterOptions);
 
-// Modules
+// Start database and Telerank's modules
 initializeDatabase().then(() => {
   initializeTelegramProto();
   initializeJobs();
-});
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("OK");
-});
+  // Configure Routes
+  app.get("/", (req, res) => {
+    res.send("OK");
+  });
 
-initializeRoutes(app);
+  initializeRoutes(app);
 
-app.listen(port, () => {
-  log.info(`Server listening on port ${port}`);
+  // Start server
+  app.listen(port, () => {
+    log.info(`Server listening on port ${port}`);
+  });
 });
