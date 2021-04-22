@@ -1,6 +1,6 @@
 import express from "express";
 import CommonRoutesConfig from "routes/common.routes.config";
-import * as EntryModel from "data/models/entry-model/EntryModel";
+import * as EntryModel from "data/models/EntryModel";
 import { parseEntryType } from "telerank-shared/lib";
 
 const LIMIT_PER_PAGE = 20; // Limit of objects returned per page

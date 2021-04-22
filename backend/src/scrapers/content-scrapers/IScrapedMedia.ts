@@ -1,5 +1,5 @@
 import { EnumEntryType } from "telerank-shared/lib";
-import { EnumLanguage } from "data/models/entry-model/EnumLanguage";
+import { EnumLanguage } from "data/models/EnumLanguage";
 
 export default interface IScrapedMedia {
   username: string;

@@ -1,5 +1,5 @@
-require("dotenv").config();
 import "module-alias/register";
+require("dotenv").config();
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";

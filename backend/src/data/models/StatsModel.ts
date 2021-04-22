@@ -1,5 +1,5 @@
 import moment from "moment";
-import * as EntryModel from "data/models/entry-model/EntryModel";
+import * as EntryModel from "data/models/EntryModel";
 import { log } from "lib/Helpers";
 import IStats from "data/models/IStats";
 

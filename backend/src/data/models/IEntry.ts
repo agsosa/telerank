@@ -1,5 +1,5 @@
 import { Document } from "mongoose";
-import { EnumLanguage } from "data/models/entry-model/EnumLanguage";
+import { EnumLanguage } from "data/models/EnumLanguage";
 import { EnumEntryType } from "telerank-shared/lib/index";
 
 export interface IEntry {
