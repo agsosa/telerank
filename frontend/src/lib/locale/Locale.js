@@ -1,3 +1,8 @@
+/* 
+
+Note: Import this file on App.jsx to initialize on app start
+*/
+
 import { getLocales } from 'react-native-localize';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
@@ -49,6 +54,7 @@ const LanguageDetector = {
 	},
 };
 
+// Initialize i18n
 i18n
 	.use(initReactI18next)
 	.use(LanguageDetector)

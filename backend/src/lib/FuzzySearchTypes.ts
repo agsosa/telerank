@@ -1,3 +1,7 @@
+/* 
+  Types for mongoose-fuzzy-searching plugin
+*/
+
 /* eslint-disable */
 
 declare module "mongoose" {

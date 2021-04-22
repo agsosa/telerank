@@ -7,7 +7,6 @@ import { log, downloadImage } from "lib/Helpers";
 
 sharp.cache(false);
 
-// TODO: Move project id, bucket url, etc. to environment variables
 const storage = new Storage({
   keyFilename: "./serviceAccountKey.json",
   projectId: process.env.GCLOUD_PROJECT_ID,
@@ -70,18 +69,5 @@ export async function uploadPhoto(
   } catch (err) {
     log.error(err);
     return undefined;
-  }
-}
-
-// Lists all buckets in the current project
-export async function listBuckets() {
-  try {
-    const [buckets] = await storage.getBuckets();
-    log.info("Buckets:");
-    buckets.forEach((b) => {
-      log.info(b.name);
-    });
-  } catch (err) {
-    log.error(err);
   }
 }
