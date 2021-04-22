@@ -1,10 +1,10 @@
 import express from "express";
 import { GetStats } from "models/StatsModel";
 
-export function initialize(app: express.Application): void {
+export function initialize(router: express.Router): void {
   // Parameters: none
   // Return: IStats object
-  app
+  router
     .route(`/stats`)
     .get(
       (

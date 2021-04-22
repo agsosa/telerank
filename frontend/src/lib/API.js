@@ -5,7 +5,7 @@ import { MMKV } from 'react-native-mmkv';
 import { store } from 'lib/state/Store';
 
 // Base URL for the API calls
-const BASE_URL = 'http://7264863152e9.ngrok.io';
+const BASE_URL = 'http://7264863152e9.ngrok.io/api';
 
 // Retry config
 const PROMISE_RETRY_TIMEOUT = 3000; // Wait time to retry the promise after failing all retry-axios attempts

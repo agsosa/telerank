@@ -8,7 +8,7 @@ const LIMIT_POPULAR = 50; // Max entries returned by /entries/popular
 const LIMIT_BIGGEST = 50; // Max entries returned by /entries/biggest
 const LIMIT_TOP = 50; // Max entries returned by /entries/top
 
-export function initialize(app: express.Application) {
+export function initialize(router: express.Router) {
   /*
       API Endpoint: /entries
       Paginated: yes
@@ -21,7 +21,7 @@ export function initialize(app: express.Application) {
         Array of max. LimitPerPage IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Not sorted.
     */
-  app
+  router
     .route(`/entries`)
     .get(
       (
@@ -76,7 +76,7 @@ export function initialize(app: express.Application) {
         Array of IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Not sorted
     */
-  app
+  router
     .route(`/entries/featured`)
     .get(
       (
@@ -105,7 +105,7 @@ export function initialize(app: express.Application) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by members count (descending)
     */
-  app
+  router
     .route(`/entries/biggest`)
     .get(
       (
@@ -134,7 +134,7 @@ export function initialize(app: express.Application) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by views count (descending)
     */
-  app
+  router
     .route(`/entries/popular`)
     .get(
       (
@@ -163,7 +163,7 @@ export function initialize(app: express.Application) {
         Array of max 50 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by likes (descending) and dislikes(ascending)
     */
-  app
+  router
     .route(`/entries/top`)
     .get(
       (
@@ -197,7 +197,7 @@ export function initialize(app: express.Application) {
         Array of max 10 IEntry objects with some fields excluded (check EntryModel.GetEntries select method)
         Sorted by added date
     */
-  app
+  router
     .route(`/entries/recent`)
     .get(
       (
@@ -225,7 +225,7 @@ export function initialize(app: express.Application) {
       Return JSON:
         A random IEntry
     */
-  app
+  router
     .route(`/entries/random`)
     .get(
       (
